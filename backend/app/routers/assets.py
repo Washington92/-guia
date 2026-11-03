@@ -29,7 +29,7 @@ def update_asset(asset_id: int, data: AssetUpdate, db: Session = Depends(get_db)
     asset = db.get(Asset, asset_id)
     if asset is None:
         raise HTTPException(404, "Ativo não encontrado")
-    for field, value in data.model_dump(exclude_unset=True).items():
+    for field, value in data.model_dump(exclude_unset=True, exclude_none=True).items():
         setattr(asset, field, value)
     db.commit()
     db.refresh(asset)
