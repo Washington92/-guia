@@ -38,3 +38,16 @@ class WorkOrder(Base):
     created_at: Mapped[datetime] = mapped_column(DateTime(timezone=True), default=now_utc)
     client: Mapped[Client] = relationship()
     ticket: Mapped[Ticket | None] = relationship()
+
+class Asset(Base):
+    __tablename__ = "assets"
+    id: Mapped[int] = mapped_column(primary_key=True)
+    client_id: Mapped[int] = mapped_column(ForeignKey("clients.id"), index=True)
+    name: Mapped[str] = mapped_column(String(160))
+    category: Mapped[str] = mapped_column(String(40), default="outro")
+    serial_number: Mapped[str | None] = mapped_column(String(100), nullable=True)
+    ip_address: Mapped[str | None] = mapped_column(String(45), nullable=True)
+    location: Mapped[str | None] = mapped_column(String(160), nullable=True)
+    status: Mapped[str] = mapped_column(String(24), default="ativo")
+    created_at: Mapped[datetime] = mapped_column(DateTime(timezone=True), default=now_utc)
+    client: Mapped[Client] = relationship()
