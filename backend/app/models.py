@@ -92,3 +92,19 @@ class TicketEvent(Base):
     new_value: Mapped[str] = mapped_column(String(100))
     created_at: Mapped[datetime] = mapped_column(DateTime(timezone=True), default=now_utc)
     ticket: Mapped[Ticket] = relationship()
+
+class Technician(Base):
+    __tablename__ = "technicians"
+    id: Mapped[int] = mapped_column(primary_key=True)
+    name: Mapped[str] = mapped_column(String(160))
+    email: Mapped[str | None] = mapped_column(String(254), nullable=True)
+    specialty: Mapped[str | None] = mapped_column(String(100), nullable=True)
+    active: Mapped[int] = mapped_column(Integer, default=1)
+    created_at: Mapped[datetime] = mapped_column(DateTime(timezone=True), default=now_utc)
+
+class TicketAssignment(Base):
+    __tablename__ = "ticket_assignments"
+    id: Mapped[int] = mapped_column(primary_key=True)
+    ticket_id: Mapped[int] = mapped_column(ForeignKey("tickets.id"), index=True, unique=True)
+    technician_id: Mapped[int] = mapped_column(ForeignKey("technicians.id"), index=True)
+    assigned_at: Mapped[datetime] = mapped_column(DateTime(timezone=True), default=now_utc)
