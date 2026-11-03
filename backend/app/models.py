@@ -82,3 +82,13 @@ class TicketNote(Base):
     content: Mapped[str] = mapped_column(Text)
     created_at: Mapped[datetime] = mapped_column(DateTime(timezone=True), default=now_utc)
     ticket: Mapped[Ticket] = relationship()
+
+class TicketEvent(Base):
+    __tablename__ = "ticket_events"
+    id: Mapped[int] = mapped_column(primary_key=True)
+    ticket_id: Mapped[int] = mapped_column(ForeignKey("tickets.id"), index=True)
+    event_type: Mapped[str] = mapped_column(String(32))
+    previous_value: Mapped[str | None] = mapped_column(String(100), nullable=True)
+    new_value: Mapped[str] = mapped_column(String(100))
+    created_at: Mapped[datetime] = mapped_column(DateTime(timezone=True), default=now_utc)
+    ticket: Mapped[Ticket] = relationship()
