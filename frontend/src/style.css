@@ -59,3 +59,11 @@ button:focus-visible,input:focus-visible,select:focus-visible,textarea:focus-vis
 }
 @media(max-width:380px){.stat-card{padding:14px}.stat-card strong{font-size:27px}.nav-item{padding:10px}.content{padding-left:12px;padding-right:12px}}
 @media(prefers-reduced-motion:reduce){html{scroll-behavior:auto}.stat-card,.primary{transition:none}}
+
+/* Busca local instantânea */
+.searchbar{display:flex;align-items:center;gap:10px;max-width:540px;background:var(--surface);border:1px solid var(--line);border-radius:14px;padding:0 14px;margin:-9px 0 22px;box-shadow:var(--shadow);color:var(--muted)}
+.searchbar:focus-within{border-color:var(--accent);box-shadow:0 0 0 3px rgba(0,122,255,.1)}
+.searchbar>span{font-size:24px;line-height:1}
+.searchbar input{border:0;background:transparent;box-shadow:none!important;outline:0!important;padding:14px 0;font-size:14px;min-width:0}
+.searchbar button{background:var(--surface-soft);border:0;color:var(--muted);border-radius:50%;height:26px;width:26px;flex-shrink:0}
+@media(max-width:700px){.searchbar{max-width:none;margin:0 0 20px}}
