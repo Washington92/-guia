@@ -25,11 +25,19 @@ with sync_playwright() as p:
         page = browser.new_page(viewport=viewport, device_scale_factor=1, is_mobile=(device=="mobile"), has_touch=(device=="mobile"))
         def route_handler(route):
             path = route.request.url.split("/api/",1)[-1].split("?",1)[0]
-            route.fulfill(status=200, content_type="application/json", body=json.dumps(payload.get("/api/"+path, [])))
+            if path == "auth/login":
+                route.fulfill(status=200, content_type="application/json", body=json.dumps({"access_token":"a"*64,"token_type":"bearer","expires_in":28800}))
+            else:
+                route.fulfill(status=200, content_type="application/json", body=json.dumps(payload.get("/api/"+path, [])))
         page.route("**/api/**", route_handler)
         page.goto(os.environ.get("FRONTEND_URL","http://127.0.0.1:5173"),wait_until="networkidle")
         page.evaluate("localStorage.setItem('aguia-theme','light')")
         page.reload(wait_until="networkidle")
+        page.screenshot(path=str(OUT / f"00-login-{device}.png"),full_page=True,animations="disabled")
+        page.get_by_label("Usuário").fill("demo")
+        page.get_by_label("Senha").fill("SenhaDemoNaoReal123!")
+        page.get_by_role("button",name="Entrar",exact=True).click()
+        page.get_by_role("navigation",name="Navegação principal").wait_for()
         for label, filename in pages:
             page.get_by_role("navigation",name="Navegação principal").get_by_role("button",name=label).click()
             page.wait_for_timeout(250)
