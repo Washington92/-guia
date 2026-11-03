@@ -108,3 +108,20 @@ class TicketAssignment(Base):
     ticket_id: Mapped[int] = mapped_column(ForeignKey("tickets.id"), index=True, unique=True)
     technician_id: Mapped[int] = mapped_column(ForeignKey("technicians.id"), index=True)
     assigned_at: Mapped[datetime] = mapped_column(DateTime(timezone=True), default=now_utc)
+
+class UserAccount(Base):
+    __tablename__ = "user_accounts"
+    id: Mapped[int] = mapped_column(primary_key=True)
+    username: Mapped[str] = mapped_column(String(80), unique=True, index=True)
+    password_hash: Mapped[str] = mapped_column(String(300))
+    role: Mapped[str] = mapped_column(String(20), default="technician")
+    active: Mapped[int] = mapped_column(Integer, default=1)
+    created_at: Mapped[datetime] = mapped_column(DateTime(timezone=True), default=now_utc)
+
+class UserSession(Base):
+    __tablename__ = "user_sessions"
+    id: Mapped[int] = mapped_column(primary_key=True)
+    user_id: Mapped[int] = mapped_column(ForeignKey("user_accounts.id"), index=True)
+    token_hash: Mapped[str] = mapped_column(String(64), unique=True, index=True)
+    expires_at: Mapped[datetime] = mapped_column(DateTime(timezone=True))
+    created_at: Mapped[datetime] = mapped_column(DateTime(timezone=True), default=now_utc)
