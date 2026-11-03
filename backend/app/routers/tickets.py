@@ -2,8 +2,8 @@ from fastapi import APIRouter, Depends, HTTPException, status
 from sqlalchemy import select
 from sqlalchemy.orm import Session
 from ..database import get_db
-from ..models import Client, Ticket
-from ..schemas import TicketCreate, TicketRead, TicketUpdate
+from ..models import Client, Ticket, TicketNote
+from ..schemas import TicketCreate, TicketRead, TicketUpdate, TicketNoteCreate, TicketNoteRead
 
 router = APIRouter(prefix="/api/tickets", tags=["Chamados"])
 
@@ -30,3 +30,19 @@ def update_ticket(ticket_id: int, data: TicketUpdate, db: Session = Depends(get_
     db.commit()
     db.refresh(ticket)
     return ticket
+
+@router.get("/{ticket_id}/notes", response_model=list[TicketNoteRead])
+def list_ticket_notes(ticket_id: int, db: Session = Depends(get_db)):
+    if db.get(Ticket, ticket_id) is None:
+        raise HTTPException(404, "Chamado não encontrado")
+    return db.scalars(select(TicketNote).where(TicketNote.ticket_id == ticket_id).order_by(TicketNote.id.desc()).limit(200)).all()
+
+@router.post("/{ticket_id}/notes", response_model=TicketNoteRead, status_code=status.HTTP_201_CREATED)
+def add_ticket_note(ticket_id: int, data: TicketNoteCreate, db: Session = Depends(get_db)):
+    if db.get(Ticket, ticket_id) is None:
+        raise HTTPException(404, "Chamado não encontrado")
+    note = TicketNote(ticket_id=ticket_id, **data.model_dump())
+    db.add(note)
+    db.commit()
+    db.refresh(note)
+    return note
