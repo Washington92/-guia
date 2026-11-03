@@ -58,7 +58,7 @@ def test_dashboard_analytics_filters_and_workload():
             assert data["tickets"]["unassigned_active"] == 0
             assert data["work_orders"]["pending_or_running"] == 1
             assert data["assets"]["total"] == 1
-            assert data["technician_workload"][0]["active_tickets"] == 1
+            assert data["technician_workload"][0]["active_tickets"] == 1\n            assert data["top_technician"]["leaders"] == []\n            assert data["top_technician"]["completed_total"] == 1\n            assert data["top_technician"]["completed_without_assignment"] == 1
             assert data["sla"]["configured"] is False
             assert client.get("/api/dashboard/analytics", params={
                 "start_date": "2026-11-03", "end_date": "2026-11-01"
