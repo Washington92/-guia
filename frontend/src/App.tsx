@@ -13,6 +13,7 @@ async function request<T>(path: string, init?: RequestInit): Promise<T> {
 }
 const navigation = [{icon:'◫',label:'Visão geral'},{icon:'♙',label:'Clientes'},{icon:'▤',label:'Chamados'},{icon:'◇',label:'Ordens de serviço'},{icon:'▦',label:'Ativos'},{icon:'▥',label:'Estoque'}] as const;
 export default function App() {
+  const [darkMode, setDarkMode] = useState(() => typeof window !== 'undefined' && window.localStorage.getItem('aguia-theme') === 'dark');
   const [clients, setClients] = useState<Client[]>([]);
   const [tickets, setTickets] = useState<Ticket[]>([]);
   const [orders, setOrders] = useState<WorkOrder[]>([]);
@@ -46,6 +47,10 @@ export default function App() {
     const [c, t, o, a, items, movements] = await Promise.all([request<Client[]>('/api/clients'), request<Ticket[]>('/api/tickets'), request<WorkOrder[]>('/api/work-orders'), request<Asset[]>('/api/assets'), request<StockItem[]>('/api/stock/items'), request<StockMovement[]>('/api/stock/movements')]);
     setClients(c); setTickets(t); setOrders(o); setAssets(a); setStockItems(items); setStockMovements(movements);
   }
+  useEffect(() => {
+    document.documentElement.dataset.theme = darkMode ? 'dark' : 'light';
+    window.localStorage.setItem('aguia-theme', darkMode ? 'dark' : 'light');
+  }, [darkMode]);
   useEffect(() => { refresh().catch(e => setError('Não foi possível conectar à API: ' + e.message)); }, []);
   async function addClient(e: FormEvent) {
     e.preventDefault(); setBusy(true); setError('');
@@ -100,7 +105,7 @@ export default function App() {
       <div className="sidebar-bottom"><span className="status-dot"/> Ambiente de desenvolvimento</div>
     </aside>
     <div className="workspace">
-      <header className="topbar"><div className="breadcrumb">Workspace <span>/</span> {section}</div><div className="avatar" aria-label="Águia Gestão">AG</div></header>
+      <header className="topbar"><div className="breadcrumb">Workspace <span>/</span> {section}</div><div className="topbar-actions"><button type="button" className="theme-toggle" aria-label={darkMode?'Ativar modo claro':'Ativar modo escuro'} aria-pressed={darkMode} onClick={()=>setDarkMode(v=>!v)} title={darkMode?'Modo claro':'Modo escuro'}>{darkMode?'☀':'☾'} <span>{darkMode?'Claro':'Escuro'}</span></button><div className="avatar" aria-label="Águia Gestão">AG</div></div></header>
       <main className="content">
         <div className="heading"><div><p className="eyebrow">ÁGUIA GESTÃO CRM</p><h1>{section==='Visão geral'?'Bom trabalho começa com clareza.':section}</h1><p className="subtitle">{section==='Visão geral'?'Sua operação de suporte e infraestrutura em um só lugar.':'Gerencie sua operação com simplicidade e precisão.'}</p></div><span className="env-pill"><span className="status-dot"/> Desenvolvimento</span></div>
         {error&&<div role="alert" className="error">{error}</div>}
