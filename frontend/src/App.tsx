@@ -10,13 +10,21 @@ type TicketEvent = { id:number; ticket_id:number; event_type:string; previous_va
 type TicketNote = { id:number; ticket_id:number; author:string; content:string; created_at:string };
 type Ticket = { id: number; client_id: number; title: string; description: string; status: string; priority: string };
 const API = import.meta.env.VITE_API_URL || 'http://localhost:8000';
+let accessToken: string | null = null;
 async function request<T>(path: string, init?: RequestInit): Promise<T> {
-  const response = await fetch(API + path, { ...init, headers: { 'Content-Type': 'application/json', ...init?.headers } });
+  const response = await fetch(API + path, { ...init, headers: { 'Content-Type': 'application/json', ...(accessToken ? { Authorization: 'Bearer ' + accessToken } : {}), ...init?.headers } });
   if (!response.ok) throw new Error((await response.text()).slice(0, 250));
   return response.json();
 }
 const navigation = [{icon:'◫',label:'Visão geral'},{icon:'♙',label:'Clientes'},{icon:'▤',label:'Chamados'},{icon:'◇',label:'Ordens de serviço'},{icon:'▦',label:'Ativos'},{icon:'▥',label:'Estoque'},{icon:'♧',label:'Equipe técnica'}] as const;
 export default function App() {
+  const [authReady,setAuthReady] = useState(false);
+  const [authenticated,setAuthenticated] = useState(false);
+  const [authUser,setAuthUser] = useState('');
+  const [authPassword,setAuthPassword] = useState('');
+  const [authError,setAuthError] = useState('');
+  const [authBusy,setAuthBusy] = useState(false);
+  const [setupMode,setSetupMode] = useState(false);
   const [search, setSearch] = useState('');
   const [ticketFilter, setTicketFilter] = useState('todos');
   const [technicianFilter,setTechnicianFilter] = useState('todos');
@@ -124,7 +132,28 @@ export default function App() {
     document.documentElement.dataset.theme = darkMode ? 'dark' : 'light';
     window.localStorage.setItem('aguia-theme', darkMode ? 'dark' : 'light');
   }, [darkMode]);
-  useEffect(() => { refresh().catch(e => setError('Não foi possível conectar à API: ' + e.message)); }, []);
+  useEffect(() => {
+    // O token fica somente em memória: recarregar exige novo login.
+    setAuthReady(true);
+  }, []);
+  async function submitAuth(e:FormEvent){
+    e.preventDefault();setAuthBusy(true);setAuthError('');
+    try {
+      if(setupMode){
+        await request('/api/auth/bootstrap',{method:'POST',body:JSON.stringify({username:authUser,password:authPassword})});
+        setSetupMode(false);
+      }
+      const response = await request<{access_token:string}>('/api/auth/login',{method:'POST',body:JSON.stringify({username:authUser,password:authPassword})});
+      accessToken=response.access_token;
+      await refresh();
+      setAuthenticated(true);setAuthPassword('');
+    }catch(err){accessToken=null;setAuthError('Não foi possível autenticar. Verifique as credenciais e a conexão com a API.');}
+    finally{setAuthBusy(false);}
+  }
+  async function signOut(){
+    try{await request('/api/auth/logout',{method:'POST'});}catch{/* Sessão local será encerrada mesmo se a API estiver indisponível. */}
+    accessToken=null;setAuthenticated(false);setClients([]);setTickets([]);setOrders([]);setAssets([]);setStockItems([]);setStockMovements([]);setTechnicians([]);setAssignments([]);setSelectedTicketId(null);setSection('Visão geral');
+  }
   async function addClient(e: FormEvent) {
     e.preventDefault(); setBusy(true); setError('');
     try { await request('/api/clients', { method:'POST', body:JSON.stringify({name,email:email||null,phone:phone||null}) }); setName('');setEmail('');setPhone('');await refresh(); }
@@ -170,6 +199,8 @@ export default function App() {
     try{await request('/api/stock/movements',{method:'POST',body:JSON.stringify({item_id:Number(movementItem),type:movementType,quantity:Number(movementQuantity),work_order_id:movementOrder?Number(movementOrder):null})});await refresh();}
     catch(e){setError(String(e));}finally{setBusy(false);}
   }
+  if(!authReady)return null;
+  if(!authenticated)return <main className="auth-screen"><section className="auth-card"><div className="auth-brand"><div className="logo-mark">A</div><div><strong>Águia Gestão</strong><small>CRM · Ambiente de desenvolvimento</small></div></div><h1>{setupMode?'Configuração inicial':'Acesso ao sistema'}</h1><p>{setupMode?'Crie a primeira conta administradora. Esta operação só é permitida uma vez.':'Entre com suas credenciais para acessar os módulos de suporte e infraestrutura.'}</p><form onSubmit={submitAuth}><label>Usuário<input autoComplete="username" required minLength={3} value={authUser} onChange={e=>setAuthUser(e.target.value)}/></label><label>Senha<input type="password" autoComplete={setupMode?'new-password':'current-password'} required minLength={setupMode?12:1} value={authPassword} onChange={e=>setAuthPassword(e.target.value)}/></label>{authError&&<p role="alert" className="error">{authError}</p>}<button className="primary" disabled={authBusy}>{authBusy?'Aguarde...':setupMode?'Criar administrador e entrar':'Entrar'}</button></form><button type="button" className="text-button" onClick={()=>{setSetupMode(v=>!v);setAuthError('')}}>{setupMode?'Voltar ao login':'Primeira instalação? Criar administrador'}</button><small>Não use dados reais antes da homologação de segurança.</small></section></main>;
   return <div className="shell">
     <aside className="sidebar">
       <div className="logo"><div className="logo-mark">A</div><div><strong>Águia Gestão</strong><small>CRM Workspace</small></div></div>
@@ -178,7 +209,7 @@ export default function App() {
       <div className="sidebar-bottom"><span className="status-dot"/> Ambiente de desenvolvimento</div>
     </aside>
     <div className="workspace">
-      <header className="topbar"><div className="breadcrumb">Workspace <span>/</span> {section}</div><div className="topbar-actions"><button type="button" className="theme-toggle" aria-label={darkMode?'Ativar modo claro':'Ativar modo escuro'} aria-pressed={darkMode} onClick={()=>setDarkMode(v=>!v)} title={darkMode?'Modo claro':'Modo escuro'}>{darkMode?'☀':'☾'} <span>{darkMode?'Claro':'Escuro'}</span></button><div className="avatar" aria-label="Águia Gestão">AG</div></div></header>
+      <header className="topbar"><div className="breadcrumb">Workspace <span>/</span> {section}</div><div className="topbar-actions"><button type="button" className="theme-toggle" aria-label={darkMode?'Ativar modo claro':'Ativar modo escuro'} aria-pressed={darkMode} onClick={()=>setDarkMode(v=>!v)} title={darkMode?'Modo claro':'Modo escuro'}>{darkMode?'☀':'☾'} <span>{darkMode?'Claro':'Escuro'}</span></button><button type="button" className="text-button" onClick={signOut}>Sair</button><div className="avatar" aria-label="Águia Gestão">AG</div></div></header>
       <main className="content">
         <div className="heading"><div><p className="eyebrow">ÁGUIA GESTÃO CRM</p><h1>{section==='Visão geral'?'Bom trabalho começa com clareza.':section}</h1><p className="subtitle">{section==='Visão geral'?'Sua operação de suporte e infraestrutura em um só lugar.':'Gerencie sua operação com simplicidade e precisão.'}</p></div><span className="env-pill"><span className="status-dot"/> Desenvolvimento</span></div>
         {section!=='Visão geral'&&<div className="searchbar"><span aria-hidden="true">⌕</span><input type="search" aria-label="Buscar registros" placeholder={'Buscar em '+section.toLocaleLowerCase('pt-BR')+'...'} value={search} onChange={e=>setSearch(e.target.value)}/>{search&&<button type="button" onClick={()=>setSearch('')} aria-label="Limpar busca">✕</button>}</div>}
