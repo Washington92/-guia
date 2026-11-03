@@ -1,5 +1,5 @@
 from datetime import datetime, timezone
-from sqlalchemy import DateTime, ForeignKey, Integer, String, Text
+from sqlalchemy import DateTime, Float, ForeignKey, Integer, String, Text
 from sqlalchemy.orm import Mapped, mapped_column, relationship
 from .database import Base
 
@@ -35,9 +35,26 @@ class WorkOrder(Base):
     title: Mapped[str] = mapped_column(String(180))
     description: Mapped[str] = mapped_column(Text, default="")
     status: Mapped[str] = mapped_column(String(24), default="pendente")
+    labor_cost: Mapped[float] = mapped_column(Float, default=0.0)
+    parts_cost: Mapped[float] = mapped_column(Float, default=0.0)
+    total_cost: Mapped[float] = mapped_column(Float, default=0.0)
     created_at: Mapped[datetime] = mapped_column(DateTime(timezone=True), default=now_utc)
     client: Mapped[Client] = relationship()
     ticket: Mapped[Ticket | None] = relationship()
+    items: Mapped[list["WorkOrderItem"]] = relationship(back_populates="work_order", cascade="all, delete-orphan")
+
+
+class WorkOrderItem(Base):
+    __tablename__ = "work_order_items"
+    id: Mapped[int] = mapped_column(primary_key=True)
+    work_order_id: Mapped[int] = mapped_column(ForeignKey("work_orders.id"), index=True)
+    stock_item_id: Mapped[int | None] = mapped_column(ForeignKey("stock_items.id"), nullable=True)
+    description: Mapped[str] = mapped_column(String(180))
+    quantity: Mapped[int] = mapped_column(Integer, default=1)
+    unit_price: Mapped[float] = mapped_column(Float, default=0.0)
+    total_price: Mapped[float] = mapped_column(Float, default=0.0)
+    work_order: Mapped[WorkOrder] = relationship(back_populates="items")
+    stock_item: Mapped["StockItem | None"] = relationship()
 
 class Asset(Base):
     __tablename__ = "assets"

@@ -28,21 +28,44 @@ class TicketRead(TicketCreate):
     status: str
     created_at: datetime
 
+class WorkOrderItemCreate(BaseModel):
+    stock_item_id: int | None = None
+    description: str = Field(min_length=1, max_length=180)
+    quantity: int = Field(default=1, ge=1)
+    unit_price: float = Field(default=0.0, ge=0.0)
+
+class WorkOrderItemRead(WorkOrderItemCreate):
+    model_config = ConfigDict(from_attributes=True)
+    id: int
+    work_order_id: int
+    total_price: float
+
 class WorkOrderCreate(BaseModel):
     client_id: int
     ticket_id: int | None = None
     title: str = Field(min_length=3, max_length=180)
     description: str = ""
+    labor_cost: float = Field(default=0.0, ge=0.0)
+    items: list[WorkOrderItemCreate] = []
 
 class WorkOrderUpdate(BaseModel):
     status: Literal["pendente", "em_execucao", "concluida", "cancelada"] | None = None
     description: str | None = None
+    labor_cost: float | None = Field(default=None, ge=0.0)
 
-class WorkOrderRead(WorkOrderCreate):
+class WorkOrderRead(BaseModel):
     model_config = ConfigDict(from_attributes=True)
     id: int
+    client_id: int
+    ticket_id: int | None
+    title: str
+    description: str
     status: str
+    labor_cost: float
+    parts_cost: float
+    total_cost: float
     created_at: datetime
+    items: list[WorkOrderItemRead] = []
 
 class AssetCreate(BaseModel):
     client_id: int
