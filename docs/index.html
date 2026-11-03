@@ -77,6 +77,9 @@ try{
  }
 }catch{/* Armazenamento indisponível: a demonstração continua em memória. */}
 function saveDemo(){try{localStorage.setItem('aguia-demo-records-v1',JSON.stringify(data))}catch{/* Sem persistência neste navegador. */}}
+const sampleTeam=[['#TEC-01','Lucas','N1','Suporte','Ativo',''],['#TEC-02','Washington','N2','Redes','Ativo',''],['#TEC-03','Renato','N2','Infraestrutura','Ativo',''],['#TEC-04','Rodrigo','N1','Suporte','Ativo',''],['#TEC-05','Robert','N3','Redes','Ativo',''],['#TEC-06','Roberto','N2','CFTV','Ativo',''],['#TEC-07','Agnaldo','N3','Infraestrutura','Ativo',''],['#TEC-08','Reginaldo','N1','Suporte','Ativo','']];
+if(data.team.length===2&&data.team[0][1]==='Técnico N1'&&data.team[1][1]==='Técnico N2'){data.team=sampleTeam;saveDemo()}
+
 const unitCodes={};
 try{const saved=JSON.parse(localStorage.getItem('aguia-demo-unit-codes-v1')||'{}');if(saved&&typeof saved==='object'&&!Array.isArray(saved))Object.assign(unitCodes,saved)}catch{}
 function saveUnitCodes(){try{localStorage.setItem('aguia-demo-unit-codes-v1',JSON.stringify(unitCodes))}catch{}}
