@@ -1,4 +1,5 @@
 import { FormEvent, useEffect, useState } from 'react';
+type CRMUser = {id:number;username:string;role:string;active:boolean};
 type Client = { id: number; name: string; email: string | null; phone: string | null };
 type StockItem = { id:number; name:string; sku:string|null; unit:string; quantity:number; min_quantity:number };
 type StockMovement = { id:number; item_id:number; work_order_id:number|null; type:string; quantity:number; note:string };
@@ -16,8 +17,14 @@ async function request<T>(path: string, init?: RequestInit): Promise<T> {
   if (!response.ok) throw new Error((await response.text()).slice(0, 250));
   return response.json();
 }
-const navigation = [{icon:'◫',label:'Visão geral'},{icon:'♙',label:'Clientes'},{icon:'▤',label:'Chamados'},{icon:'◇',label:'Ordens de serviço'},{icon:'▦',label:'Ativos'},{icon:'▥',label:'Estoque'},{icon:'♧',label:'Equipe técnica'}] as const;
+const navigation = [{icon:'◫',label:'Visão geral'},{icon:'♙',label:'Clientes'},{icon:'▤',label:'Chamados'},{icon:'◇',label:'Ordens de serviço'},{icon:'▦',label:'Ativos'},{icon:'▥',label:'Estoque'},{icon:'♧',label:'Equipe técnica'},{icon:'⚙',label:'Usuários'}] as const;
 export default function App() {
+  const [currentRole,setCurrentRole] = useState('');
+  const [users,setUsers] = useState<CRMUser[]>([]);
+  const [newUsername,setNewUsername] = useState('');
+  const [newPassword,setNewPassword] = useState('');
+  const [newRole,setNewRole] = useState('technician');
+  const [userMessage,setUserMessage] = useState('');
   const [authReady,setAuthReady] = useState(false);
   const [authenticated,setAuthenticated] = useState(false);
   const [authUser,setAuthUser] = useState('');
@@ -67,7 +74,7 @@ export default function App() {
   const [orderTicketId, setOrderTicketId] = useState('');
   const [error, setError] = useState('');
   const [busy, setBusy] = useState(false);
-  const [section, setSection] = useState<'Visão geral'|'Clientes'|'Chamados'|'Ordens de serviço'|'Ativos'|'Estoque'|'Equipe técnica'>('Visão geral');
+  const [section, setSection] = useState<'Visão geral'|'Clientes'|'Chamados'|'Ordens de serviço'|'Ativos'|'Estoque'|'Equipe técnica'|'Usuários'>('Visão geral');
   const [name, setName] = useState(''); const [email, setEmail] = useState(''); const [phone, setPhone] = useState('');
   const [clientId, setClientId] = useState(''); const [title, setTitle] = useState('');
   const [description, setDescription] = useState(''); const [priority, setPriority] = useState('media');
@@ -122,6 +129,22 @@ export default function App() {
     try{await request('/api/tickets/'+ticketId+'/assignment',{method:'PUT',body:JSON.stringify({technician_id:Number(technicianId)})});setAssignments(await request<Assignment[]>('/api/tickets/assignments'));if(selectedTicketId===ticketId)setTicketEvents(await request<TicketEvent[]>('/api/tickets/'+ticketId+'/events'));}
     catch(e){setError(String(e))}
   }
+  async function refreshUsers(){
+    if(currentRole!=='admin')return;
+    setUsers(await request<CRMUser[]>('/api/users'));
+  }
+  async function addUser(e:FormEvent){
+    e.preventDefault();setUserMessage('');
+    try{
+      await request('/api/users',{method:'POST',body:JSON.stringify({username:newUsername,password:newPassword,role:newRole})});
+      setNewUsername('');setNewPassword('');await refreshUsers();setUserMessage('Usuário cadastrado.');
+    }catch(err){setUserMessage('Não foi possível cadastrar: '+String(err))}
+  }
+  async function changeUser(id:number,changes:{role?:string;active?:boolean}){
+    setUserMessage('');
+    try{await request('/api/users/'+id,{method:'PATCH',body:JSON.stringify(changes)});await refreshUsers();setUserMessage('Conta atualizada.');}
+    catch(err){setUserMessage('Não foi possível atualizar: '+String(err))}
+  }
   async function refresh() {
     const [c, t, o, a, items, movements] = await Promise.all([request<Client[]>('/api/clients'), request<Ticket[]>('/api/tickets'), request<WorkOrder[]>('/api/work-orders'), request<Asset[]>('/api/assets'), request<StockItem[]>('/api/stock/items'), request<StockMovement[]>('/api/stock/movements')]);
     setClients(c); setTickets(t); setOrders(o); setAssets(a); setStockItems(items); setStockMovements(movements);
@@ -145,6 +168,8 @@ export default function App() {
       }
       const response = await request<{access_token:string}>('/api/auth/login',{method:'POST',body:JSON.stringify({username:authUser,password:authPassword})});
       accessToken=response.access_token;
+      const identity=await request<{role:string}>('/api/auth/me');
+      setCurrentRole(identity.role);
       await refresh();
       setAuthenticated(true);setAuthPassword('');
     }catch(err){accessToken=null;setAuthError('Não foi possível autenticar. Verifique as credenciais e a conexão com a API.');}
@@ -152,7 +177,7 @@ export default function App() {
   }
   async function signOut(){
     try{await request('/api/auth/logout',{method:'POST'});}catch{/* Sessão local será encerrada mesmo se a API estiver indisponível. */}
-    accessToken=null;setAuthenticated(false);setClients([]);setTickets([]);setOrders([]);setAssets([]);setStockItems([]);setStockMovements([]);setTechnicians([]);setAssignments([]);setSelectedTicketId(null);setSection('Visão geral');
+    accessToken=null;setAuthenticated(false);setCurrentRole('');setUsers([]);setClients([]);setTickets([]);setOrders([]);setAssets([]);setStockItems([]);setStockMovements([]);setTechnicians([]);setAssignments([]);setSelectedTicketId(null);setSection('Visão geral');
   }
   async function addClient(e: FormEvent) {
     e.preventDefault(); setBusy(true); setError('');
@@ -205,14 +230,14 @@ export default function App() {
     <aside className="sidebar">
       <div className="logo"><div className="logo-mark">A</div><div><strong>Águia Gestão</strong><small>CRM Workspace</small></div></div>
       <div className="nav-heading">WORKSPACE</div>
-      <nav aria-label="Navegação principal">{navigation.map(item=><button key={item.label} className={'nav-item '+(section===item.label?'active':'')} onClick={()=>{setSection(item.label);setSearch('');}}><span className="nav-icon">{item.icon}</span>{item.label}</button>)}</nav>
+      <nav aria-label="Navegação principal">{navigation.filter(item=>item.label!=='Usuários'||currentRole==='admin').map(item=><button key={item.label} className={'nav-item '+(section===item.label?'active':'')} onClick={()=>{setSection(item.label);setSearch('');if(item.label==='Usuários')refreshUsers().catch(e=>setUserMessage(String(e)));}}><span className="nav-icon">{item.icon}</span>{item.label}</button>)}</nav>
       <div className="sidebar-bottom"><span className="status-dot"/> Ambiente de desenvolvimento</div>
     </aside>
     <div className="workspace">
       <header className="topbar"><div className="breadcrumb">Workspace <span>/</span> {section}</div><div className="topbar-actions"><button type="button" className="theme-toggle" aria-label={darkMode?'Ativar modo claro':'Ativar modo escuro'} aria-pressed={darkMode} onClick={()=>setDarkMode(v=>!v)} title={darkMode?'Modo claro':'Modo escuro'}>{darkMode?'☀':'☾'} <span>{darkMode?'Claro':'Escuro'}</span></button><button type="button" className="text-button" onClick={signOut}>Sair</button><div className="avatar" aria-label="Águia Gestão">AG</div></div></header>
       <main className="content">
         <div className="heading"><div><p className="eyebrow">ÁGUIA GESTÃO CRM</p><h1>{section==='Visão geral'?'Bom trabalho começa com clareza.':section}</h1><p className="subtitle">{section==='Visão geral'?'Sua operação de suporte e infraestrutura em um só lugar.':'Gerencie sua operação com simplicidade e precisão.'}</p></div><span className="env-pill"><span className="status-dot"/> Desenvolvimento</span></div>
-        {section!=='Visão geral'&&<div className="searchbar"><span aria-hidden="true">⌕</span><input type="search" aria-label="Buscar registros" placeholder={'Buscar em '+section.toLocaleLowerCase('pt-BR')+'...'} value={search} onChange={e=>setSearch(e.target.value)}/>{search&&<button type="button" onClick={()=>setSearch('')} aria-label="Limpar busca">✕</button>}</div>}
+        {section!=='Visão geral'&&section!=='Usuários'&&<div className="searchbar"><span aria-hidden="true">⌕</span><input type="search" aria-label="Buscar registros" placeholder={'Buscar em '+section.toLocaleLowerCase('pt-BR')+'...'} value={search} onChange={e=>setSearch(e.target.value)}/>{search&&<button type="button" onClick={()=>setSearch('')} aria-label="Limpar busca">✕</button>}</div>}
         {error&&<div role="alert" className="error">{error}</div>}
         {section==='Visão geral'&&<>
           <div className="stats">
@@ -235,6 +260,7 @@ export default function App() {
           <section className="panel dashboard-recent"><div className="panel-head"><div><h2>Chamados recentes</h2><p>Acompanhe os últimos registros da operação.</p></div><button className="text-button" onClick={()=>setSection('Chamados')}>Ver todos →</button></div><TicketList tickets={tickets.slice(0,5)} clients={clients} setStatus={setStatus} onSelect={setSelectedTicketId}/></section>
         </>}
         {selectedTicket&&<div className="detail-overlay" role="presentation" onMouseDown={e=>{if(e.target===e.currentTarget)setSelectedTicketId(null)}}><section className="detail-dialog" role="dialog" aria-modal="true" aria-labelledby="ticket-detail-title"><div className="detail-header"><div><p className="eyebrow">CHAMADO # {selectedTicket.id}</p><h2 id="ticket-detail-title">{selectedTicket.title}</h2></div><button type="button" className="detail-close" aria-label="Fechar detalhes" onClick={()=>setSelectedTicketId(null)}>✕</button></div><div className="ticket-badges"><span className={'priority-badge priority-'+selectedTicket.priority}>{priorityNames[selectedTicket.priority]||selectedTicket.priority}</span><span className={'status-badge status-'+selectedTicket.status}>{statusNames[selectedTicket.status]||selectedTicket.status}</span></div><div className="detail-section"><span>Cliente</span><strong>{clients.find(c=>c.id===selectedTicket.client_id)?.name||'Cliente não localizado'}</strong></div><div className="detail-section"><label htmlFor="ticket-technician">Técnico responsável</label><select id="ticket-technician" value={assignedTechnician(selectedTicket.id)||''} onChange={e=>assignTechnician(selectedTicket.id,e.target.value)}><option value="">Não atribuído</option>{technicians.filter(t=>t.active).map(t=><option value={t.id} key={t.id}>{t.name}{t.specialty?' · '+t.specialty:''}</option>)}</select></div><div className="detail-section"><span>Descrição do atendimento</span><p>{selectedTicket.description||'Nenhuma descrição registrada.'}</p></div><div className="detail-section"><label htmlFor="detail-ticket-status">Atualizar status</label><select id="detail-ticket-status" value={selectedTicket.status} onChange={e=>setStatus(selectedTicket.id,e.target.value)}><option value="aberto">Aberto</option><option value="em_andamento">Em andamento</option><option value="resolvido">Resolvido</option><option value="fechado">Fechado</option></select></div><div className="detail-section"><span>Alterações de status</span><div className="event-list">{ticketEvents.length?ticketEvents.map(ev=><article className="event-entry" key={ev.id}><span className="event-dot" aria-hidden="true"/><div><strong>{ev.event_type==='assignment'?'Responsável: '+(technicians.find(t=>t.id===Number(ev.previous_value))?.name||'Não atribuído')+' → '+(technicians.find(t=>t.id===Number(ev.new_value))?.name||'Técnico #'+ev.new_value):(statusNames[ev.previous_value||'']||'Status inicial')+' → '+(statusNames[ev.new_value]||ev.new_value)}</strong><time dateTime={ev.created_at}>{new Date(ev.created_at).toLocaleString('pt-BR')}</time></div></article>):<p className="empty">Nenhuma alteração de status registrada.</p>}</div></div><div className="detail-section"><span>Histórico técnico</span>{noteError&&<p role="alert" className="note-error">{noteError}</p>}<form className="note-form" onSubmit={addTicketNote}><label>Responsável<input required minLength={2} maxLength={100} value={noteAuthor} onChange={e=>setNoteAuthor(e.target.value)}/></label><label>Registro do atendimento<textarea required minLength={3} maxLength={4000} rows={3} placeholder="Descreva os testes, ações realizadas e próximos passos..." value={noteContent} onChange={e=>setNoteContent(e.target.value)}/></label><button className="primary" disabled={noteBusy}>{noteBusy?'Salvando...':'Adicionar anotação'}</button></form><div className="note-timeline">{ticketNotes.length?ticketNotes.map(note=><article className="note-entry" key={note.id}><div><strong>{note.author}</strong><time dateTime={note.created_at}>{new Date(note.created_at).toLocaleString('pt-BR')}</time></div><p>{note.content}</p></article>):<p className="empty">Nenhuma anotação registrada.</p>}</div></div><button type="button" className="primary" onClick={()=>setSelectedTicketId(null)}>Concluir visualização</button></section></div>}
+        {section==='Usuários'&&currentRole==='admin'&&<div className="two-col"><section className="panel"><div className="panel-head"><h2>Novo usuário</h2></div><form onSubmit={addUser}><label>Usuário<input required minLength={3} maxLength={80} pattern="[a-zA-Z0-9._-]+" value={newUsername} onChange={e=>setNewUsername(e.target.value)} autoComplete="off"/></label><label>Senha temporária<input type="password" required minLength={12} maxLength={256} value={newPassword} onChange={e=>setNewPassword(e.target.value)} autoComplete="new-password"/></label><label>Perfil<select value={newRole} onChange={e=>setNewRole(e.target.value)}><option value="technician">Técnico</option><option value="supervisor">Supervisor</option><option value="admin">Administrador</option></select></label><button className="primary" type="submit">Cadastrar usuário</button></form>{userMessage&&<p role="status">{userMessage}</p>}</section><section className="panel"><div className="panel-head"><h2>Contas cadastradas</h2><button type="button" className="text-button" onClick={()=>refreshUsers().catch(e=>setUserMessage(String(e)))}>Atualizar</button></div>{users.map(u=><div className="ticket-row" key={u.id}><div className="ticket-info"><b>{u.username}</b><small>{u.active?'Ativo':'Inativo'} · #{u.id}</small></div><select aria-label={'Perfil de '+u.username} value={u.role} onChange={e=>changeUser(u.id,{role:e.target.value})}><option value="technician">Técnico</option><option value="supervisor">Supervisor</option><option value="admin">Administrador</option></select><button type="button" className="text-button" onClick={()=>changeUser(u.id,{active:!u.active})}>{u.active?'Desativar':'Ativar'}</button></div>)}{users.length===0&&<p className="empty">Clique em Atualizar para consultar as contas.</p>}</section></div>}
         {section==='Equipe técnica'&&<div className="queue-summary"><article><span>Sem responsável</span><strong>{unassignedTickets.length}</strong><button type="button" onClick={()=>{setSection('Chamados');setTechnicianFilter('sem_responsavel');setQueueFilter('ativos')}}>Ver fila →</button></article><article><span>Em atendimento</span><strong>{openTickets.filter(t=>assignedTechnician(t.id)).length}</strong><button type="button" onClick={()=>{setSection('Chamados');setTechnicianFilter('todos');setQueueFilter('ativos')}}>Ver chamados →</button></article><article><span>Técnicos cadastrados</span><strong>{technicians.length}</strong><small>Equipe operacional</small></article></div>}
         {section==='Equipe técnica'&&<section className="panel workload-panel"><div className="panel-head"><div><h2>Carga de trabalho por técnico</h2><p>Indicadores calculados a partir dos chamados atribuídos.</p></div></div><div className="workload-table"><div className="workload-head"><span>Profissional</span><span>Ativos</span><span>Urgentes</span><span>Resolvidos</span></div>{workload.length?workload.map(w=><button type="button" className="workload-row" key={w.technician.id} onClick={()=>{setSection('Chamados');setTechnicianFilter(String(w.technician.id));setQueueFilter('todas');setSearch('')}}><strong>{w.technician.name}</strong><span>{w.active}</span><span>{w.critical}</span><span>{w.resolved}</span></button>):<p className="empty">Cadastre um técnico para acompanhar os indicadores.</p>}</div></section>}
         {section==='Equipe técnica'&&<section className="panel technician-panel"><div className="panel-head"><div><h2>Equipe técnica</h2><p>Cadastre profissionais para atribuir os chamados.</p></div><span className="count">{technicians.length}</span></div><form className="technician-form" onSubmit={addTechnician}><label>Nome<input required minLength={2} maxLength={160} value={technicianName} onChange={e=>setTechnicianName(e.target.value)} placeholder="Nome do técnico"/></label><label>E-mail<input type="email" value={technicianEmail} onChange={e=>setTechnicianEmail(e.target.value)} placeholder="Opcional"/></label><label>Especialidade<input maxLength={100} value={technicianSpecialty} onChange={e=>setTechnicianSpecialty(e.target.value)} placeholder="Ex.: Redes / N2"/></label><button className="primary" disabled={busy}>Cadastrar técnico</button></form><div className="technician-list">{filteredTechnicians.map(t=><div className="technician-row" key={t.id}><span className="technician-avatar">{t.name.slice(0,1).toUpperCase()}</span><div><strong>{t.name}</strong><small>{t.specialty||'Sem especialidade definida'}</small></div><span className="count">{assignments.filter(a=>a.technician_id===t.id).length} chamados</span></div>)}</div></section>}
