@@ -34,6 +34,8 @@ with sync_playwright() as p:
             page.get_by_role("navigation",name="Navegação principal").get_by_role("button",name=label).click()
             page.wait_for_timeout(250)
             page.screenshot(path=str(OUT / f"{filename}-{device}.png"),full_page=True,animations="disabled")
+        page.get_by_role("navigation",name="Navegação principal").get_by_role("button",name="Equipe técnica").click()
+        page.screenshot(path=str(OUT / f"10-carga-trabalho-{device}.png"),full_page=True,animations="disabled")
         page.get_by_role("navigation",name="Navegação principal").get_by_role("button",name="Chamados").click()
         page.get_by_role("button",name="Ver detalhes do chamado 1").click()
         page.screenshot(path=str(OUT / f"08-detalhes-chamado-{device}.png"),full_page=True,animations="disabled")
