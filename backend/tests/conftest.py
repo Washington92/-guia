@@ -10,7 +10,7 @@ from app.models import UserAccount
 
 @pytest.fixture(autouse=True)
 def authenticated_test_actor(request):
-    if request.module.__name__.endswith("test_auth"):
+    if request.module.__name__.endswith(("test_auth", "test_users")):
         yield
         return
     original = app.dependency_overrides.get(get_current_user)
