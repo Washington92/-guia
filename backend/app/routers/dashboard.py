@@ -66,6 +66,22 @@ def analytics(
     for assignment in assignments:
         tech_counts[assignment.technician_id] = tech_counts.get(assignment.technician_id, 0) + 1
     technicians = db.execute(select(Technician.id, Technician.name, Technician.specialty)).all()
+    completed_ids = {row.id for row in tickets if row.status in ("resolvido", "fechado")}
+    completed_assignments = db.execute(
+        select(TicketAssignment.ticket_id, TicketAssignment.technician_id).where(
+            TicketAssignment.ticket_id.in_(completed_ids)
+        )
+    ).all() if completed_ids else []
+    completed_counts = {}
+    for assignment in completed_assignments:
+        completed_counts[assignment.technician_id] = completed_counts.get(assignment.technician_id, 0) + 1
+    best_total = max(completed_counts.values(), default=0)
+    top_technicians = [
+        {"id": tech.id, "name": tech.name, "specialty": tech.specialty, "completed_tickets": best_total}
+        for tech in technicians if best_total > 0 and completed_counts.get(tech.id, 0) == best_total
+    ]
+    top_technicians.sort(key=lambda tech: (tech["name"].casefold(), tech["id"]))
+
 
     return {
         "filters": {
@@ -96,5 +112,12 @@ def analytics(
             {"id": tech.id, "name": tech.name, "specialty": tech.specialty, "active_tickets": tech_counts.get(tech.id, 0)}
             for tech in technicians
         ],
+        "top_technician": {
+            "metric": "completed_tickets_by_current_assignee",
+            "leaders": top_technicians,
+            "completed_total": len(completed_ids),
+            "completed_without_assignment": len(completed_ids - {a.ticket_id for a in completed_assignments}),
+            "note": "Uses current assignment, not a verified completion author; ties are preserved",
+        },
         "sla": {"configured": False, "message": "SLA metrics require persisted policies and deadlines"},
     }
