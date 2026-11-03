@@ -116,3 +116,22 @@ button:focus-visible,input:focus-visible,select:focus-visible,textarea:focus-vis
 [data-theme="dark"] .priority-critica{background:#482628;color:#ff9999}
 [data-theme="dark"] .status-resolvido{color:#83d6a0}
 @media(max-width:700px){.ticket-record{align-items:flex-start}.ticket-record .ticket-info{flex:1;min-width:calc(100% - 54px)}.ticket-status-field{width:100%;margin-left:49px}.ticket-status-field select{width:100%}}
+
+
+/* Painel de detalhes do chamado */
+.ticket-title-button{display:block;border:0;background:none;padding:0;text-align:left;font-weight:700;font-size:13px;color:var(--text);overflow-wrap:anywhere}
+.ticket-title-button:hover{color:var(--accent);text-decoration:underline}
+.detail-overlay{position:fixed;inset:0;z-index:30;background:rgba(8,14,28,.5);display:flex;align-items:center;justify-content:center;padding:20px;backdrop-filter:blur(5px)}
+.detail-dialog{background:var(--surface);color:var(--text);width:min(100%,540px);max-height:calc(100dvh - 40px);overflow-y:auto;border:1px solid var(--line);border-radius:22px;padding:28px;box-shadow:0 25px 80px rgba(0,0,0,.2)}
+.detail-header{display:flex;align-items:flex-start;justify-content:space-between;gap:14px}
+.detail-header h2{margin:0;font-size:23px;line-height:1.25;letter-spacing:-.6px;overflow-wrap:anywhere}
+.detail-header .eyebrow{margin-bottom:8px}
+.detail-close{flex-shrink:0;border:1px solid var(--line);background:var(--surface-soft);color:var(--muted);width:34px;height:34px;border-radius:50%}
+.detail-dialog>.ticket-badges{margin:18px 0}
+.detail-section{border-top:1px solid var(--line);padding:18px 0;display:grid;gap:8px}
+.detail-section>span,.detail-section>label{font-size:12px;font-weight:700;color:var(--muted)}
+.detail-section strong{font-size:14px}
+.detail-section p{white-space:pre-wrap;overflow-wrap:anywhere;font-size:14px;line-height:1.65;margin:0}
+.detail-section select{margin:0}
+.detail-dialog>.primary{width:100%}
+@media(max-width:700px){.detail-overlay{align-items:flex-end;padding:0}.detail-dialog{width:100%;max-height:92dvh;border-radius:22px 22px 0 0;padding:23px 20px max(24px,env(safe-area-inset-bottom))}.detail-header h2{font-size:21px}}
