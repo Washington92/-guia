@@ -93,3 +93,26 @@ button:focus-visible,input:focus-visible,select:focus-visible,textarea:focus-vis
 @media(max-width:700px){.dashboard-grid{gap:14px;margin-bottom:14px}.dashboard-quick-actions{margin-bottom:18px}.dashboard-quick-actions button{padding:11px 13px}.breakdown-row{padding:13px 0}}
 
 .ticket-filterbar{display:flex;align-items:center;gap:14px;flex-wrap:wrap;margin-bottom:20px}.ticket-filterbar label{display:grid;gap:6px;font-size:12px;color:var(--muted);min-width:200px}.ticket-filterbar select{background:var(--surface)}@media(max-width:700px){.ticket-filterbar label{flex:1;min-width:160px}}
+
+
+/* Indicadores operacionais dos chamados */
+.ticket-record{align-items:center}
+.ticket-badges{display:flex;align-items:center;gap:6px;flex-wrap:wrap;margin-top:10px}
+.priority-badge,.status-badge{display:inline-flex;align-items:center;gap:5px;border-radius:999px;padding:5px 9px;font-size:10px;font-weight:750;letter-spacing:.1px}
+.priority-badge:before{content:"";width:6px;height:6px;border-radius:50%;background:currentColor}
+.priority-baixa{background:#edf6ee;color:#287b40}
+.priority-media{background:#e9f2ff;color:#2367ad}
+.priority-alta{background:#fff3de;color:#a2670b}
+.priority-critica{background:#ffe9e9;color:#bc3030}
+.status-badge{background:var(--surface-soft);color:var(--muted);border:1px solid var(--line)}
+.status-em_andamento{color:var(--accent)}
+.status-resolvido{color:#24804b}
+.ticket-status-field{display:grid;gap:6px;width:150px;flex-shrink:0}
+.ticket-status-field span{font-size:10px;color:var(--muted);font-weight:650}
+.ticket-status-field select{width:100%;margin:0;padding:9px}
+[data-theme="dark"] .priority-baixa{background:#1e392b;color:#8fe0a7}
+[data-theme="dark"] .priority-media{background:#1e3654;color:#9ac9ff}
+[data-theme="dark"] .priority-alta{background:#44341c;color:#ffd18a}
+[data-theme="dark"] .priority-critica{background:#482628;color:#ff9999}
+[data-theme="dark"] .status-resolvido{color:#83d6a0}
+@media(max-width:700px){.ticket-record{align-items:flex-start}.ticket-record .ticket-info{flex:1;min-width:calc(100% - 54px)}.ticket-status-field{width:100%;margin-left:49px}.ticket-status-field select{width:100%}}
