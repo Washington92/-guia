@@ -27,3 +27,19 @@ class TicketRead(TicketCreate):
     id: int
     status: str
     created_at: datetime
+
+class WorkOrderCreate(BaseModel):
+    client_id: int
+    ticket_id: int | None = None
+    title: str = Field(min_length=3, max_length=180)
+    description: str = ""
+
+class WorkOrderUpdate(BaseModel):
+    status: Literal["pendente", "em_execucao", "concluida", "cancelada"] | None = None
+    description: str | None = None
+
+class WorkOrderRead(WorkOrderCreate):
+    model_config = ConfigDict(from_attributes=True)
+    id: int
+    status: str
+    created_at: datetime
