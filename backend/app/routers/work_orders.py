@@ -37,7 +37,7 @@ def update_work_order(order_id: int, data: WorkOrderUpdate, db: Session = Depend
     order = db.get(WorkOrder, order_id)
     if order is None:
         raise HTTPException(404, "OS não encontrada")
-    for field, value in data.model_dump(exclude_unset=True).items():
+    for field, value in data.model_dump(exclude_unset=True, exclude_none=True).items():
         setattr(order, field, value)
     db.commit()
     db.refresh(order)
