@@ -38,10 +38,14 @@ def test_bootstrap_login_logout(client):
     assert client.post("/api/auth/bootstrap", json={"username": "outro", "password": "SenhaForteDeTeste123!"}).status_code == 403
     assert client.post("/api/auth/login", json={"username": "admin", "password": "errada"}).status_code == 401
     assert client.get("/api/auth/me").status_code == 401
+    assert client.get("/api/clients").status_code == 401
+    assert client.post("/api/clients", json={"name": "Bloqueado"}).status_code == 401
     login = client.post("/api/auth/login", json=credentials)
     assert login.status_code == 200
     token = login.json()["access_token"]
     headers = {"Authorization": "Bearer " + token}
     assert client.get("/api/auth/me", headers=headers).json()["role"] == "admin"
+    assert client.get("/api/clients", headers=headers).status_code == 200
     assert client.post("/api/auth/logout", headers=headers).status_code == 204
     assert client.get("/api/auth/me", headers=headers).status_code == 401
+    assert client.get("/api/clients", headers=headers).status_code == 401
