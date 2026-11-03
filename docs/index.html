@@ -196,6 +196,39 @@ button:focus-visible{outline:3px solid #f49a76;outline-offset:2px}
 .ticket-action span{font-size:22px}.ticket-resolve{background:#0b3d37!important;color:#fff!important}
 .ticket-action:hover{filter:brightness(.96)}
 @media(max-width:760px){.ticket-modal{position:fixed;inset:0 0 0 0;max-height:100dvh;width:100%;border-radius:22px 22px 0 0;margin-top:env(safe-area-inset-top);height:calc(100dvh - env(safe-area-inset-top));padding-bottom:env(safe-area-inset-bottom)}.ticket-handle{display:block;width:42px;height:5px;border-radius:5px;background:#c9d2d3;margin:9px auto 0}.ticket-modal .modal-head{padding:17px 18px}.ticket-modal .modal-head h2{font-size:23px}.ticket-modal .modal-body{padding:10px 16px 25px}.ticket-summary{grid-template-columns:repeat(2,minmax(0,1fr));gap:8px}.ticket-summary>div{padding:13px}.ticket-tabs button{padding:11px 12px}.ticket-section{padding:15px}.ticket-action-grid{grid-template-columns:repeat(3,minmax(0,1fr));gap:8px}.ticket-action{min-height:86px}.ticket-detail-row{gap:10px}.ticket-detail-row span{flex:0 0 35%}}
+
+/* Ticket mobile-first: enforce readable full-screen details on narrow devices */
+@media (max-width: 760px){
+ #modal-root:has(.ticket-modal){position:fixed;inset:0;z-index:120}
+ #modal-root .modal-backdrop:has(.ticket-modal){position:fixed!important;inset:0!important;display:flex!important;align-items:stretch!important;justify-content:stretch!important;padding:0!important;overflow:hidden!important;backdrop-filter:none}
+ #modal-root .ticket-modal{position:relative!important;inset:auto!important;margin:0!important;width:100vw!important;min-width:0!important;max-width:none!important;height:100dvh!important;max-height:100dvh!important;overflow-y:auto!important;overflow-x:hidden!important;border-radius:0!important;box-shadow:none!important;transform:none!important;zoom:1!important;padding:env(safe-area-inset-top) 0 env(safe-area-inset-bottom)!important}
+ #modal-root .ticket-modal .modal-head{padding:22px 20px 18px!important;position:relative;gap:12px}
+ #modal-root .ticket-modal .modal-head h2{font-size:27px!important;line-height:1.2!important;letter-spacing:-.7px!important}
+ #modal-root .ticket-modal .modal-body{padding:12px 18px 32px!important;font-size:15px!important}
+ #modal-root .ticket-modal .ticket-overline{font-size:12px!important}
+ #modal-root .ticket-modal .ticket-location{font-size:14px!important;line-height:1.5}
+ #modal-root .ticket-modal .ticket-summary{grid-template-columns:repeat(2,minmax(0,1fr))!important;gap:10px!important;margin:12px 0 22px}
+ #modal-root .ticket-modal .ticket-summary>div{padding:16px 14px!important;border-radius:17px!important;min-height:86px}
+ #modal-root .ticket-modal .ticket-summary>div:nth-child(1){background:#fff1e8}
+ #modal-root .ticket-modal .ticket-summary>div:nth-child(2){background:#e9f7f0}
+ #modal-root .ticket-modal .ticket-summary>div:nth-child(3){background:#f2eafa}
+ #modal-root .ticket-modal .ticket-summary>div:nth-child(4){background:#eaf4fc}
+ #modal-root .ticket-modal .ticket-summary small{font-size:11px!important;margin-bottom:9px!important}
+ #modal-root .ticket-modal .ticket-summary strong{font-size:15px!important;line-height:1.3!important}
+ #modal-root .ticket-modal .ticket-tabs{gap:7px!important;overflow-x:auto!important;scrollbar-width:none!important;flex-wrap:nowrap!important;margin-bottom:20px!important;padding:6px!important}
+ #modal-root .ticket-modal .ticket-tabs button{flex:0 0 auto!important;min-height:44px!important;padding:10px 15px!important;font-size:13px!important}
+ #modal-root .ticket-modal .ticket-section{padding:19px 17px!important;border-radius:20px!important;margin-bottom:16px!important}
+ #modal-root .ticket-modal .ticket-section h3,#modal-root .ticket-modal .ticket-actions h3{font-size:17px!important}
+ #modal-root .ticket-modal .ticket-detail-row{padding:14px 0!important;font-size:14px!important;line-height:1.5!important}
+ #modal-root .ticket-modal .ticket-event{font-size:14px!important;line-height:1.5!important}
+ #modal-root .ticket-modal .ticket-muted{font-size:13px!important}
+ #modal-root .ticket-modal .ticket-action-grid{display:grid!important;grid-template-columns:repeat(2,minmax(0,1fr))!important;gap:11px!important}
+ #modal-root .ticket-modal .ticket-action{min-height:100px!important;border-radius:19px!important;font-size:14px!important;gap:11px!important;padding:15px 10px!important}
+ #modal-root .ticket-modal .ticket-action span{font-size:26px!important}
+ #modal-root .ticket-modal .ticket-resolve{grid-column:span 2}
+ #modal-root .ticket-modal .ticket-close{flex:none!important;min-width:44px!important;min-height:44px!important}
+}
+@media (min-width:761px){.ticket-modal{width:min(96vw,1040px)}.ticket-action{min-height:112px}.ticket-section{padding:23px 25px}.ticket-modal .modal-head h2{font-size:29px}}
 </style></head><body>
 <div class="shell" id="shell"><div class="overlay" id="overlay"></div><aside class="sidebar" aria-label="Menu principal"><div class="identity"><div class="logo"><img src="./aguia-mark.svg" alt="Símbolo Águia Gestão" width="35" height="35"></div><div><strong>Águia Gestão</strong><small>OPERATIONS PLATFORM</small></div></div><div class="environment"><span class="dot"></span> WORKSPACE · DEMONSTRAÇÃO</div><nav id="nav" aria-label="Módulos"></nav><div class="side-bottom">◉ Interface demonstrativa<br>Dados simulados · Sem conexão com API<br>Build visual · Ambiente de desenvolvimento</div></aside><div class="workspace"><header class="topbar"><div style="display:flex;align-items:center;gap:12px"><button id="menu" class="mobile-menu" aria-label="Abrir menu" aria-expanded="false">☰</button><div class="crumb">Workspace &nbsp;/&nbsp; <strong id="crumb">Visão geral</strong></div></div><div class="top-actions"><input class="search" id="search" aria-label="Pesquisar" placeholder="⌕  Buscar registros..."><span class="chip">● Ambiente DEV</span><span class="avatar">AG</span></div></header><main class="main"><div class="heading"><div><p class="eyebrow">CENTRAL DE OPERAÇÕES</p><h1 id="title">Visão geral</h1><p class="subtitle" id="subtitle">Visibilidade completa do atendimento e infraestrutura.</p></div><button class="primary" id="action">+ Novo chamado</button></div><div class="banner">Prévia de interface corporativa com informações fictícias. As ações de navegação e busca funcionam nesta demonstração; cadastros reais dependem do CRM autenticado.</div><div id="content"></div><footer class="footer">Águia Gestão CRM · Design system em evolução · Nenhum dado real é utilizado</footer></main></div></div><div id="modal-root"></div><div id="toast-root" role="status" aria-live="polite"></div>
 <script>
