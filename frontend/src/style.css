@@ -67,3 +67,27 @@ button:focus-visible,input:focus-visible,select:focus-visible,textarea:focus-vis
 .searchbar input{border:0;background:transparent;box-shadow:none!important;outline:0!important;padding:14px 0;font-size:14px;min-width:0}
 .searchbar button{background:var(--surface-soft);border:0;color:var(--muted);border-radius:50%;height:26px;width:26px;flex-shrink:0}
 @media(max-width:700px){.searchbar{max-width:none;margin:0 0 20px}}
+
+
+/* Dashboard operacional v0.8 */
+.dashboard-quick-actions{display:flex;gap:9px;overflow-x:auto;margin:-3px 0 22px;padding:2px 0 5px;scrollbar-width:thin}
+.dashboard-quick-actions button{display:flex;align-items:center;gap:14px;white-space:nowrap;background:var(--surface);color:var(--text);border:1px solid var(--line);border-radius:12px;padding:12px 15px;font-size:12px;font-weight:650;transition:border-color .15s,background .15s}
+.dashboard-quick-actions button:hover{border-color:var(--accent);background:var(--accent-soft)}
+.dashboard-quick-actions button span{color:var(--accent);font-size:16px}
+.dashboard-grid{display:grid;grid-template-columns:minmax(0,1.2fr) minmax(0,.8fr);gap:20px;margin-bottom:20px}
+.alert-row{display:flex;width:100%;gap:12px;align-items:center;text-align:left;border:0;border-top:1px solid var(--line);padding:15px 0;background:transparent;color:var(--text)}
+.alert-row:hover .ticket-info b{color:var(--accent)}
+.alert-indicator{display:grid;place-items:center;flex-shrink:0;width:34px;height:34px;border-radius:10px;font-weight:800}
+.alert-indicator.critical{background:#fff0ef;color:#d0443b}
+.alert-indicator.warning{background:#fff5dc;color:#ac7415}
+.alert-arrow{color:var(--muted);font-size:17px}
+.status-breakdown{display:grid;gap:0}
+.breakdown-row{display:flex;align-items:center;gap:10px;border-top:1px solid var(--line);padding:16px 0;font-size:13px;color:var(--muted)}
+.breakdown-row strong{margin-left:auto;font-size:18px;color:var(--text)}
+.breakdown-dot{width:9px;height:9px;border-radius:50%;background:#9ca3af}
+.breakdown-dot.open{background:#ff9f0a}.breakdown-dot.progress{background:#007aff}.breakdown-dot.done{background:#34c759}.breakdown-dot.closed{background:#8e8e93}
+.dashboard-recent{margin-bottom:20px}
+[data-theme="dark"] .alert-indicator.critical{background:#452528;color:#ff9994}
+[data-theme="dark"] .alert-indicator.warning{background:#44371e;color:#ffd07c}
+@media(max-width:900px){.dashboard-grid{grid-template-columns:1fr}}
+@media(max-width:700px){.dashboard-grid{gap:14px;margin-bottom:14px}.dashboard-quick-actions{margin-bottom:18px}.dashboard-quick-actions button{padding:11px 13px}.breakdown-row{padding:13px 0}}
