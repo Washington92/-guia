@@ -73,3 +73,12 @@ class StockMovement(Base):
     created_at: Mapped[datetime] = mapped_column(DateTime(timezone=True), default=now_utc)
     item: Mapped[StockItem] = relationship()
     work_order: Mapped[WorkOrder | None] = relationship()
+
+class TicketNote(Base):
+    __tablename__ = "ticket_notes"
+    id: Mapped[int] = mapped_column(primary_key=True)
+    ticket_id: Mapped[int] = mapped_column(ForeignKey("tickets.id"), index=True)
+    author: Mapped[str] = mapped_column(String(100))
+    content: Mapped[str] = mapped_column(Text)
+    created_at: Mapped[datetime] = mapped_column(DateTime(timezone=True), default=now_utc)
+    ticket: Mapped[Ticket] = relationship()
