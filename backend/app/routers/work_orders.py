@@ -1,8 +1,9 @@
-from fastapi import APIRouter, Depends, HTTPException, status
+from ..services.pdf_generator import generate_work_order_pdf
+from fastapi import APIRouter, Depends, HTTPException, Response, status
 from sqlalchemy import select
 from sqlalchemy.orm import Session
 from ..database import get_db
-from ..models import Client, StockItem, Ticket, WorkOrder, WorkOrderItem
+from ..models import Client, StockItem, Technician, Ticket, WorkOrder, WorkOrderItem
 from .schedule import validate_assignment
 from ..schemas import (
     WorkOrderCreate,
@@ -121,3 +122,22 @@ def remove_work_order_item(order_id: int, item_id: int, db: Session = Depends(ge
     order.total_cost = max(0.0, round(order.labor_cost + order.parts_cost, 2))
     db.delete(item)
     db.commit()
+
+
+@router.get("/{work_order_id}/pdf")
+def export_work_order_pdf(work_order_id: int, db: Session = Depends(get_db)):
+    wo = db.get(WorkOrder, work_order_id)
+    if wo is None:
+        raise HTTPException(404, "Ordem de serviço não encontrada")
+    client = db.get(Client, wo.client_id)
+    tech = db.get(Technician, wo.technician_id) if wo.technician_id else None
+    items = list(wo.items) if hasattr(wo, "items") else []
+
+    pdf_bytes = generate_work_order_pdf(wo, client, technician=tech, items=items)
+    filename = f"ordem_servico_{wo.id:05d}.pdf"
+
+    return Response(
+        content=pdf_bytes,
+        media_type="application/pdf",
+        headers={"Content-Disposition": f'inline; filename="{filename}"'},
+    )
