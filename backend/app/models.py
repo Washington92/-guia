@@ -26,3 +26,15 @@ class Ticket(Base):
     priority: Mapped[str] = mapped_column(String(16), default="media")
     created_at: Mapped[datetime] = mapped_column(DateTime(timezone=True), default=now_utc)
     client: Mapped[Client] = relationship(back_populates="tickets")
+
+class WorkOrder(Base):
+    __tablename__ = "work_orders"
+    id: Mapped[int] = mapped_column(primary_key=True)
+    client_id: Mapped[int] = mapped_column(ForeignKey("clients.id"), index=True)
+    ticket_id: Mapped[int | None] = mapped_column(ForeignKey("tickets.id"), nullable=True)
+    title: Mapped[str] = mapped_column(String(180))
+    description: Mapped[str] = mapped_column(Text, default="")
+    status: Mapped[str] = mapped_column(String(24), default="pendente")
+    created_at: Mapped[datetime] = mapped_column(DateTime(timezone=True), default=now_utc)
+    client: Mapped[Client] = relationship()
+    ticket: Mapped[Ticket | None] = relationship()
