@@ -3,7 +3,7 @@ from fastapi import FastAPI, Depends
 from fastapi.middleware.cors import CORSMiddleware
 from .database import Base, engine
 from . import models  # noqa: F401 - register tables
-from .routers import clients, tickets, work_orders, dashboard, assets, stock, technicians, auth, users
+from .routers import clients, tickets, work_orders, dashboard, assets, stock, technicians, auth, users, schedule
 from .routers.auth import get_current_user, require_roles
 
 app = FastAPI(title="Águia Gestão CRM", version="0.5.0")
@@ -13,6 +13,7 @@ Base.metadata.create_all(bind=engine)  # MVP only; replace with Alembic migratio
 app.include_router(clients.router, dependencies=[Depends(get_current_user)])
 app.include_router(tickets.router, dependencies=[Depends(get_current_user)])
 app.include_router(work_orders.router, dependencies=[Depends(get_current_user)])
+app.include_router(schedule.router, dependencies=[Depends(get_current_user)])
 app.include_router(dashboard.router, dependencies=[Depends(get_current_user)])
 app.include_router(assets.router, dependencies=[Depends(get_current_user)])
 app.include_router(stock.router, dependencies=[Depends(get_current_user)])

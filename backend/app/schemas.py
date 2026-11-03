@@ -43,6 +43,9 @@ class WorkOrderItemRead(WorkOrderItemCreate):
 class WorkOrderCreate(BaseModel):
     client_id: int
     ticket_id: int | None = None
+    technician_id: int | None = None
+    scheduled_at: datetime | None = None
+    estimated_duration_hours: float = Field(default=2.0, gt=0, le=24)
     title: str = Field(min_length=3, max_length=180)
     description: str = ""
     labor_cost: float = Field(default=0.0, ge=0.0)
@@ -52,12 +55,18 @@ class WorkOrderUpdate(BaseModel):
     status: Literal["pendente", "em_execucao", "concluida", "cancelada"] | None = None
     description: str | None = None
     labor_cost: float | None = Field(default=None, ge=0.0)
+    technician_id: int | None = None
+    scheduled_at: datetime | None = None
+    estimated_duration_hours: float | None = Field(default=None, gt=0, le=24)
 
 class WorkOrderRead(BaseModel):
     model_config = ConfigDict(from_attributes=True)
     id: int
     client_id: int
     ticket_id: int | None
+    technician_id: int | None
+    scheduled_at: datetime | None
+    estimated_duration_hours: float
     title: str
     description: str
     status: str

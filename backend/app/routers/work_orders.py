@@ -3,6 +3,7 @@ from sqlalchemy import select
 from sqlalchemy.orm import Session
 from ..database import get_db
 from ..models import Client, StockItem, Ticket, WorkOrder, WorkOrderItem
+from .schedule import validate_assignment
 from ..schemas import (
     WorkOrderCreate,
     WorkOrderItemCreate,
@@ -28,6 +29,7 @@ def create_work_order(data: WorkOrderCreate, db: Session = Depends(get_db)):
 
     items_data = data.items
     payload = data.model_dump(exclude={"items"})
+    validate_assignment(db, data.technician_id, data.scheduled_at, data.estimated_duration_hours)
     order = WorkOrder(**payload)
 
     parts_cost = 0.0
@@ -66,8 +68,14 @@ def update_work_order(order_id: int, data: WorkOrderUpdate, db: Session = Depend
     order = db.get(WorkOrder, order_id)
     if order is None:
         raise HTTPException(404, "OS não encontrada")
-    for field, value in data.model_dump(exclude_unset=True, exclude_none=True).items():
-        setattr(order, field, value)
+    changes = data.model_dump(exclude_unset=True)
+    technician_id = changes.get("technician_id", order.technician_id)
+    scheduled_at = changes.get("scheduled_at", order.scheduled_at)
+    duration_hours = changes.get("estimated_duration_hours", order.estimated_duration_hours)
+    validate_assignment(db, technician_id, scheduled_at, duration_hours, order.id)
+    for field, value in changes.items():
+        if value is not None or field in {"technician_id", "scheduled_at"}:
+            setattr(order, field, value)
     if data.labor_cost is not None:
         order.total_cost = round(order.labor_cost + order.parts_cost, 2)
     db.commit()
