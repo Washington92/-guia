@@ -17,6 +17,8 @@ def test_user_lifecycle_and_permissions(client):
     tech_token = client.post("/api/auth/login", json={"username": technician["username"], "password": technician["password"]}).json()["access_token"]
     tech_headers = {"Authorization": "Bearer " + tech_token}
     assert client.get("/api/users", headers=tech_headers).status_code == 403
+    assert client.post("/api/technicians", json={"name": "Outro técnico"}, headers=tech_headers).status_code == 403
+    assert client.post("/api/technicians", json={"name": "Técnico autorizado"}, headers=headers).status_code == 201
     assert client.post("/api/users", json={"username": "outro", "password": "SenhaValida123!"}, headers=tech_headers).status_code == 403
     assert client.patch("/api/users/1", json={"active": False}, headers=headers).status_code == 409
     assert client.patch(f"/api/users/{uid}", json={"role": "supervisor"}, headers=headers).status_code == 200
