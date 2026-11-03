@@ -3,7 +3,7 @@ from fastapi import FastAPI, Depends
 from fastapi.middleware.cors import CORSMiddleware
 from .database import Base, engine
 from . import models  # noqa: F401 - register tables
-from .routers import clients, tickets, work_orders, dashboard, assets, stock, technicians, auth
+from .routers import clients, tickets, work_orders, dashboard, assets, stock, technicians, auth, users
 from .routers.auth import get_current_user, require_roles
 
 app = FastAPI(title="Águia Gestão CRM", version="0.5.0")
@@ -19,6 +19,7 @@ app.include_router(stock.router, dependencies=[Depends(get_current_user)])
 app.include_router(technicians.router, dependencies=[Depends(get_current_user)])
 app.include_router(technicians.assignments, dependencies=[Depends(get_current_user)])
 app.include_router(auth.router)
+app.include_router(users.router)
 
 @app.get("/health")
 def health():
