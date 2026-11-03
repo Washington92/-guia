@@ -51,3 +51,25 @@ class Asset(Base):
     status: Mapped[str] = mapped_column(String(24), default="ativo")
     created_at: Mapped[datetime] = mapped_column(DateTime(timezone=True), default=now_utc)
     client: Mapped[Client] = relationship()
+
+class StockItem(Base):
+    __tablename__ = "stock_items"
+    id: Mapped[int] = mapped_column(primary_key=True)
+    name: Mapped[str] = mapped_column(String(160), index=True)
+    sku: Mapped[str | None] = mapped_column(String(80), nullable=True)
+    unit: Mapped[str] = mapped_column(String(12), default="un")
+    quantity: Mapped[int] = mapped_column(Integer, default=0)
+    min_quantity: Mapped[int] = mapped_column(Integer, default=0)
+    created_at: Mapped[datetime] = mapped_column(DateTime(timezone=True), default=now_utc)
+
+class StockMovement(Base):
+    __tablename__ = "stock_movements"
+    id: Mapped[int] = mapped_column(primary_key=True)
+    item_id: Mapped[int] = mapped_column(ForeignKey("stock_items.id"), index=True)
+    work_order_id: Mapped[int | None] = mapped_column(ForeignKey("work_orders.id"), nullable=True)
+    type: Mapped[str] = mapped_column(String(12))
+    quantity: Mapped[int] = mapped_column(Integer)
+    note: Mapped[str] = mapped_column(String(255), default="")
+    created_at: Mapped[datetime] = mapped_column(DateTime(timezone=True), default=now_utc)
+    item: Mapped[StockItem] = relationship()
+    work_order: Mapped[WorkOrder | None] = relationship()
