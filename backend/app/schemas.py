@@ -43,3 +43,21 @@ class WorkOrderRead(WorkOrderCreate):
     id: int
     status: str
     created_at: datetime
+
+class AssetCreate(BaseModel):
+    client_id: int
+    name: str = Field(min_length=2, max_length=160)
+    category: Literal["switch", "roteador", "access_point", "camera", "dvr_nvr", "servidor", "outro"] = "outro"
+    serial_number: str | None = Field(default=None, max_length=100)
+    ip_address: str | None = Field(default=None, max_length=45)
+    location: str | None = Field(default=None, max_length=160)
+
+class AssetUpdate(BaseModel):
+    status: Literal["ativo", "manutencao", "inativo"] | None = None
+    location: str | None = Field(default=None, max_length=160)
+
+class AssetRead(AssetCreate):
+    model_config = ConfigDict(from_attributes=True)
+    id: int
+    status: str
+    created_at: datetime
