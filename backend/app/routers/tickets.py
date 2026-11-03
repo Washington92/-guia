@@ -2,7 +2,7 @@ from fastapi import APIRouter, Depends, HTTPException, status
 from sqlalchemy import select
 from sqlalchemy.orm import Session
 from ..database import get_db
-from ..models import Client, Ticket, TicketNote
+from ..models import Client, Ticket, TicketNote, TicketEvent
 from ..schemas import TicketCreate, TicketRead, TicketUpdate, TicketNoteCreate, TicketNoteRead
 
 router = APIRouter(prefix="/api/tickets", tags=["Chamados"])
@@ -26,7 +26,9 @@ def update_ticket(ticket_id: int, data: TicketUpdate, db: Session = Depends(get_
     ticket = db.get(Ticket, ticket_id)
     if ticket is None:
         raise HTTPException(404, "Chamado não encontrado")
-    ticket.status = data.status
+    if ticket.status != data.status:
+        db.add(TicketEvent(ticket_id=ticket.id, event_type='status', previous_value=ticket.status, new_value=data.status))
+        ticket.status = data.status
     db.commit()
     db.refresh(ticket)
     return ticket
@@ -46,3 +48,10 @@ def add_ticket_note(ticket_id: int, data: TicketNoteCreate, db: Session = Depend
     db.commit()
     db.refresh(note)
     return note
+
+@router.get("/{ticket_id}/events")
+def list_ticket_events(ticket_id: int, db: Session = Depends(get_db)):
+    if db.get(Ticket, ticket_id) is None:
+        raise HTTPException(404, "Chamado não encontrado")
+    events = db.scalars(select(TicketEvent).where(TicketEvent.ticket_id == ticket_id).order_by(TicketEvent.id.desc()).limit(200)).all()
+    return [{"id": e.id, "ticket_id": e.ticket_id, "event_type": e.event_type, "previous_value": e.previous_value, "new_value": e.new_value, "created_at": e.created_at} for e in events]
