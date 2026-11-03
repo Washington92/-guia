@@ -157,6 +157,19 @@ export default function App() {
     </div>
   </div>;
 }
+const priorityNames: Record<string,string> = {baixa:'Baixa',media:'Média',alta:'Alta',critica:'Crítica'};
+const statusNames: Record<string,string> = {aberto:'Aberto',em_andamento:'Em andamento',resolvido:'Resolvido',fechado:'Fechado'};
 function TicketList({tickets,clients,setStatus}:{tickets:Ticket[];clients:Client[];setStatus:(id:number,status:string)=>void}){
-  return tickets.length?<div className="ticket-list">{tickets.map(t=><div className="ticket-row" key={t.id}><div className="ticket-icon">▤</div><div className="ticket-info"><b>{t.title}</b><small>#{t.id} · {clients.find(c=>c.id===t.client_id)?.name||'Cliente'} · {t.priority}</small></div><select aria-label={'Status do chamado '+t.id} value={t.status} onChange={e=>setStatus(t.id,e.target.value)}><option value="aberto">Aberto</option><option value="em_andamento">Em andamento</option><option value="resolvido">Resolvido</option><option value="fechado">Fechado</option></select></div>)}</div>:<p className="empty">Tudo em ordem. Nenhum chamado por aqui.</p>;
+  return tickets.length?<div className="ticket-list">{tickets.map(t=><div className="ticket-row ticket-record" key={t.id}>
+    <div className="ticket-icon" aria-hidden="true">▤</div>
+    <div className="ticket-info">
+      <b>{t.title}</b>
+      <small>#{t.id} · {clients.find(c=>c.id===t.client_id)?.name||'Cliente'}</small>
+      <div className="ticket-badges">
+        <span className={'priority-badge priority-'+t.priority}>{priorityNames[t.priority]||t.priority}</span>
+        <span className={'status-badge status-'+t.status}>{statusNames[t.status]||t.status}</span>
+      </div>
+    </div>
+    <label className="ticket-status-field"><span>Atualizar status</span><select aria-label={'Status do chamado '+t.id} value={t.status} onChange={e=>setStatus(t.id,e.target.value)}><option value="aberto">Aberto</option><option value="em_andamento">Em andamento</option><option value="resolvido">Resolvido</option><option value="fechado">Fechado</option></select></label>
+  </div>)}</div>:<p className="empty">Nenhum chamado encontrado para os filtros selecionados.</p>;
 }
