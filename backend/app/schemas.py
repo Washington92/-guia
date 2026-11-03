@@ -61,3 +61,27 @@ class AssetRead(AssetCreate):
     id: int
     status: str
     created_at: datetime
+
+class StockItemCreate(BaseModel):
+    name: str = Field(min_length=2, max_length=160)
+    sku: str | None = Field(default=None, max_length=80)
+    unit: Literal["un", "m", "cx", "pct"] = "un"
+    min_quantity: int = Field(default=0, ge=0)
+
+class StockItemRead(StockItemCreate):
+    model_config = ConfigDict(from_attributes=True)
+    id: int
+    quantity: int
+    created_at: datetime
+
+class StockMovementCreate(BaseModel):
+    item_id: int
+    work_order_id: int | None = None
+    type: Literal["entrada", "saida"]
+    quantity: int = Field(gt=0)
+    note: str = Field(default="", max_length=255)
+
+class StockMovementRead(StockMovementCreate):
+    model_config = ConfigDict(from_attributes=True)
+    id: int
+    created_at: datetime
