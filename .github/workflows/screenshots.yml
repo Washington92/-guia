@@ -7,6 +7,9 @@ on:
       - 'frontend/**'
       - 'scripts/capture_frontend.py'
       - '.github/workflows/screenshots.yml'
+concurrency:
+  group: aguia-screenshots-develop
+  cancel-in-progress: true
 permissions:
   contents: write
 jobs:
@@ -45,5 +48,14 @@ jobs:
           git add docs/screenshots/*.png
           if ! git diff --cached --quiet; then
             git commit -m "docs: atualizar capturas visuais do CRM [skip ci]"
-            git push origin HEAD:develop
+            for attempt in 1 2 3 4 5; do
+              git fetch origin develop
+              git rebase origin/develop
+              if git push origin HEAD:develop; then
+                exit 0
+              fi
+              sleep $((attempt * 2))
+            done
+            echo "Falha ao publicar screenshots após 5 tentativas"
+            exit 1
           fi
