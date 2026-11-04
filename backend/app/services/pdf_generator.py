@@ -283,3 +283,44 @@ def generate_work_order_pdf(work_order, client, technician=None, items=None) -> 
     doc.build(story)
     buffer.seek(0)
     return buffer.getvalue()
+
+
+def generate_sla_report_pdf(metrics, client_name, start_date=None, end_date=None, sample_tickets=None, client_names=None) -> bytes:
+    """Create a PDF operational summary, explicitly distinguishing it from SLA compliance."""
+    from xml.sax.saxutils import escape
+    buffer = io.BytesIO()
+    doc = SimpleDocTemplate(buffer, pagesize=A4, leftMargin=15 * mm, rightMargin=15 * mm, topMargin=15 * mm, bottomMargin=15 * mm)
+    styles = getSampleStyleSheet()
+    title = ParagraphStyle("ReportTitle", parent=styles["Title"], textColor=colors.HexColor("#0f172a"), alignment=0)
+    h2 = ParagraphStyle("ReportH2", parent=styles["Heading2"], textColor=colors.HexColor("#1e293b"))
+    body = ParagraphStyle("ReportBody", parent=styles["BodyText"], fontSize=8, leading=11)
+    story = [Paragraph("Relatório operacional de chamados e SLA", title), Spacer(1, 5 * mm)]
+    period = f"{start_date or 'Início'} a {end_date or 'Hoje'}"
+    story.append(Paragraph(f"Unidade/cliente: {escape(str(client_name))} &nbsp;&nbsp; | &nbsp;&nbsp; Período: {escape(period)}", body))
+    story.append(Paragraph("Indicadores operacionais. Não representam cumprimento contratual de SLA: políticas e prazos não estão configurados no sistema.", body))
+    story.append(Spacer(1, 5 * mm))
+    tickets = metrics.get("tickets", {})
+    orders = metrics.get("work_orders", {})
+    assets = metrics.get("assets", {})
+    rows = [["Indicador", "Total"], ["Chamados", str(tickets.get("total", 0))], ["Chamados ativos", str(tickets.get("active", 0))], ["Chamados urgentes ativos", str(tickets.get("urgent_active", 0))], ["OS", str(orders.get("total", 0))], ["OS pendentes/em execução", str(orders.get("pending_or_running", 0))], ["Ativos cadastrados", str(assets.get("total", 0))]]
+    table = Table(rows, colWidths=[120 * mm, 40 * mm], repeatRows=1)
+    table.setStyle(TableStyle([("BACKGROUND", (0,0),(-1,0), colors.HexColor("#e2e8f0")), ("FONTNAME",(0,0),(-1,0),"Helvetica-Bold"), ("GRID",(0,0),(-1,-1),0.4,colors.HexColor("#cbd5e1")), ("PADDING",(0,0),(-1,-1),6)]))
+    story.extend([table, Spacer(1, 5 * mm), Paragraph("Chamados por prioridade", h2)])
+    pri = metrics.get("tickets", {}).get("by_priority", {})
+    story.append(Paragraph(" &nbsp; | &nbsp; ".join(f"{escape(k)}: {v}" for k,v in pri.items()) or "Sem registros", body))
+    story.append(Paragraph("Carga de trabalho por técnico", h2))
+    tech_rows = [["Técnico", "Ativos", "Resolvidos"]] + [[t.get("name", ""), str(t.get("active_tickets", 0)), str(t.get("completed_tickets", 0))] for t in metrics.get("technician_workload", [])]
+    tt = Table(tech_rows, colWidths=[90 * mm, 35 * mm, 35 * mm], repeatRows=1)
+    tt.setStyle(TableStyle([("BACKGROUND",(0,0),(-1,0),colors.HexColor("#e2e8f0")),("FONTNAME",(0,0),(-1,0),"Helvetica-Bold"),("GRID",(0,0),(-1,-1),0.4,colors.HexColor("#cbd5e1")),("PADDING",(0,0),(-1,-1),5)]))
+    story.append(tt)
+    story.extend([Spacer(1, 5 * mm), Paragraph("Amostra de chamados recentes", h2)])
+    sample_rows = [["ID / título", "Unidade", "Prioridade", "Status"]]
+    for t in sample_tickets or []:
+        sample_rows.append([f"#{t.id} {t.title[:48]}", (client_names or {}).get(t.client_id, ""), t.priority, t.status])
+    if len(sample_rows) == 1:
+        sample_rows.append(["Sem chamados no período", "", "", ""])
+    sample_table = Table(sample_rows, colWidths=[72 * mm, 43 * mm, 23 * mm, 22 * mm], repeatRows=1)
+    sample_table.setStyle(TableStyle([("BACKGROUND",(0,0),(-1,0),colors.HexColor("#e2e8f0")),("FONTNAME",(0,0),(-1,0),"Helvetica-Bold"),("GRID",(0,0),(-1,-1),0.4,colors.HexColor("#cbd5e1")),("PADDING",(0,0),(-1,-1),4)]))
+    story.append(sample_table)
+    doc.build(story)
+    return buffer.getvalue()

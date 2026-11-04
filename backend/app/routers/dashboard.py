@@ -1,5 +1,5 @@
 from datetime import date, datetime, time, timedelta, timezone
-from fastapi import APIRouter, Depends, HTTPException, Query
+from fastapi import APIRouter, Depends, HTTPException, Query, Response
 from sqlalchemy import func, select
 from sqlalchemy.orm import Session
 from ..database import get_db
@@ -109,7 +109,13 @@ def analytics(
             "by_status": {status: sum(1 for row in assets if row.status == status) for status in ("ativo", "manutencao", "inativo")},
         },
         "technician_workload": [
-            {"id": tech.id, "name": tech.name, "specialty": tech.specialty, "active_tickets": tech_counts.get(tech.id, 0)}
+            {
+                "id": tech.id,
+                "name": tech.name,
+                "specialty": tech.specialty,
+                "active_tickets": tech_counts.get(tech.id, 0),
+                "completed_tickets": completed_counts.get(tech.id, 0),
+            }
             for tech in technicians
         ],
         "top_technician": {
@@ -121,3 +127,33 @@ def analytics(
         },
         "sla": {"configured": False, "message": "SLA metrics require persisted policies and deadlines"},
     }
+
+
+@router.get("/report/pdf")
+def export_sla_report_pdf(
+    client_id: int | None = Query(default=None, gt=0),
+    start_date: date | None = None,
+    end_date: date | None = None,
+    db: Session = Depends(get_db),
+):
+    """Export an operational report; this is not contractual SLA compliance."""
+    if start_date and end_date and start_date > end_date:
+        raise HTTPException(status_code=422, detail="start_date must not exceed end_date")
+    if client_id is not None and db.get(Client, client_id) is None:
+        raise HTTPException(status_code=404, detail="Client not found")
+    metrics = analytics(client_id=client_id, start_date=start_date, end_date=end_date, db=db)
+    clients = {row.id: row.name for row in db.scalars(select(Client)).all()}
+    sample_query = select(Ticket).order_by(Ticket.created_at.desc())
+    if client_id is not None:
+        sample_query = sample_query.where(Ticket.client_id == client_id)
+    if start_date is not None:
+        sample_query = sample_query.where(Ticket.created_at >= datetime.combine(start_date, time.min, tzinfo=timezone.utc))
+    if end_date is not None:
+        sample_query = sample_query.where(Ticket.created_at < datetime.combine(end_date + timedelta(days=1), time.min, tzinfo=timezone.utc))
+    sample = db.scalars(sample_query.limit(20)).all()
+    from ..services.pdf_generator import generate_sla_report_pdf
+    content = generate_sla_report_pdf(metrics, client_name=clients.get(client_id) if client_id else "Todas as unidades",
+        start_date=start_date, end_date=end_date, sample_tickets=sample, client_names=clients)
+    return Response(content=content, media_type="application/pdf", headers={
+        "Content-Disposition": 'inline; filename="relatorio_operacional_sla.pdf"'
+    })

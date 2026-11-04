@@ -60,3 +60,25 @@ def test_work_order_pdf_export():
             assert resp_404.status_code == 404
     finally:
         app.dependency_overrides.clear()
+
+
+def test_operational_pdf_report_export():
+    app.dependency_overrides[get_db] = override_db
+    try:
+        with TestClient(app) as client:
+            with TestSession() as db:
+                cli = Client(name="Unidade Relatório")
+                db.add(cli)
+                db.flush()
+                db.add(WorkOrder(client_id=cli.id, title="OS de exemplo", status="pendente"))
+                db.commit()
+                client_id = cli.id
+            response = client.get("/api/dashboard/report/pdf")
+            assert response.status_code == 200
+            assert response.headers["content-type"] == "application/pdf"
+            assert response.content.startswith(b"%PDF-")
+            filtered = client.get("/api/dashboard/report/pdf", params={"client_id": client_id})
+            assert filtered.status_code == 200 and filtered.content.startswith(b"%PDF-")
+            assert client.get("/api/dashboard/report/pdf", params={"start_date":"2026-12-02", "end_date":"2026-12-01"}).status_code == 422
+    finally:
+        app.dependency_overrides.clear()

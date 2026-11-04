@@ -1,0 +1,54 @@
+from fastapi.testclient import TestClient
+from sqlalchemy import create_engine
+from sqlalchemy.orm import sessionmaker
+from sqlalchemy.pool import StaticPool
+from app.database import Base, get_db
+from app.main import app
+from app.models import Client, Technician, Ticket, WorkOrder
+
+engine = create_engine("sqlite://", connect_args={"check_same_thread": False}, poolclass=StaticPool)
+TestSession = sessionmaker(bind=engine)
+Base.metadata.create_all(engine)
+
+def override_db():
+    with TestSession() as db:
+        yield db
+
+def test_checklist_import_creates_ticket_and_optional_work_order():
+    app.dependency_overrides[get_db] = override_db
+    try:
+        with TestSession() as db:
+            client = Client(name="Unidade Smart Fit")
+            tech = Technician(name="Técnica Exemplo")
+            db.add_all([client, tech]); db.commit()
+            client_id, tech_id = client.id, tech.id
+        with TestClient(app) as http:
+            sectors = http.get("/api/integrations/sectors")
+            assert sectors.status_code == 200 and "Catracas" in sectors.json()["sectors"]
+            response = http.post("/api/integrations/checklist-import", json={
+                "client_id": client_id, "checklist_name": "Vistoria semanal", "unit_name": "Paulista",
+                "inspector_name": "Equipe local", "auto_create_work_orders": True, "technician_id": tech_id,
+                "issues": [{"sector":"Catracas", "item":"Leitor não responde", "observation":"Necessário avaliar conexão", "priority":"alta", "photo_url":"https://example.com/foto.jpg"}]
+            })
+            assert response.status_code == 201, response.text
+            data = response.json()
+            assert len(data["created_tickets"]) == 1 and len(data["created_work_orders"]) == 1
+            with TestSession() as db:
+                ticket = db.get(Ticket, data["created_tickets"][0]["id"])
+                order = db.get(WorkOrder, data["created_work_orders"][0]["id"])
+                assert "Catracas" in ticket.description and "https://example.com/foto.jpg" in ticket.description
+                assert order.ticket_id == ticket.id and order.technician_id == tech_id
+    finally:
+        app.dependency_overrides.clear()
+
+def test_checklist_import_rejects_unknown_client():
+    app.dependency_overrides[get_db] = override_db
+    try:
+        with TestClient(app) as client:
+            response = client.post("/api/integrations/checklist-import", json={
+                "client_id":999,"checklist_name":"Vistoria","unit_name":"Unidade","inspector_name":"Pessoa",
+                "issues":[{"sector":"Rack","item":"Switch sem energia"}]
+            })
+            assert response.status_code == 404
+    finally:
+        app.dependency_overrides.clear()
