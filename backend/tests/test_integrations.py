@@ -52,3 +52,90 @@ def test_checklist_import_rejects_unknown_client():
             assert response.status_code == 404
     finally:
         app.dependency_overrides.clear()
+
+def test_checklist_batch_approval_and_discard():
+    app.dependency_overrides[get_db] = override_db
+    try:
+        with TestSession() as db:
+            client = Client(name="Smart Fit Santana")
+            tech = Technician(name="Técnico Validador")
+            db.add_all([client, tech])
+            db.commit()
+            c_id, t_id = client.id, tech.id
+
+        with TestClient(app) as http:
+            # Test template endpoint
+            tmpl = http.get("/api/integrations/template/smartfit")
+            assert tmpl.status_code == 200
+            assert "Facial SPA" in tmpl.json()["sectors"]
+            assert len(tmpl.json()["suggested_items"]) >= 10
+
+            # Test batch approval
+            payload = {
+                "client_id": c_id,
+                "checklist_name": "Auditoria de Unidade",
+                "unit_name": "Santana",
+                "inspector_name": "Supervisor Regional",
+                "items": [
+                    {
+                        "sector": "Facial SPA",
+                        "item": "Câmera de reconhecimento offline",
+                        "observation": "Necessário reiniciar switch PoE",
+                        "priority": "critica",
+                        "approved": True,
+                        "create_work_order": True,
+                        "technician_id": t_id,
+                        "estimated_duration_hours": 1.5
+                    },
+                    {
+                        "sector": "Som",
+                        "item": "Caixa da sala de ginástica sem áudio",
+                        "observation": "Cabo desconectado no canal 2",
+                        "priority": "media",
+                        "approved": True,
+                        "create_work_order": False
+                    },
+                    {
+                        "sector": "Balcão",
+                        "item": "Impressora térmica limpa e funcionando",
+                        "observation": "Item em conformidade",
+                        "priority": "baixa",
+                        "approved": False
+                    }
+                ]
+            }
+            res = http.post("/api/integrations/checklist-batch", json=payload)
+            assert res.status_code == 201, res.text
+            body = res.json()
+            assert body["summary"]["total_items"] == 3
+            assert body["summary"]["approved_tickets"] == 2
+            assert body["summary"]["created_work_orders"] == 1
+            assert body["summary"]["discarded_count"] == 1
+            assert len(body["discarded_items"]) == 1
+            assert body["discarded_items"][0]["sector"] == "Balcão"
+    finally:
+        app.dependency_overrides.clear()
+
+
+def test_approval_creates_work_order_once_for_inspection_ticket():
+    app.dependency_overrides[get_db] = override_db
+    try:
+        with TestSession() as db:
+            client = Client(name="Unidade Aprovação")
+            db.add(client); db.commit()
+            ticket = Ticket(client_id=client.id, title="Rack: switch superaquecido", description="Vistoria: Mensal | Unidade: Centro | Setor: Rack", priority="alta")
+            db.add(ticket); db.commit()
+            ticket_id = ticket.id
+
+        with TestClient(app) as http:
+            first = http.post(f"/api/integrations/inspection-approval/{ticket_id}")
+            assert first.status_code == 201, first.text
+            assert first.json()["created"] is True
+            second = http.post(f"/api/integrations/inspection-approval/{ticket_id}")
+            assert second.status_code == 201, second.text
+            assert second.json()["created"] is False
+            assert second.json()["work_order"]["id"] == first.json()["work_order"]["id"]
+            with TestSession() as db:
+                assert db.query(WorkOrder).filter(WorkOrder.ticket_id == ticket_id).count() == 1
+    finally:
+        app.dependency_overrides.clear()
