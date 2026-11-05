@@ -62,13 +62,19 @@ def list_schedule(
     if end_utc <= start_utc:
         raise HTTPException(422, "O fim do período deve ser posterior ao início")
 
-    query = select(WorkOrder).where(
-        WorkOrder.scheduled_at >= start_utc,
-        WorkOrder.scheduled_at < end_utc,
-    )
+    # Include appointments that start before the window but remain in progress.
+    # Normalize timestamps in Python to handle SQLite naive datetimes consistently.
+    query = select(WorkOrder).where(WorkOrder.scheduled_at.is_not(None))
     if technician_id is not None:
         query = query.where(WorkOrder.technician_id == technician_id)
-    return db.scalars(query.order_by(WorkOrder.scheduled_at, WorkOrder.id).limit(500)).all()
+    orders = db.scalars(query).all()
+    overlapping = [
+        order for order in orders
+        if _utc_aware(order.scheduled_at) < end_utc
+        and _utc_aware(order.scheduled_at) + timedelta(hours=order.estimated_duration_hours) > start_utc
+    ]
+    overlapping.sort(key=lambda order: (_utc_aware(order.scheduled_at), order.id))
+    return overlapping[:500]
 
 
 @router.get("/technicians/{technician_id}", response_model=list[WorkOrderRead])
