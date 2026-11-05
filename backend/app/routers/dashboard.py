@@ -128,7 +128,8 @@ def analytics(
         ],
         "top_technician": {
             "metric": "completed_tickets_by_current_assignee",
-            "leaders": top_technicians,\n            "ranking": technician_ranking,
+            "leaders": top_technicians,
+            "ranking": technician_ranking,
             "completed_total": len(completed_ids),
             "completed_without_assignment": len(completed_ids - {a.ticket_id for a in completed_assignments}),
             "note": "Uses current assignment, not a verified completion author; ties are preserved",
