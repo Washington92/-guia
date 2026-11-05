@@ -3,8 +3,9 @@ from typing import Literal
 from fastapi import APIRouter, Depends, HTTPException, status
 from pydantic import BaseModel, Field, HttpUrl
 from sqlalchemy.orm import Session
+from sqlalchemy import select
 from ..database import get_db
-from ..models import Client, Ticket, Technician, TicketAssignment, TicketEvent, WorkOrder
+from ..models import Client, Ticket, Technician, TicketAssignment, TicketEvent, TicketNote, WorkOrder
 from .schedule import validate_assignment
 
 router = APIRouter(prefix="/api/integrations", tags=["Integrações"])
@@ -236,3 +237,49 @@ def approve_inspection(ticket_id: int, db: Session = Depends(get_db)):
         raise
 
     return {"created": True, "work_order": {"id": order.id, "ticket_id": ticket.id, "title": order.title, "status": order.status}}
+
+
+@router.get("/inspection-trace/{ticket_id}")
+def inspection_trace(ticket_id: int, db: Session = Depends(get_db)):
+    """Read-only operational chain: inspection issue, ticket, OS, schedule, assignment and audit."""
+    ticket = db.get(Ticket, ticket_id)
+    if ticket is None:
+        raise HTTPException(404, "Chamado não encontrado")
+    if not (ticket.description or "").startswith("Vistoria:"):
+        raise HTTPException(400, "Chamado não foi originado por vistoria")
+
+    client = db.get(Client, ticket.client_id)
+    assignment = db.scalar(select(TicketAssignment).where(TicketAssignment.ticket_id == ticket_id))
+    orders = db.scalars(select(WorkOrder).where(WorkOrder.ticket_id == ticket_id).order_by(WorkOrder.id)).all()
+    events = db.scalars(select(TicketEvent).where(TicketEvent.ticket_id == ticket_id).order_by(TicketEvent.id)).all()
+    notes = db.scalars(select(TicketNote).where(TicketNote.ticket_id == ticket_id).order_by(TicketNote.id)).all()
+    technician = db.get(Technician, assignment.technician_id) if assignment else None
+
+    return {
+        "origin": "inspection",
+        "client": {"id": client.id, "name": client.name} if client else None,
+        "ticket": {
+            "id": ticket.id, "title": ticket.title, "description": ticket.description,
+            "status": ticket.status, "priority": ticket.priority, "created_at": ticket.created_at,
+        },
+        "assignment": {
+            "technician_id": technician.id, "technician_name": technician.name,
+            "assigned_at": assignment.assigned_at,
+        } if technician else None,
+        "work_orders": [{
+            "id": order.id, "title": order.title, "status": order.status,
+            "technician_id": order.technician_id, "scheduled_at": order.scheduled_at,
+            "estimated_duration_hours": order.estimated_duration_hours,
+            "labor_cost": order.labor_cost, "parts_cost": order.parts_cost,
+            "total_cost": order.total_cost, "created_at": order.created_at,
+        } for order in orders],
+        "events": [{
+            "id": event.id, "type": event.event_type,
+            "previous_value": event.previous_value, "new_value": event.new_value,
+            "created_at": event.created_at,
+        } for event in events],
+        "notes": [{
+            "id": note.id, "author": note.author, "content": note.content,
+            "created_at": note.created_at,
+        } for note in notes],
+    }
