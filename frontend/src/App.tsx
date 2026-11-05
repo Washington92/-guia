@@ -1,5 +1,5 @@
 import { FormEvent, useEffect, useState } from 'react';
-type Analytics = {filters:{client_id:number|null;start_date:string|null;end_date:string|null};tickets:{total:number;active:number;urgent_active:number;by_priority:Record<string,number>;by_status:Record<string,number>};work_orders:{pending_or_running:number};assets:{total:number};top_technician:{leaders:{id:number;name:string;completed_tickets:number}[];completed_total:number;completed_without_assignment:number};technician_workload:{id:number;name:string;active_tickets:number}[]};
+type Analytics = {filters:{client_id:number|null;start_date:string|null;end_date:string|null};tickets:{total:number;active:number;urgent_active:number;by_priority:Record<string,number>;by_status:Record<string,number>};work_orders:{pending_or_running:number};assets:{total:number};top_technician:{leaders:{id:number;name:string;completed_tickets:number}[];ranking:{id:number;name:string;completed_tickets:number}[];completed_total:number;completed_without_assignment:number};technician_workload:{id:number;name:string;active_tickets:number}[]};
 type CRMUser = {id:number;username:string;role:string;active:boolean};
 type Client = { id: number; name: string; email: string | null; phone: string | null };
 type StockItem = { id:number; name:string; sku:string|null; unit:string; quantity:number; min_quantity:number };
@@ -321,8 +321,8 @@ export default function App() {
               </div>
               <h3>Ranking dos 5 técnicos com mais chamados concluídos</h3>
               <p>Considera o técnico atualmente atribuído, não o autor auditado da conclusão.</p>
-              {[...analytics.top_technician.leaders].slice(0,5).length?
-                analytics.top_technician.leaders.slice(0,5).map((tech,i)=><div key={tech.id} style={{display:'flex',justifyContent:'space-between',padding:'10px 0',borderBottom:'1px solid var(--line, #dce5e3)'}}><strong>{i+1}º · {tech.name}</strong><span>{tech.completed_tickets} concluídos</span></div>):
+              {analytics.top_technician.ranking.length?
+                analytics.top_technician.ranking.slice(0,5).map((tech,i)=><div key={tech.id} style={{display:'flex',justifyContent:'space-between',padding:'10px 0',borderBottom:'1px solid var(--line, #dce5e3)'}}><strong>{i+1}º · {tech.name}</strong><span>{tech.completed_tickets} concluídos</span></div>):
                 <p>Nenhum técnico com conclusão atribuída nos filtros selecionados.</p>}
               <p>{analytics.top_technician.completed_without_assignment} conclusão(ões) sem técnico vinculado.</p>
             </>}
