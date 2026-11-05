@@ -1,4 +1,5 @@
 import { FormEvent, useEffect, useState } from 'react';
+type Analytics = {filters:{client_id:number|null;start_date:string|null;end_date:string|null};tickets:{total:number;active:number;urgent_active:number;by_priority:Record<string,number>;by_status:Record<string,number>};work_orders:{pending_or_running:number};assets:{total:number};top_technician:{leaders:{id:number;name:string;completed_tickets:number}[];completed_total:number;completed_without_assignment:number};technician_workload:{id:number;name:string;active_tickets:number}[]};
 type CRMUser = {id:number;username:string;role:string;active:boolean};
 type Client = { id: number; name: string; email: string | null; phone: string | null };
 type StockItem = { id:number; name:string; sku:string|null; unit:string; quantity:number; min_quantity:number };
@@ -45,6 +46,11 @@ export default function App() {
   const [noteBusy,setNoteBusy] = useState(false);
   const [noteError,setNoteError] = useState('');
   const [darkMode, setDarkMode] = useState(() => typeof window !== 'undefined' && window.localStorage.getItem('aguia-theme') === 'dark');
+  const [analytics,setAnalytics] = useState<Analytics|null>(null);
+  const [analyticsError,setAnalyticsError] = useState('');
+  const [analyticsClient,setAnalyticsClient] = useState('');
+  const [analyticsStart,setAnalyticsStart] = useState('');
+  const [analyticsEnd,setAnalyticsEnd] = useState('');
   const [clients, setClients] = useState<Client[]>([]);
   const [technicians,setTechnicians] = useState<Technician[]>([]);
   const [assignments,setAssignments] = useState<Assignment[]>([]);
@@ -160,11 +166,23 @@ export default function App() {
     try{await request('/api/users/'+id,{method:'PATCH',body:JSON.stringify(changes)});await refreshUsers();setUserMessage('Conta atualizada.');}
     catch(err){setUserMessage('Não foi possível atualizar: '+String(err))}
   }
+  async function loadAnalytics(){
+    if(analyticsStart&&analyticsEnd&&analyticsStart>analyticsEnd){setAnalyticsError('Data inicial maior que a final.');return}
+    try{
+      const params=new URLSearchParams();
+      if(analyticsClient)params.set('client_id',analyticsClient);
+      if(analyticsStart)params.set('start_date',analyticsStart);
+      if(analyticsEnd)params.set('end_date',analyticsEnd);
+      const result=await request<Analytics>('/api/dashboard/analytics'+(params.size?'?'+params.toString():''));
+      setAnalytics(result);setAnalyticsError('');
+    }catch(e){setAnalyticsError('Indicadores indisponíveis: '+String(e));setAnalytics(null)}
+  }
+  useEffect(()=>{if(authenticated)loadAnalytics()},[authenticated,analyticsClient,analyticsStart,analyticsEnd]);
   async function refresh() {
     const [c, t, o, a, items, movements] = await Promise.all([request<Client[]>('/api/clients'), request<Ticket[]>('/api/tickets'), request<WorkOrder[]>('/api/work-orders'), request<Asset[]>('/api/assets'), request<StockItem[]>('/api/stock/items'), request<StockMovement[]>('/api/stock/movements')]);
     setClients(c); setTickets(t); setOrders(o); setAssets(a); setStockItems(items); setStockMovements(movements);
     const [techs,assigned] = await Promise.all([request<Technician[]>('/api/technicians'),request<Assignment[]>('/api/tickets/assignments')]);
-    setTechnicians(techs);setAssignments(assigned);
+    setTechnicians(techs);setAssignments(assigned);await loadAnalytics();
   }
   useEffect(() => {
     document.documentElement.dataset.theme = darkMode ? 'dark' : 'light';
@@ -285,6 +303,30 @@ export default function App() {
             <article className="stat-card"><span>OS pendentes / execução</span><strong>{pendingOrders.length}</strong><small>{orders.length} ordens cadastradas</small></article>
             <article className="stat-card"><span>Estoque em alerta</span><strong>{lowStock.length}</strong><small>Itens no mínimo ou abaixo</small></article>
           </div>
+          <section className="panel" style={{marginBottom:20,padding:20}}>
+            <div className="panel-head"><div><h2>Indicadores conectados à API</h2><p>Dados persistidos no servidor · período pela data de criação (UTC)</p></div><button type="button" className="text-button" onClick={loadAnalytics}>Atualizar</button></div>
+            <div style={{display:'flex',gap:12,flexWrap:'wrap',marginBottom:16}}>
+              <label>Cliente <select aria-label="Filtrar cliente" value={analyticsClient} onChange={e=>setAnalyticsClient(e.target.value)}><option value="">Todos</option>{clients.map(c=><option key={c.id} value={c.id}>{c.name}</option>)}</select></label>
+              <label>De <input aria-label="Data inicial" type="date" value={analyticsStart} onChange={e=>setAnalyticsStart(e.target.value)}/></label>
+              <label>Até <input aria-label="Data final" type="date" value={analyticsEnd} onChange={e=>setAnalyticsEnd(e.target.value)}/></label>
+              <button type="button" className="text-button" onClick={()=>{setAnalyticsClient('');setAnalyticsStart('');setAnalyticsEnd('')}}>Limpar filtros</button>
+            </div>
+            {analyticsError&&<p role="alert">{analyticsError}</p>}
+            {analytics&&<>
+              <div className="stats">
+                <article className="stat-card"><span>Chamados no período</span><strong>{analytics.tickets.total}</strong><small>{analytics.tickets.active} ativos</small></article>
+                <article className="stat-card"><span>Urgentes ativos</span><strong>{analytics.tickets.urgent_active}</strong><small>Crítica ou alta</small></article>
+                <article className="stat-card"><span>OS em andamento / pendentes</span><strong>{analytics.work_orders.pending_or_running}</strong><small>Na seleção</small></article>
+                <article className="stat-card"><span>Ativos cadastrados</span><strong>{analytics.assets.total}</strong><small>Na seleção</small></article>
+              </div>
+              <h3>Ranking dos 5 técnicos com mais chamados concluídos</h3>
+              <p>Considera o técnico atualmente atribuído, não o autor auditado da conclusão.</p>
+              {[...analytics.top_technician.leaders].slice(0,5).length?
+                analytics.top_technician.leaders.slice(0,5).map((tech,i)=><div key={tech.id} style={{display:'flex',justifyContent:'space-between',padding:'10px 0',borderBottom:'1px solid var(--line, #dce5e3)'}}><strong>{i+1}º · {tech.name}</strong><span>{tech.completed_tickets} concluídos</span></div>):
+                <p>Nenhum técnico com conclusão atribuída nos filtros selecionados.</p>}
+              <p>{analytics.top_technician.completed_without_assignment} conclusão(ões) sem técnico vinculado.</p>
+            </>}
+          </section>
           <div className="dashboard-quick-actions" aria-label="Acesso rápido aos módulos">
             <button type="button" onClick={downloadSlaPdf}>Relatório operacional PDF <span aria-hidden="true">↓</span></button>
             {(['Clientes','Chamados','Ordens de serviço','Ativos','Estoque'] as const).map((label)=><button type="button" key={label} onClick={()=>{setSection(label);setSearch('')}}>{label}<span aria-hidden="true">↗</span></button>)}
