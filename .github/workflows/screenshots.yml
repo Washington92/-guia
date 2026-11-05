@@ -1,0 +1,61 @@
+name: Capturas visuais do frontend
+on:
+  workflow_dispatch:
+  push:
+    branches: [develop]
+    paths:
+      - 'frontend/**'
+      - 'scripts/capture_frontend.py'
+      - '.github/workflows/screenshots.yml'
+concurrency:
+  group: aguia-screenshots-develop
+  cancel-in-progress: true
+permissions:
+  contents: write
+jobs:
+  screenshots:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: develop
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+      - name: Instalar dependências
+        run: |
+          cd frontend
+          npm install
+          cd ..
+          python -m pip install playwright
+          python -m playwright install --with-deps chromium
+      - name: Iniciar frontend
+        run: |
+          cd frontend
+          npm run dev -- --host 127.0.0.1 > /tmp/aguia-vite.log 2>&1 &
+          for i in $(seq 1 40); do curl -fsS http://127.0.0.1:5173/ >/dev/null && exit 0; sleep 2; done
+          cat /tmp/aguia-vite.log
+          exit 1
+      - name: Capturar telas com dados fictícios
+        run: python scripts/capture_frontend.py
+      - name: Salvar capturas no repositório
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add docs/screenshots/*.png
+          if ! git diff --cached --quiet; then
+            git commit -m "docs: atualizar capturas visuais do CRM [skip ci]"
+            for attempt in 1 2 3 4 5; do
+              git fetch origin develop
+              git rebase origin/develop
+              if git push origin HEAD:develop; then
+                exit 0
+              fi
+              sleep $((attempt * 2))
+            done
+            echo "Falha ao publicar screenshots após 5 tentativas"
+            exit 1
+          fi

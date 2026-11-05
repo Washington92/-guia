@@ -1,0 +1,1077 @@
+<!doctype html>
+<html lang="pt-BR"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><meta name="theme-color" content="#101b30"><title>Águia Gestão | Operations Workspace</title><link rel="icon" type="image/svg+xml" href="./aguia-mark.svg"><link rel="apple-touch-icon" href="./aguia-mark.svg">
+<style>
+:root{font-family:Inter,ui-sans-serif,system-ui,-apple-system,"Segoe UI",sans-serif;color:#1c2940;background:#f3f6fb;font-synthesis:none}*{box-sizing:border-box}body{margin:0}button,input,select{font:inherit}button{cursor:pointer}button:focus-visible,input:focus-visible,select:focus-visible{outline:3px solid #70aaff;outline-offset:2px}.shell{display:grid;grid-template-columns:258px minmax(0,1fr);min-height:100vh}.sidebar{background:#111d32;color:#d5e0f2;display:flex;flex-direction:column;position:sticky;top:0;height:100vh;overflow-y:auto}.identity{padding:26px 21px 22px;display:flex;align-items:center;gap:12px;border-bottom:1px solid #273850}.logo{display:grid;place-items:center;background:linear-gradient(135deg,#3087f6,#1853b4);color:#fff;border-radius:12px;width:43px;height:43px;font-size:24px;font-weight:800;box-shadow:0 6px 18px #0b3c8b66}.identity strong{display:block;color:white;font-size:16px;letter-spacing:-.5px}.identity small{display:block;color:#8ea5c7;font-size:10px;letter-spacing:1.2px;margin-top:3px}.environment{margin:20px 16px 12px;border:1px solid #334763;border-radius:9px;padding:10px 12px;display:flex;align-items:center;gap:9px;font-size:11px;color:#a8bfde}.dot{display:inline-block;width:8px;height:8px;border-radius:50%;background:#37d7a0;box-shadow:0 0 0 3px #37d7a022}.nav-title{padding:22px 21px 8px;color:#748cad;font-size:10px;font-weight:800;letter-spacing:1.3px}.nav-item{width:calc(100% - 20px);margin:2px 10px;border:0;background:transparent;color:#b6c5dc;display:flex;align-items:center;gap:12px;padding:11px 13px;text-align:left;border-radius:9px;font-size:13px;font-weight:600}.nav-item:hover{background:#223551;color:white}.nav-item.active{background:#254a80;color:#fff;box-shadow:inset 3px 0 #5da5ff}.nav-icon{font-size:17px;width:23px;text-align:center;opacity:.9}.nav-count{margin-left:auto;font-size:10px;border-radius:5px;padding:3px 6px;background:#314664;color:#cbd8e9}.side-bottom{margin-top:auto;padding:18px 21px;border-top:1px solid #273850;font-size:11px;color:#91a5c3;line-height:1.7}.workspace{min-width:0}.topbar{height:72px;background:#fff;border-bottom:1px solid #e3e9f2;display:flex;align-items:center;justify-content:space-between;padding:0 31px;gap:18px}.crumb{font-size:12px;color:#8a96a8}.crumb strong{color:#263a59}.top-actions{display:flex;align-items:center;gap:12px}.search{border:1px solid #e0e7f0;border-radius:9px;background:#f7f9fc;padding:10px 13px;width:230px;font-size:12px;color:#24334a}.avatar{width:35px;height:35px;border-radius:10px;background:#e9f1ff;color:#225bb0;display:grid;place-items:center;font-weight:800;font-size:12px}.chip{font-size:11px;font-weight:700;border:1px solid #dce6f2;background:#f5f8fc;border-radius:7px;padding:8px 10px;color:#516784}.main{padding:31px;max-width:1570px;margin:auto}.heading{display:flex;justify-content:space-between;align-items:center;gap:14px;margin-bottom:24px}.eyebrow{font-size:10px;font-weight:800;letter-spacing:1.5px;color:#4271b2;margin:0 0 8px}.heading h1{font-size:27px;letter-spacing:-.9px;color:#15243c;margin:0 0 7px}.subtitle{font-size:12px;color:#7c899c;margin:0}.primary{border:0;border-radius:9px;background:#2267c8;color:#fff;padding:12px 16px;font-weight:700;font-size:12px;box-shadow:0 4px 12px #1f66cb26}.primary:hover{background:#1556b1}.kpis{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:16px;margin-bottom:20px}.kpi{background:#fff;border:1px solid #e1e8f2;border-radius:12px;padding:19px 20px;min-width:0;box-shadow:0 4px 20px #233e6107}.kpi-top{display:flex;justify-content:space-between;align-items:center;gap:8px;color:#748398;font-size:11px;font-weight:650}.kpi-icon{display:grid;place-items:center;width:32px;height:32px;border-radius:9px;background:#edf4ff;color:#256ac3;font-size:18px}.kpi-number{font-size:31px;font-weight:800;letter-spacing:-1px;margin:15px 0 8px;color:#15243c}.kpi-foot{font-size:11px;color:#8190a4}.kpi-foot b{color:#19876a}.layout{display:grid;grid-template-columns:minmax(0,1.7fr) minmax(285px,1fr);gap:18px}.panel{background:#fff;border:1px solid #e1e8f2;border-radius:12px;box-shadow:0 4px 20px #233e6107;margin-bottom:18px;overflow:hidden}.panel-head{padding:19px 20px;display:flex;justify-content:space-between;align-items:center;gap:10px;border-bottom:1px solid #edf0f5}.panel-head h2{font-size:14px;margin:0;color:#23344e;letter-spacing:-.2px}.panel-head small{display:block;color:#8b98a9;margin-top:5px;font-size:11px}.link{background:none;border:0;color:#2769c0;font-size:11px;font-weight:750;padding:5px}.table-wrap{overflow:auto}.table{width:100%;border-collapse:collapse;text-align:left;min-width:520px}.table th{font-size:10px;color:#8593a6;text-transform:uppercase;letter-spacing:.6px;background:#f9fbfe;padding:13px 17px;border-bottom:1px solid #edf0f5}.table td{font-size:12px;padding:15px 17px;border-bottom:1px solid #f0f2f6;vertical-align:middle}.table tr:last-child td{border-bottom:0}.table td strong{display:block;font-size:12px;color:#24334c}.table td small{display:block;font-size:10px;color:#8b98a9;margin-top:5px}.status{display:inline-flex;align-items:center;border-radius:6px;padding:5px 8px;font-size:10px;font-weight:750;white-space:nowrap;background:#edf4ff;color:#2b67b1}.status.red{background:#fff0f0;color:#c34a4a}.status.green{background:#e9f8f0;color:#19865d}.status.amber{background:#fff6e6;color:#a46b19}.priority{font-weight:750;font-size:11px;color:#66748a}.priority.critical{color:#c94c4c}.priority.high{color:#c0801d}.bar-row{padding:14px 20px;border-bottom:1px solid #f0f2f6}.bar-row:last-child{border:0}.bar-label{display:flex;justify-content:space-between;font-size:11px;font-weight:650;color:#52627b;margin-bottom:10px}.track{height:7px;border-radius:20px;background:#edf1f7;overflow:hidden}.fill{height:100%;border-radius:20px;background:#3479d3}.fill.amber{background:#e8a64d}.fill.red{background:#d96161}.activity{display:flex;gap:12px;padding:14px 20px;border-bottom:1px solid #f0f2f6}.activity:last-child{border:0}.activity-dot{width:9px;height:9px;background:#4485d8;border-radius:50%;margin-top:5px;flex:none;box-shadow:0 0 0 4px #edf4ff}.activity strong{display:block;font-size:11px;color:#34445c}.activity small{display:block;font-size:10px;color:#8b98a9;margin-top:5px;line-height:1.5}.banner{padding:14px 18px;background:#eff5ff;border:1px solid #d8e7ff;border-radius:10px;color:#496b9c;font-size:11px;line-height:1.6;margin-bottom:20px}.footer{text-align:center;font-size:10px;color:#9aa7b8;padding:16px}.mobile-menu,.overlay{display:none}.empty{padding:28px;color:#8a97a8;font-size:12px}.filter-row{display:flex;gap:10px;flex-wrap:wrap;margin-bottom:16px}.filter{border:1px solid #dae4f0;border-radius:8px;background:white;color:#4b617f;padding:9px 12px;font-size:11px;font-weight:700}.filter.active{background:#eaf3ff;border-color:#9dc6f7;color:#195cac}@media(max-width:1150px){.kpis{grid-template-columns:repeat(2,minmax(0,1fr))}.layout{grid-template-columns:1fr}.search{width:170px}}@media(max-width:760px){.shell{display:block}.sidebar{position:fixed;z-index:30;width:270px;transform:translateX(-105%);transition:transform .2s}.shell.open .sidebar{transform:translateX(0)}.shell.open .overlay{display:block;position:fixed;inset:0;background:#0c1525b0;z-index:25}.mobile-menu{display:block;background:#f2f6fc;border:1px solid #e0e8f2;border-radius:9px;padding:8px 11px;font-size:19px}.topbar{height:62px;padding:0 15px}.topbar .search{display:none}.main{padding:20px 15px}.heading h1{font-size:23px}.heading{align-items:flex-start}.heading .primary{padding:10px;font-size:10px}.kpis{gap:10px}.kpi{padding:14px}.kpi-number{font-size:26px}.kpi-top{font-size:10px}.panel-head{padding:16px}.crumb{font-size:11px}}@media(max-width:360px){.kpis{grid-template-columns:1fr}.chip{display:none}}@media(prefers-reduced-motion:reduce){.sidebar{transition:none}}
+.modal-backdrop{position:fixed;inset:0;background:#101d32b8;display:grid;place-items:center;z-index:80;padding:16px}.modal{background:#fff;width:min(100%,540px);max-height:90vh;overflow:auto;border-radius:16px;box-shadow:0 30px 90px #0b183a55}.modal-head{padding:22px 24px;border-bottom:1px solid #e8edf5;display:flex;justify-content:space-between;align-items:center}.modal-head h2{font-size:17px;margin:0}.modal-body{padding:22px 24px}.modal-body label{display:block;font-size:12px;font-weight:700;color:#435672;margin-bottom:15px}.modal-body input,.modal-body select{display:block;width:100%;margin-top:7px;padding:12px;border:1px solid #d9e3f0;border-radius:8px;background:#fff;color:#263852}.modal-foot{display:flex;justify-content:flex-end;gap:10px;padding-top:8px}.secondary{border:1px solid #dbe4ef;background:#fff;color:#3d5270;border-radius:9px;padding:11px 15px;font-size:12px;font-weight:700}.row-actions{white-space:nowrap}.row-actions button{border:1px solid #dce7f4;background:#f7faff;color:#2866b3;border-radius:7px;padding:6px 9px;font-size:11px;font-weight:700}.toast{position:fixed;right:20px;bottom:20px;background:#173456;color:white;padding:13px 18px;border-radius:9px;z-index:90;box-shadow:0 10px 30px #0003;font-size:12px}@media(max-width:760px){.modal-head,.modal-body{padding:18px}.toast{left:15px;right:15px;bottom:15px}} 
+/* Responsive UX v2: desktop, tablet e smartphone */
+html{scroll-behavior:smooth}body{overflow-x:hidden}
+.workspace,.main,.layout,.panel,.heading{min-width:0}
+.table td,.table th{overflow-wrap:anywhere}
+.modal-backdrop{overscroll-behavior:contain}
+.modal{width:min(100%,600px)}
+.modal-body{display:block}
+.modal-body input,.modal-body select{min-height:46px;font-size:16px}
+.modal-body label{line-height:1.5}
+.nav-item{min-height:43px}
+@media(min-width:761px) and (max-width:1050px){
+ .shell{grid-template-columns:216px minmax(0,1fr)}
+ .identity{padding:20px 14px}.identity strong{font-size:14px}
+ .main{padding:24px 20px}.topbar{padding:0 20px}
+ .sidebar .nav-item{font-size:12px}
+}
+@media(max-width:760px){
+ .topbar{position:sticky;top:0;z-index:20}
+ .main{padding:18px 12px}
+ .heading{flex-direction:column;align-items:stretch;gap:14px}
+ .heading .primary{width:100%;min-height:44px;font-size:13px}
+ .heading h1{font-size:24px}
+ .banner{font-size:12px;padding:12px 14px}
+ .kpis{grid-template-columns:repeat(2,minmax(0,1fr));gap:9px}
+ .kpi{padding:13px;min-height:120px}
+ .kpi-top{align-items:flex-start}
+ .kpi-number{font-size:28px;margin:10px 0 6px}
+ .panel{border-radius:11px}
+ .panel-head{align-items:flex-start}
+ .panel-head h2{font-size:14px}
+ .table-wrap{overflow:visible}
+ .table{min-width:0;display:block}
+ .table thead{display:none}
+ .table tbody{display:grid;gap:10px;padding:10px}
+ .table tr{display:grid;grid-template-columns:minmax(0,1fr) auto;gap:7px 12px;padding:14px;border:1px solid #e5ebf4;border-radius:10px;background:#fff}
+ .table td{display:block;border:0;padding:0;font-size:12px;min-width:0}
+ .table td:nth-child(1){grid-column:1;grid-row:1;font-size:11px;font-weight:800;color:#3571bf}
+ .table td:nth-child(2){grid-column:1/-1;grid-row:2}
+ .table td:nth-child(2) strong{font-size:14px;line-height:1.4}
+ .table td:nth-child(3){grid-column:1/-1;grid-row:3;color:#78869a}
+ .table td:nth-child(4){grid-column:1;grid-row:4}
+ .table td:nth-child(5){grid-column:2;grid-row:4;text-align:right}
+ .table td:nth-child(6){grid-column:1;grid-row:5;color:#8795a8;font-size:11px}
+ .table td:nth-child(7){grid-column:2;grid-row:5;text-align:right}
+ .row-actions button{min-height:36px;padding:8px 12px}
+ .modal-backdrop{padding:0;align-items:end}
+ .modal{width:100%;max-height:min(90dvh,850px);border-radius:18px 18px 0 0;overflow:auto}
+ .modal-head{position:sticky;top:0;background:#fff;z-index:1}
+ .modal-body{padding-bottom:max(22px,env(safe-area-inset-bottom))}
+ .modal-foot{position:sticky;bottom:0;background:#fff;padding:12px 0 0;flex-wrap:wrap}
+ .modal-foot button{min-height:44px;flex:1}
+}
+@media(max-width:390px){
+ .topbar{gap:7px}.top-actions{gap:6px}
+ .crumb{max-width:145px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+ .kpi-top{font-size:10px}.kpi-icon{width:26px;height:26px}
+ .kpi-number{font-size:25px}
+ .panel-head{padding:14px}
+}
+.logo{background:transparent;box-shadow:none;border-radius:50%;width:49px;height:49px;flex:none}.logo img{display:block;width:100%;height:100%;object-fit:contain}.network-filter{font-size:11px;color:#667993;font-weight:700;display:flex;align-items:center;gap:9px}.network-filter select{padding:9px;border:1px solid #dce5f1;border-radius:8px;background:#fff;color:#263b59;max-width:230px}.network-tree{padding:14px 18px;display:grid;gap:12px}.network-group{border:1px solid #e3eaf3;border-radius:10px;overflow:hidden}.network-parent{display:flex;gap:12px;align-items:center;background:#f4f8ff;padding:14px}.network-parent strong,.network-child strong{display:block;font-size:12px;color:#253a57}.network-parent small,.network-child small{display:block;font-size:10px;color:#7e8da2;margin-top:5px}.network-symbol{font-size:20px;color:#2e6dbf}.network-child{display:flex;gap:12px;align-items:center;padding:12px 18px 12px 32px;border-top:1px solid #edf1f6}.network-child>span{color:#6c89b3}@media(max-width:760px){.network-filter{flex-direction:column;align-items:flex-start}.network-filter select{max-width:150px;width:100%}.network-tree{padding:10px}.network-child{padding-left:20px}} .network-link{width:100%;border:0;text-align:left;font:inherit;cursor:pointer}.network-link:hover{background:#e9f2ff}.network-child.network-link:hover{background:#f4f8ff}.unit-modal{width:min(100%,690px)}.unit-caption{display:block;color:#8290a5;font-size:11px;margin-top:5px}.unit-info{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:10px;margin-bottom:18px}.unit-info>div{padding:13px;border-radius:9px;background:#f4f7fc}.unit-info span{display:block;font-size:10px;color:#8492a5}.unit-info strong{display:block;font-size:12px;margin-top:6px;color:#2c3e58;overflow-wrap:anywhere}.unit-section{border:1px solid #e6ebf3;border-radius:10px;margin-bottom:12px;overflow:hidden}.unit-section-head{background:#f8faff;padding:12px 14px;font-size:12px;color:#314969}.unit-count{background:#e7f0ff;color:#2463af;border-radius:6px;padding:2px 6px}.unit-record{display:grid;grid-template-columns:75px 1fr auto;gap:10px;align-items:center;padding:12px 14px;border-top:1px solid #edf1f6;font-size:11px}.unit-record strong{overflow-wrap:anywhere}.unit-record small{color:#8190a5}.unit-empty{padding:10px 14px;font-size:11px;color:#8390a3}.unit-child-button{display:block;width:100%;text-align:left;border:0;border-top:1px solid #edf1f6;background:white;padding:12px 14px;color:#2669b9;font-weight:700}.unit-actions{display:flex;gap:10px;flex-wrap:wrap;margin-top:18px}.unit-note{font-size:10px;color:#91a0b3;line-height:1.6}@media(max-width:760px){.unit-info{grid-template-columns:1fr 1fr}.unit-record{grid-template-columns:1fr auto}.unit-record strong{grid-column:1/-1;grid-row:2}.unit-actions>*{flex:1;min-height:44px}} .profile-modal{width:min(100%,820px)}.profile-tabs{display:flex;gap:4px;padding:12px 18px;border-bottom:1px solid #e5eaf2;overflow-x:auto;scrollbar-width:thin}.profile-tabs button{flex:none;border:0;background:transparent;border-radius:8px;padding:10px 13px;font-weight:700;font-size:12px;color:#667891;cursor:pointer;white-space:nowrap}.profile-tabs button.active{background:#eaf2ff;color:#2063ba}.profile-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:12px 16px}.profile-grid label{margin:0}.profile-grid textarea{display:block;width:100%;min-height:95px;margin-top:7px;padding:12px;border:1px solid #d9e3f0;border-radius:8px;font:inherit;resize:vertical}.profile-wide{grid-column:1/-1}.profile-check{display:flex!important;align-items:center;gap:10px;padding:10px;border:1px solid #e3eaf2;border-radius:9px}.profile-check input{width:18px!important;height:18px!important;min-height:0!important;margin:0!important}.profile-modal .modal-body{padding-top:18px}@media(max-width:600px){.profile-grid{grid-template-columns:1fr}.profile-tabs{padding:8px 12px}.profile-tabs button{padding:10px}.profile-modal{max-height:94dvh}} 
+/* Águia Studio: soft editorial SaaS design inspired by the provided reference */
+:root{font-family:Inter,ui-sans-serif,system-ui,-apple-system,"Segoe UI",sans-serif;color:#15282b;background:#edf0f2}
+body{background:linear-gradient(125deg,#e7a089 0,#b88b9d 22%,#e6e9ed 43%,#f0f2f4 100%);background-attachment:fixed}
+.shell{grid-template-columns:94px minmax(0,1fr);max-width:1720px;margin:24px auto;min-height:calc(100vh - 48px);width:calc(100% - 48px);border-radius:30px;background:#f2f4f6;box-shadow:0 22px 85px #24333b19;overflow:clip}
+.sidebar{background:#f2f4f6;color:#344549;border-right:1px solid #e8eced;overflow-y:auto;align-items:center;height:calc(100vh - 48px);top:24px}
+.identity{padding:22px 10px 14px;border:0;flex-direction:column;gap:7px;text-align:center;width:100%}
+.logo{width:58px!important;height:58px!important;border-radius:50%!important;background:#09282b!important;box-shadow:none!important;padding:12px}
+.logo img{width:100%;height:100%}
+.identity strong{color:#132f31;font-size:10px;letter-spacing:-.25px;white-space:nowrap}
+.identity small{display:none}
+.environment{display:none}
+#nav{width:100%;padding:10px 0;display:flex;flex-direction:column;align-items:center;gap:5px}
+.nav-title{display:none}
+.nav-item{position:relative;width:52px;height:52px;min-height:52px;margin:0;display:flex;align-items:center;justify-content:center;padding:0;border-radius:50%;background:#fff;border:1px solid #e8edef;color:#65777a;box-shadow:0 2px 8px #152d3007;font-size:0}
+.nav-item .nav-icon{font-size:22px;width:auto;opacity:1}
+.nav-item.active{background:#0b3032;color:#fff;box-shadow:none;border-color:#0b3032}
+.nav-item:hover{background:#dce8e6;color:#0c3435}
+.nav-item.active:hover{background:#0b3032;color:#fff}
+.nav-item .nav-count{position:absolute;top:-3px;right:-3px;background:#e96d54;color:#fff;border:2px solid #f2f4f6;border-radius:20px;padding:2px 5px;font-size:9px}
+.nav-item::after{content:attr(data-page);position:absolute;left:62px;top:50%;transform:translateY(-50%);white-space:nowrap;padding:8px 11px;background:#16393b;color:#fff;font-size:11px;font-weight:650;border-radius:7px;opacity:0;pointer-events:none;z-index:10}
+.nav-item:hover::after,.nav-item:focus-visible::after{opacity:1}
+.side-bottom{margin-top:auto;border:0;padding:15px 4px 24px;width:100%;font-size:0;text-align:center}
+.side-bottom::after{content:'DEV';font-size:10px;letter-spacing:1px;font-weight:800;color:#748c8e}
+.workspace{background:#f2f4f6}
+.topbar{height:78px;background:transparent;border:0;padding:0 35px}
+.crumb{color:#7c8d90;font-size:12px}.crumb strong{color:#1b3537}
+.search{border:1px solid #e3e8e8;background:#fff;border-radius:28px;padding:13px 18px;width:280px;font-size:12px}
+.chip{border-radius:24px;border:1px solid #e2e7e7;background:#fff;color:#476366;padding:10px 15px}
+.avatar{border-radius:50%;background:#103537;color:#fff;width:42px;height:42px}
+.main{padding:12px 36px 34px;max-width:none}
+.heading{margin-bottom:26px}.heading h1{font-size:38px;font-weight:650;letter-spacing:-1.6px;color:#102e30}
+.eyebrow{color:#7e9294;letter-spacing:.4px;font-size:12px;font-weight:550;text-transform:none}
+.subtitle{color:#7e8c90;font-size:13px}
+.primary{background:#0c3032;color:#fff;border-radius:25px;padding:13px 22px;font-size:12px;box-shadow:none}
+.primary:hover{background:#185456}
+.secondary{border-radius:24px;background:#fff;color:#254143}
+.banner{background:#e9eeed;border:0;border-radius:15px;color:#708588;font-size:11px;padding:12px 16px}
+.kpis{gap:18px}.kpi{border:0;border-radius:26px;box-shadow:none;padding:25px 24px;min-height:158px}
+.kpi-top{color:#586d70;font-size:12px}.kpi-icon{border-radius:50%;background:#edf4f3;color:#174c4c;width:40px;height:40px}
+.kpi-number{font-size:38px;font-weight:650;letter-spacing:-1.4px;color:#112f30}
+.kpi-foot{color:#849395}
+.panel{border:0;border-radius:25px;box-shadow:none;margin-bottom:18px}
+.panel-head{border-bottom:1px solid #f0f2f2;padding:23px 25px}
+.panel-head h2{color:#1a3436;font-size:16px;font-weight:650}
+.panel-head small{color:#9aa7a8}.link{color:#0b4849}
+.table th{background:#fafbfb;color:#8a9b9d}.table td{border-color:#f1f3f3}
+.status{border-radius:20px}.row-actions button{border-radius:20px;background:#f2f7f6;border-color:#e2ecea;color:#174c4c}
+.filter{border-radius:25px;border-color:#e1e9e8}.filter.active{background:#0b3032;border-color:#0b3032;color:white}
+.modal-backdrop{background:#09242788;backdrop-filter:blur(5px)}
+.modal{border-radius:25px;box-shadow:0 28px 90px #0b252b38}
+.modal-head h2{font-size:20px;color:#123538}
+.modal-body label{color:#40595b;font-weight:600}
+.modal-body input,.modal-body select,.profile-grid textarea{background:#f9fbfb;border:1px solid #e2e9e8;border-radius:12px;color:#18393b}
+.modal-body input:focus,.modal-body select:focus,.profile-grid textarea:focus{outline:2px solid #4e9996}
+.profile-tabs button{border-radius:25px;color:#70898b}.profile-tabs button.active{background:#0b3032;color:#fff}
+.profile-check{border-radius:14px;border-color:#e9eeee}
+.network-parent{background:#f4f8f7}.network-link:hover{background:#e8f1ef}.network-child.network-link:hover{background:#f6faf9}
+.network-symbol{color:#0e5553}.unit-section-head{background:#f7faf9}.unit-info>div{background:#f3f7f6}
+@media(min-width:761px) and (max-width:1050px){.shell{grid-template-columns:78px minmax(0,1fr)}.sidebar{width:78px}.topbar{padding:0 20px}.main{padding:12px 20px 25px}}
+@media(max-width:760px){
+ body{background:#f2f4f6}
+ .shell{display:block;margin:0;width:100%;min-height:100dvh;border-radius:0;overflow:visible;box-shadow:none}
+ .sidebar{position:fixed;top:0;left:0;z-index:30;height:100dvh;width:94px;transform:translateX(-110%);transition:transform .2s;border-radius:0}
+ .shell.open .sidebar{transform:translateX(0)}
+ .shell.open .overlay{display:block;position:fixed;inset:0;background:#0b2c2c99;z-index:25}
+ .topbar{height:68px;padding:0 15px}.topbar .search{display:none}
+ .mobile-menu{display:block;background:#fff;border:1px solid #e4e9e8;border-radius:50%;height:42px;width:42px;padding:0;font-size:19px;color:#183a3b}
+ .main{padding:15px 15px 35px}.heading h1{font-size:29px;letter-spacing:-.9px}.heading .primary{border-radius:22px;font-size:12px}
+ .kpis{gap:10px}.kpi{border-radius:19px;padding:17px;min-height:128px}.kpi-number{font-size:29px}
+ .panel{border-radius:19px}.panel-head{padding:17px}
+ .table tbody{padding:12px}.table tr{border-radius:15px;border-color:#e9eeee}
+ .modal{border-radius:23px 23px 0 0}.modal-head{border-radius:23px 23px 0 0}
+ .profile-tabs{gap:5px}.profile-tabs button{border-radius:20px}
+}
+
+/* Paleta editorial da referência: coral, pêssego, ameixa e violeta. */
+:root{--aguia-ink:#102d30;--aguia-coral:#fa6b70;--aguia-peach:#f4a36b;--aguia-plum:#933d86;--aguia-violet:#a82fca;--aguia-sky:#22b9e6}
+body{background:radial-gradient(ellipse at 5% 0%,#f7a47e 0,transparent 37%),radial-gradient(ellipse at 85% 5%,#fc7c77 0,transparent 36%),linear-gradient(115deg,#e89d7c,#974b8e 57%,#f4a568);background-attachment:fixed}
+.sidebar{background:#f4f5f7;border-color:#eceef0}
+.workspace,.shell{background:#f3f4f7}
+.nav-item{border-color:#edf0f1;background:#fff;color:#637579;transition:background .16s,color .16s,transform .16s}
+.nav-item .nav-icon{display:flex;align-items:center;justify-content:center;width:24px;height:24px}
+.nav-item .nav-icon svg{display:block}
+.nav-item:hover{transform:translateY(-1px);background:#fff0eb;color:#a84e64}
+.nav-item.active,.nav-item.active:hover{background:#0b2d30;color:#fff;border-color:#0b2d30}
+.nav-item:nth-of-type(4n+2):not(.active):hover{background:#f5eaf8;color:#933d86}
+.nav-item:nth-of-type(4n+3):not(.active):hover{background:#fff1e4;color:#b56b35}
+.nav-count{background:#f26c79!important}
+.kpi:nth-child(4n+1) .kpi-icon{background:#fff0e9;color:#d47b4d}
+.kpi:nth-child(4n+2) .kpi-icon{background:#eaf7fd;color:#1e9bc2}
+.kpi:nth-child(4n+3) .kpi-icon{background:#f6eafd;color:#a43cbd}
+.kpi:nth-child(4n+4) .kpi-icon{background:#ffebf0;color:#d75d82}
+.fill.amber{background:#f7a057}.fill.red{background:#f06b7e}
+.status.red{background:#ffedf0;color:#bb455c}
+.status.amber{background:#fff2e7;color:#b46b36}
+.status.green{background:#e6f7f2;color:#1b8a72}
+.filter.active,.profile-tabs button.active{background:#0b3032;color:#fff}
+button:focus-visible{outline:3px solid #f49a76;outline-offset:2px}
+@media(max-width:760px){body{background:#f3f4f7}.nav-item::after{display:none}}
+.nav-icon .lucide-target{display:none}.nav-icon .lucide-fallback{display:flex;align-items:center;justify-content:center}.lucide-ready .nav-icon .lucide-fallback{display:none}.lucide-ready .nav-icon svg.lucide{display:block;width:23px;height:23px;stroke-width:1.75}.nav-icon{display:flex;align-items:center;justify-content:center} 
+/* Alinhamento óptico dos ícones Lucide dentro dos botões circulares */
+.nav-item{display:grid!important;place-items:center!important;justify-content:center!important;align-content:center!important;padding:0!important;line-height:1!important}
+.nav-item .nav-icon{display:grid!important;place-items:center!important;width:26px!important;height:26px!important;min-width:26px!important;min-height:26px!important;margin:0!important;padding:0!important;flex:none!important;line-height:0!important;position:relative}
+.nav-item .nav-icon>svg,.nav-item .nav-icon>span,.nav-item .nav-icon>i{grid-area:1/1;justify-self:center!important;align-self:center!important;margin:0!important;vertical-align:middle}
+.nav-item .nav-icon svg.lucide,.nav-item .nav-icon .lucide-fallback svg{width:23px!important;height:23px!important;display:block;flex:none}
+.nav-item .nav-icon .lucide-fallback{width:26px;height:26px;align-items:center;justify-content:center}
+.nav-item .nav-count{position:absolute;top:-3px;right:-3px;margin:0}
+.record-clickable{cursor:pointer;transition:background .15s}.record-clickable:hover{background:#f7faf9}.record-clickable:focus-visible{outline:2px solid #52918d;outline-offset:-2px}.record-clickable td:first-child{color:#276b70;font-weight:700}@media(max-width:760px){.table tbody tr.record-clickable{cursor:pointer}.table tbody tr.record-clickable:active{background:#f1f7f6}}.kpi-action{display:block;width:100%;font:inherit;text-align:left;cursor:pointer;transition:transform .15s,box-shadow .15s}.kpi-action:hover{transform:translateY(-3px);box-shadow:0 10px 28px #19383a12}.kpi-action:active{transform:scale(.99)}.kpi-action:focus-visible{outline:3px solid #d98799;outline-offset:3px} 
+.ticket-modal{width:min(100%,880px);max-height:94dvh;border-radius:28px;overflow:auto}
+.ticket-handle{display:none}.ticket-modal .modal-head{align-items:flex-start;padding:26px 28px 18px}
+.ticket-modal .modal-head h2{font-size:25px;margin:6px 0;letter-spacing:-.6px}
+.ticket-overline{color:#6c8787;font-size:11px;font-weight:800;letter-spacing:1px}
+.ticket-location{margin:0;color:#788b8d;font-size:13px}
+.ticket-modal .modal-body{padding:12px 28px 28px}
+.ticket-summary{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:10px;margin-bottom:20px}
+.ticket-summary>div{background:#f4f7f7;border-radius:15px;padding:15px;min-width:0}
+.ticket-summary small{display:block;color:#809293;font-size:10px;letter-spacing:.6px;margin-bottom:7px}
+.ticket-summary strong{display:block;color:#14383a;font-size:13px;overflow-wrap:anywhere}
+.ticket-tabs{display:flex;gap:5px;overflow-x:auto;padding:5px;background:#f4f6f7;border-radius:16px;margin-bottom:18px}
+.ticket-tabs button{flex:1;border:0;background:transparent;color:#627a7b;border-radius:12px;padding:12px 15px;white-space:nowrap;font-size:12px;font-weight:700}
+.ticket-tabs button.active{background:#103638;color:#fff}
+.ticket-section{background:#fff;border:1px solid #e8eeee;border-radius:18px;padding:18px 20px;margin-bottom:14px}
+.ticket-section h3,.ticket-actions h3{font-size:15px;color:#163b3c;margin:0 0 15px}
+.ticket-detail-row{display:flex;justify-content:space-between;gap:20px;padding:11px 0;border-bottom:1px solid #eff2f2;font-size:12px}
+.ticket-detail-row:last-child{border:0}.ticket-detail-row span{color:#809092}.ticket-detail-row strong{color:#1b383a;text-align:right;overflow-wrap:anywhere}
+.ticket-event{display:flex;gap:12px;padding:11px 0;border-bottom:1px solid #f1f3f3;font-size:12px}.ticket-event>span{color:#2b997d}.ticket-event strong{display:block;font-weight:600}.ticket-event small{display:block;color:#829293;margin-top:6px}
+.ticket-muted{font-size:12px;color:#839294;line-height:1.6}.ticket-disclaimer{margin:15px 0 0}
+.ticket-actions{padding:18px 0}.ticket-action-grid{display:grid;grid-template-columns:repeat(5,minmax(0,1fr));gap:10px}
+.ticket-action{border:0;border-radius:17px;background:#edf8f5;min-height:92px;color:#144a48;font-size:12px;font-weight:700;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:9px;padding:12px}
+.ticket-action:nth-child(2){background:#f2eff9;color:#63469a}.ticket-action:nth-child(3){background:#f1e9fa;color:#8549ac}.ticket-action:nth-child(4){background:#eaf3ff;color:#315e99}
+.ticket-action span{font-size:22px}.ticket-resolve{background:#0b3d37!important;color:#fff!important}
+.ticket-action:hover{filter:brightness(.96)}
+@media(max-width:760px){.ticket-modal{position:fixed;inset:0 0 0 0;max-height:100dvh;width:100%;border-radius:22px 22px 0 0;margin-top:env(safe-area-inset-top);height:calc(100dvh - env(safe-area-inset-top));padding-bottom:env(safe-area-inset-bottom)}.ticket-handle{display:block;width:42px;height:5px;border-radius:5px;background:#c9d2d3;margin:9px auto 0}.ticket-modal .modal-head{padding:17px 18px}.ticket-modal .modal-head h2{font-size:23px}.ticket-modal .modal-body{padding:10px 16px 25px}.ticket-summary{grid-template-columns:repeat(2,minmax(0,1fr));gap:8px}.ticket-summary>div{padding:13px}.ticket-tabs button{padding:11px 12px}.ticket-section{padding:15px}.ticket-action-grid{grid-template-columns:repeat(3,minmax(0,1fr));gap:8px}.ticket-action{min-height:86px}.ticket-detail-row{gap:10px}.ticket-detail-row span{flex:0 0 35%}}
+
+/* Ticket mobile-first: enforce readable full-screen details on narrow devices */
+@media (max-width: 760px){
+ #modal-root:has(.ticket-modal){position:fixed;inset:0;z-index:120}
+ #modal-root .modal-backdrop:has(.ticket-modal){position:fixed!important;inset:0!important;display:flex!important;align-items:stretch!important;justify-content:stretch!important;padding:0!important;overflow:hidden!important;backdrop-filter:none}
+ #modal-root .ticket-modal{position:relative!important;inset:auto!important;margin:0!important;width:100vw!important;min-width:0!important;max-width:none!important;height:100dvh!important;max-height:100dvh!important;overflow-y:auto!important;overflow-x:hidden!important;border-radius:0!important;box-shadow:none!important;transform:none!important;zoom:1!important;padding:env(safe-area-inset-top) 0 env(safe-area-inset-bottom)!important}
+ #modal-root .ticket-modal .modal-head{padding:22px 20px 18px!important;position:relative;gap:12px}
+ #modal-root .ticket-modal .modal-head h2{font-size:27px!important;line-height:1.2!important;letter-spacing:-.7px!important}
+ #modal-root .ticket-modal .modal-body{padding:12px 18px 32px!important;font-size:15px!important}
+ #modal-root .ticket-modal .ticket-overline{font-size:12px!important}
+ #modal-root .ticket-modal .ticket-location{font-size:14px!important;line-height:1.5}
+ #modal-root .ticket-modal .ticket-summary{grid-template-columns:repeat(2,minmax(0,1fr))!important;gap:10px!important;margin:12px 0 22px}
+ #modal-root .ticket-modal .ticket-summary>div{padding:16px 14px!important;border-radius:17px!important;min-height:86px}
+ #modal-root .ticket-modal .ticket-summary>div:nth-child(1){background:#fff1e8}
+ #modal-root .ticket-modal .ticket-summary>div:nth-child(2){background:#e9f7f0}
+ #modal-root .ticket-modal .ticket-summary>div:nth-child(3){background:#f2eafa}
+ #modal-root .ticket-modal .ticket-summary>div:nth-child(4){background:#eaf4fc}
+ #modal-root .ticket-modal .ticket-summary small{font-size:11px!important;margin-bottom:9px!important}
+ #modal-root .ticket-modal .ticket-summary strong{font-size:15px!important;line-height:1.3!important}
+ #modal-root .ticket-modal .ticket-tabs{gap:7px!important;overflow-x:auto!important;scrollbar-width:none!important;flex-wrap:nowrap!important;margin-bottom:20px!important;padding:6px!important}
+ #modal-root .ticket-modal .ticket-tabs button{flex:0 0 auto!important;min-height:44px!important;padding:10px 15px!important;font-size:13px!important}
+ #modal-root .ticket-modal .ticket-section{padding:19px 17px!important;border-radius:20px!important;margin-bottom:16px!important}
+ #modal-root .ticket-modal .ticket-section h3,#modal-root .ticket-modal .ticket-actions h3{font-size:17px!important}
+ #modal-root .ticket-modal .ticket-detail-row{padding:14px 0!important;font-size:14px!important;line-height:1.5!important}
+ #modal-root .ticket-modal .ticket-event{font-size:14px!important;line-height:1.5!important}
+ #modal-root .ticket-modal .ticket-muted{font-size:13px!important}
+ #modal-root .ticket-modal .ticket-action-grid{display:grid!important;grid-template-columns:repeat(2,minmax(0,1fr))!important;gap:11px!important}
+ #modal-root .ticket-modal .ticket-action{min-height:100px!important;border-radius:19px!important;font-size:14px!important;gap:11px!important;padding:15px 10px!important}
+ #modal-root .ticket-modal .ticket-action span{font-size:26px!important}
+ #modal-root .ticket-modal .ticket-resolve{grid-column:span 2}
+ #modal-root .ticket-modal .ticket-close{flex:none!important;min-width:44px!important;min-height:44px!important}
+}
+@media (min-width:761px){.ticket-modal{width:min(96vw,1040px)}.ticket-action{min-height:112px}.ticket-section{padding:23px 25px}.ticket-modal .modal-head h2{font-size:29px}}
+.ticket-event-content{flex:1;min-width:0}.ticket-event-meta{display:flex;gap:8px 16px;flex-wrap:wrap;margin-top:9px;color:#7d8d90;font-size:12px}.ticket-event-meta time{font-size:12px}.ticket-latest{display:inline-flex;margin-top:10px;background:#e8f7f1;color:#19755e;border-radius:18px;padding:5px 9px;font-size:10px;font-weight:750}.ticket-event-dot{font-size:16px}.ticket-event{padding:16px 0}@media(max-width:760px){#modal-root .ticket-event-meta{flex-direction:column;gap:6px;font-size:13px}#modal-root .ticket-event-meta time{font-size:13px}} 
+/* Identidade aprovada: ações com Lucide, hierarquia textual e indicador circular de atualização */
+.ticket-action-grid{grid-template-columns:repeat(2,minmax(0,1fr));gap:12px}
+.ticket-action{display:grid;grid-template-columns:52px minmax(0,1fr) 20px;align-items:center;justify-items:stretch;gap:12px;min-height:112px;text-align:left;padding:17px 16px;border:1px solid transparent;border-radius:21px;line-height:1.35}
+.ticket-action-icon{display:grid;place-items:center;width:52px;height:52px;border-radius:16px;background:#d6f3e8;color:#064a3c;font-size:0!important}
+.ticket-action-icon svg{width:29px;height:29px;stroke-width:2.15}
+.ticket-action-copy{display:flex;flex-direction:column;gap:5px;min-width:0}
+.ticket-action-copy strong{font-size:16px;line-height:1.25}
+.ticket-action-copy small{font-size:12px;font-weight:450;line-height:1.45;opacity:.84}
+.ticket-action-chevron{width:18px;height:18px;justify-self:end;opacity:.8}
+.ticket-action-assign .ticket-action-icon{background:#e7d9fb;color:#7442ba}
+.ticket-action-os{background:#fff0e7;color:#8f3d22}
+.ticket-action-os .ticket-action-icon{background:#ffdfc9;color:#b34320}
+.ticket-action-note{background:#e7f1ff;color:#285c9b;border-color:#d1e5ff}
+.ticket-action-note .ticket-action-icon{background:#d2e6ff;color:#1668dc}
+.ticket-action-note .ticket-action-icon svg{animation:aguia-loader-spin 2.3s linear infinite;transform-origin:center}
+@keyframes aguia-loader-spin{to{transform:rotate(360deg)}}
+@media(prefers-reduced-motion:reduce){.ticket-action-note .ticket-action-icon svg{animation:none}}
+.ticket-action-resolve,.ticket-resolve{grid-column:1/-1;grid-template-columns:60px minmax(0,1fr) 22px;background:linear-gradient(115deg,#07584c,#05382f)!important;color:#fff!important;min-height:104px}
+.ticket-action-resolve .ticket-action-icon{width:56px;height:56px;border-radius:50%;background:transparent;border:2px solid #fff;color:#fff}
+.ticket-action-resolve .ticket-action-copy strong{font-size:19px}
+.ticket-action-resolve .ticket-action-copy small{font-size:13px}
+@media(max-width:760px){
+ #modal-root .ticket-modal .ticket-action-grid{grid-template-columns:repeat(2,minmax(0,1fr))!important;gap:10px!important}
+ #modal-root .ticket-modal .ticket-action{display:flex!important;flex-direction:column!important;align-items:flex-start!important;justify-content:flex-start!important;min-height:174px!important;padding:16px!important;gap:11px!important;position:relative}
+ #modal-root .ticket-modal .ticket-action-icon{width:48px;height:48px;min-height:48px;flex:none}
+ #modal-root .ticket-modal .ticket-action-icon svg{width:27px;height:27px}
+ #modal-root .ticket-modal .ticket-action-copy strong{font-size:16px}
+ #modal-root .ticket-modal .ticket-action-copy small{font-size:12px}
+ #modal-root .ticket-modal .ticket-action-chevron{position:absolute;right:14px;top:70px;width:16px;height:16px}
+ #modal-root .ticket-modal .ticket-action-resolve{grid-column:1/-1!important;min-height:110px!important;display:grid!important;grid-template-columns:54px minmax(0,1fr) 20px!important;align-items:center!important;gap:12px!important}
+ #modal-root .ticket-modal .ticket-action-resolve .ticket-action-icon{width:52px;height:52px}
+ #modal-root .ticket-modal .ticket-action-resolve .ticket-action-chevron{position:static}
+}
+/* Reutilização dos detalhes modernos para OS, ativos, estoque e demais registros */.ticket-action-status{background:#fff0e7;color:#8d4e2d}.ticket-action-status .ticket-action-icon{background:#ffe0ca;color:#a34c23}.ticket-action-edit{background:#ebf8f3;color:#175b4c}.ticket-action-edit .ticket-action-icon{background:#d5f2e7;color:#125543}@media(max-width:760px){#modal-root .ticket-modal .ticket-action-grid:has(> :only-child){grid-template-columns:1fr!important}}
+/* Sidebar de navegação aprovada: menu legível, símbolos semânticos e tema persistente */
+.sidebar{width:300px!important;background:#fff!important;color:#12383a!important;border-right:1px solid #e9eeee!important}
+.identity{background:linear-gradient(115deg,#043f38,#075c51)!important;color:#fff!important;padding:20px 16px!important;border-radius:0 0 22px 22px}
+.identity strong,.identity small{color:#fff!important}
+.sidebar .environment,.sidebar .side-bottom{display:none!important}
+.sidebar #nav{padding:16px 12px 22px!important}
+.sidebar .nav-title{font-size:10px!important;color:#889899!important;margin:16px 12px 8px!important;letter-spacing:1.2px}
+.sidebar .nav-item{display:flex!important;align-items:center!important;justify-content:flex-start!important;align-content:center!important;gap:12px!important;width:100%!important;min-height:66px!important;height:auto!important;margin:3px 0!important;padding:10px 12px!important;border-radius:17px!important;text-align:left!important;background:transparent!important;color:#233b40!important;border:0!important;position:relative}
+.sidebar .nav-item:hover{background:#eff7f5!important;transform:none!important}
+.sidebar .nav-item.active{background:#07554b!important;color:#fff!important}
+.sidebar .nav-item .nav-icon,.nav-theme .nav-icon{width:45px!important;height:45px!important;min-width:45px!important;min-height:45px!important;border-radius:15px!important;background:#f5f8f8;display:grid!important;place-items:center!important;box-shadow:0 3px 12px #173c3910}
+.sidebar .nav-item.active .nav-icon{background:#0b7264;color:#fff}
+.sidebar .nav-item .nav-icon svg,.nav-theme .nav-icon svg{width:24px!important;height:24px!important}
+.sidebar .nav-label{display:flex!important;flex-direction:column!important;gap:3px!important;min-width:0!important;flex:1!important;white-space:normal!important;line-height:1.2!important}
+.sidebar .nav-label strong{font-size:13px!important;font-weight:750!important}
+.sidebar .nav-label small{font-size:10px!important;font-weight:450!important;color:#809092!important;line-height:1.35!important}
+.sidebar .nav-item.active .nav-label small{color:#d3e8e3!important}
+.sidebar .nav-arrow{font-size:23px;opacity:.65}
+.sidebar .nav-count{position:absolute!important;top:5px!important;right:12px!important;font-size:10px!important}
+.nav-preferences{margin:22px 0 0;padding:18px 2px 0;border-top:1px solid #e8eeee}
+.nav-theme{display:flex;align-items:center;gap:12px;width:100%;border:0;background:#f3f5f7;border-radius:18px;padding:12px;text-align:left;color:#163a3b;cursor:pointer}
+.nav-theme .nav-label strong{font-size:13px}.nav-theme .nav-label small{font-size:10px}
+.theme-switch{width:43px;height:25px;background:#c9d0d1;border-radius:20px;padding:3px;flex:none}
+.theme-switch span{display:block;width:19px;height:19px;border-radius:50%;background:white;transition:transform .2s}
+[data-theme=dark] .theme-switch{background:#0c786b}
+[data-theme=dark] .theme-switch span{transform:translateX(18px)}
+.nav-dev{display:flex;align-items:center;gap:10px;padding:22px 8px;color:#6c8585;font-size:10px}
+.nav-dev strong{background:#07584d;color:#fff;padding:6px 10px;border-radius:8px;font-size:11px}
+@media(max-width:760px){.sidebar{width:min(88vw,350px)!important;max-width:350px!important}.sidebar #nav{padding:12px!important}.sidebar .nav-item{min-height:62px!important}.sidebar .nav-title{margin:13px 12px 6px!important}}
+[data-theme=dark] body{background:#101c20!important;color:#e9f2f0}
+[data-theme=dark] .workspace,[data-theme=dark] .shell{background:#111e23!important;color:#e9f2f0}
+[data-theme=dark] .topbar,[data-theme=dark] .panel,[data-theme=dark] .kpi,[data-theme=dark] .ticket-modal,[data-theme=dark] .modal,[data-theme=dark] .ticket-section,[data-theme=dark] .table tbody tr,[data-theme=dark] .table-wrap{background:#1a2b30!important;color:#edf5f3!important;border-color:#34494b!important}
+[data-theme=dark] .sidebar{background:#16262b!important;color:#edf5f3!important;border-color:#33494b!important}
+[data-theme=dark] .sidebar .nav-item{color:#e2eeeb!important}
+[data-theme=dark] .sidebar .nav-item.active{background:#07584d!important}
+[data-theme=dark] .sidebar .nav-label small{color:#b1c3c3!important}
+[data-theme=dark] .sidebar .nav-icon{background:#294247!important;color:#d9eeea!important}
+[data-theme=dark] .nav-theme{background:#24393e;color:#edf5f3}
+[data-theme=dark] .sidebar .nav-title,[data-theme=dark] .nav-dev{color:#a9bfbd}
+[data-theme=dark] .banner,[data-theme=dark] .ticket-summary>div,[data-theme=dark] .ticket-tabs{background:#253b40!important;color:#e5f1ef!important}
+[data-theme=dark] h1,[data-theme=dark] h2,[data-theme=dark] h3,[data-theme=dark] .ticket-detail-row strong,[data-theme=dark] .ticket-summary strong,[data-theme=dark] .kpi strong{color:#e9f4f1!important}
+[data-theme=dark] .subtitle,[data-theme=dark] .ticket-muted,[data-theme=dark] .ticket-detail-row span{color:#b1c7c5!important}
+[data-theme=dark] input,[data-theme=dark] select,[data-theme=dark] textarea{background:#243b40!important;color:#f1f8f6!important;border-color:#4b6364!important}
+@media(min-width:761px){.shell{grid-template-columns:300px minmax(0,1fr)!important}}.sidebar .nav-item .nav-icon{flex:none!important}.sidebar .nav-item .nav-count{z-index:2}.sidebar .nav-item.active .nav-label strong{color:#fff!important}[data-theme=dark] .sidebar .nav-item.active .nav-icon{background:#0b7264!important}
+/* Escala de criticidade aprovada — único padrão em tabelas e detalhes */
+.priority-chip{display:inline-flex;align-items:center;gap:7px;padding:7px 11px;border-radius:999px;font-size:12px;font-weight:750;line-height:1.1;white-space:nowrap;border:1px solid transparent;vertical-align:middle}
+.priority-chip svg{width:16px!important;height:16px!important;stroke-width:2.25;flex:none}
+.priority-critical{color:#ad242a!important;background:#fde8e8!important;border-color:#f4b7b7!important}
+.priority-high{color:#bd5c12!important;background:#fff0e1!important;border-color:#f6d0aa!important}
+.priority-medium{color:#956508!important;background:#fff6d9!important;border-color:#f2df9d!important}
+.priority-low{color:#206fa9!important;background:#e7f3ff!important;border-color:#c3e0f9!important}
+.priority-planned{color:#506d70!important;background:#eef2f3!important;border-color:#d6e0e2!important}
+.ticket-summary .priority-summary{background:#f6f8f8!important}
+.ticket-summary .priority-summary strong{display:flex;align-items:center;margin-top:5px}
+.ticket-summary .priority-summary .priority-chip{font-size:13px}
+.ticket-detail-row .priority-chip{font-size:12px}
+@media(max-width:760px){#modal-root .ticket-summary .priority-summary .priority-chip{font-size:14px}#modal-root .ticket-detail-row .priority-chip{font-size:12px}}
+[data-theme=dark] .priority-chip{filter:saturate(.9)}
+
+/* Dashboard inteligente — dados derivados dos registros, sem percentuais fictícios */
+.dashboard-heading{display:flex;align-items:center;justify-content:space-between;gap:16px;margin:2px 0 22px}
+.dashboard-heading h2{font-size:26px;margin:6px 0;color:#113c3b;letter-spacing:-.7px}
+.dashboard-heading p{margin:0;color:#829394;font-size:13px}
+.dashboard-eyebrow{font-size:10px;font-weight:800;letter-spacing:1.5px;color:#0c8170}
+.dashboard-live{display:inline-flex;align-items:center;gap:8px;white-space:nowrap;border:1px solid #cfe8de;border-radius:50px;background:#effaf5;color:#256958;padding:10px 13px;font-size:11px;font-weight:700}
+.dashboard-live>span{height:7px;width:7px;background:#29a87c;border-radius:50%}
+.dashboard-chart-grid,.dashboard-bottom-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:18px;margin:22px 0}
+.dashboard-panel{min-width:0;padding-bottom:20px}
+.dashboard-total{font-size:11px;color:#78908f;font-weight:700}
+.dashboard-bars{display:flex;flex-direction:column;gap:17px;padding:10px 24px 22px}
+.dashboard-bar-item{display:block;text-align:left;width:100%;border:0;background:transparent;padding:0;cursor:pointer;color:inherit}
+.dashboard-bar-item:hover .dashboard-track{outline:2px solid #b6d9d0;outline-offset:2px}
+.dashboard-bar-top{display:flex;align-items:center;justify-content:space-between;gap:10px;margin-bottom:9px;font-size:13px}
+.dashboard-bar-top>strong{font-size:15px;white-space:nowrap}
+.dashboard-bar-top>strong small{font-size:11px;color:#899b9b}
+.dashboard-track{height:11px;display:block;border-radius:99px;background:#edf1f2;overflow:hidden}
+.dashboard-fill{height:100%;display:block;border-radius:99px;background:#0a7669;transition:width .3s ease}
+.dashboard-fill.critical{background:#c62828}.dashboard-fill.high{background:#d96a16}.dashboard-fill.medium{background:#b77908}.dashboard-fill.low{background:#2775b6}.dashboard-fill.planned{background:#60777a}
+.dashboard-status-dot{display:inline-block;height:9px;width:9px;border-radius:50%;background:#2775b6;margin-right:8px}
+.dashboard-status-dot.high{background:#d96a16}.dashboard-status-dot.planned{background:#60777a}
+.dashboard-team{padding:0 20px}
+.dashboard-team-row{display:flex;align-items:center;gap:11px;padding:10px 3px;border-bottom:1px solid #edf1f0}
+.dashboard-team-row:last-child{border-bottom:0}
+.dashboard-avatar{width:37px;height:37px;display:grid;place-items:center;background:#e6f5f0;color:#0c5c4f;border-radius:12px;font-weight:800;flex:none}
+.dashboard-team-name{display:flex;flex-direction:column;gap:2px;flex:1;min-width:0;font-size:12px}
+.dashboard-team-name small{font-size:10px;color:#849698}
+.dashboard-team-count{background:#edf5f3;border-radius:99px;padding:7px 9px;font-size:11px;font-weight:700;color:#23594f}
+.dashboard-hint{font-size:11px;color:#889898;margin:14px 23px 0}
+.dashboard-activity{display:flex;gap:11px;padding:12px 22px;border-bottom:1px solid #edf1f0;align-items:flex-start}
+.dashboard-activity>div{min-width:0;display:flex;flex-direction:column;gap:6px}
+.dashboard-activity strong{font-size:12px;overflow-wrap:anywhere}
+.dashboard-activity small{color:#829393;font-size:10px;overflow-wrap:anywhere}
+.dashboard-empty{padding:35px 22px;display:flex;flex-direction:column;align-items:center;text-align:center;gap:9px;color:#7d9292}
+.dashboard-empty svg{height:28px;width:28px}
+.dashboard-empty strong{color:#27534e;font-size:13px}
+.dashboard-empty span{font-size:12px}
+.dashboard-records{display:grid;gap:18px}
+.kpi-icon svg{width:25px;height:25px;stroke-width:1.9}
+[data-theme=dark] .dashboard-heading h2,[data-theme=dark] .dashboard-empty strong{color:#edf7f4}
+[data-theme=dark] .dashboard-track{background:#34484b}
+[data-theme=dark] .dashboard-team-row,[data-theme=dark] .dashboard-activity{border-color:#34484b}
+[data-theme=dark] .dashboard-team-count,[data-theme=dark] .dashboard-avatar{background:#294a45;color:#d9f3e8}
+@media(max-width:900px){.dashboard-chart-grid,.dashboard-bottom-grid{grid-template-columns:1fr}}
+@media(max-width:600px){.dashboard-heading{align-items:flex-start;flex-direction:column}.dashboard-heading h2{font-size:23px}.dashboard-bars{padding:10px 16px 18px}.dashboard-panel .panel-head{gap:10px}.dashboard-bar-top{font-size:12px}.dashboard-total{font-size:10px}}
+.dashboard-leader{margin:20px 0}.dashboard-leader .panel-head h2{display:flex;align-items:center;gap:9px}.dashboard-leader .panel-head h2 svg{width:20px;height:20px;color:#bd8b29}.dashboard-leader-people{padding:6px 22px 10px;display:grid;gap:12px}.dashboard-leader-person{display:flex;align-items:center;gap:13px;background:#f6f9f8;border:1px solid #e3eeeb;border-radius:17px;padding:16px}.dashboard-leader-avatar{display:grid;place-items:center;flex:none;width:54px;height:54px;border-radius:17px;background:#e5f5ee;color:#0b5b4d;font-weight:850;font-size:21px}.dashboard-leader-person>span:nth-child(2){display:flex;flex-direction:column;gap:5px;flex:1;min-width:0}.dashboard-leader-person>span:nth-child(2) strong{font-size:17px;color:#113c3b}.dashboard-leader-person>span:nth-child(2) small{font-size:11px;color:#7a9290}.dashboard-leader-number{display:flex;flex-direction:column;align-items:center;font-size:28px;font-weight:850;color:#07584d}.dashboard-leader-number small{font-size:10px;font-weight:600;color:#809390}[data-theme=dark] .dashboard-leader-person{background:#233b3f;border-color:#365154}[data-theme=dark] .dashboard-leader-person>span:nth-child(2) strong{color:#edf7f4}[data-theme=dark] .dashboard-leader-number{color:#9be3c8}@media(max-width:600px){.dashboard-leader-people{padding:6px 14px 10px}.dashboard-leader-person{padding:12px}.dashboard-leader-avatar{width:46px;height:46px}.dashboard-leader-person>span:nth-child(2) strong{font-size:14px}}.ranking-filters{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:12px;padding:12px 22px 20px}.ranking-filters label{display:grid;gap:7px;font-size:12px;color:#66807e}.ranking-filters select{width:100%;min-width:0;min-height:43px;padding:9px;border-radius:11px;border:1px solid #d8e7e2;background:#fff;color:#1b4944}.ranking-position{font-size:16px;font-weight:800;color:#bd8b29}.ranking-name{display:grid;gap:4px;flex:1}.ranking-name small{color:#78918f}[data-theme=dark] .ranking-filters select{background:#243b40;color:#e7f5f1}@media(max-width:700px){.ranking-filters{grid-template-columns:1fr}}
+.unit-filter-pill{display:inline-flex;align-items:center;gap:8px;background:#ffffff;border:1px solid #d8e2e2;border-radius:28px;padding:6px 14px;box-shadow:0 2px 8px rgba(16,53,55,0.04)}
+.unit-filter-icon{font-size:15px;opacity:.9}
+.global-unit-select{border:0;background:transparent;font-size:12px;font-weight:700;color:#1b3537;outline:none;cursor:pointer;max-width:210px}
+.btn-topbar-export{display:inline-flex;align-items:center;gap:7px;background:linear-gradient(135deg,#1d68cf,#154fa8);color:#ffffff;border:0;border-radius:24px;padding:9px 16px;font-size:12px;font-weight:750;cursor:pointer;box-shadow:0 4px 14px rgba(29,104,207,.25);transition:all .2s ease;white-space:nowrap}
+.btn-topbar-export:hover{background:linear-gradient(135deg,#175bb8,#11428e);transform:translateY(-1px);box-shadow:0 6px 18px rgba(29,104,207,.35)}
+.active-unit-banner{display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:12px;padding:12px 18px;margin-bottom:20px;background:#e8f3ff;border:1px solid #b9daf9;border-radius:12px;color:#164b8a;font-size:12px}
+.active-unit-banner strong{color:#0c3566}
+.btn-export-unit-pdf{border:0;border-radius:8px;background:#195cac;color:#fff;padding:6px 12px;font-size:11px;font-weight:750;cursor:pointer}
+.btn-clear-unit{border:1px solid #a3cbf5;border-radius:8px;background:#ffffff;color:#1a569c;padding:6px 12px;font-size:11px;font-weight:700;cursor:pointer}
+[data-theme=dark] .unit-filter-pill{background:#1a2b30!important;border-color:#34494b!important}
+[data-theme=dark] .global-unit-select{color:#edf5f3!important;background:#1a2b30!important}
+[data-theme=dark] .active-unit-banner{background:#183344!important;border-color:#274f6b!important;color:#9cd0fc!important}
+[data-theme=dark] .active-unit-banner strong{color:#e0f0ff!important}
+[data-theme=dark] .btn-clear-unit{background:#1f3747!important;border-color:#375b75!important;color:#9cd0fc!important}
+@media(max-width:900px){.global-unit-select{max-width:140px}}
+@media(max-width:650px){.unit-filter-pill{padding:4px 8px}.global-unit-select{max-width:110px;font-size:11px}.btn-topbar-export span:last-child{display:none}.btn-topbar-export{padding:8px 10px}}
+
+</style></head><body>
+<div class="shell" id="shell"><div class="overlay" id="overlay"></div><aside class="sidebar" aria-label="Menu principal"><div class="identity"><div class="logo"><img src="./aguia-mark.svg" alt="Símbolo Águia Gestão" width="35" height="35"></div><div><strong>Águia Gestão</strong><small>OPERATIONS PLATFORM</small></div></div><div class="environment"><span class="dot"></span> WORKSPACE · DEMONSTRAÇÃO</div><nav id="nav" aria-label="Módulos"></nav><div class="side-bottom">◉ Interface demonstrativa<br>Dados simulados · Sem conexão com API<br>Build visual · Ambiente de desenvolvimento</div></aside><div class="workspace"><header class="topbar"><div style="display:flex;align-items:center;gap:12px"><button id="menu" class="mobile-menu" aria-label="Abrir menu" aria-expanded="false">☰</button><div class="crumb">Workspace &nbsp;/&nbsp; <strong id="crumb">Visão geral</strong></div></div><div class="top-actions">
+<div class="unit-filter-pill"><span class="unit-filter-icon">🏢</span><select id="global-unit-select" class="global-unit-select" onchange="onGlobalUnitChange(this.value)" aria-label="Filtrar por Unidade"><option value="all">Todas as unidades</option></select></div>
+<button type="button" class="btn-topbar-export" onclick="exportConsolidatedReportPDF()" title="Exportar Relatório Consolidado em PDF"><span>📊</span><span>Exportar PDF</span></button>
+<input class="search" id="search" aria-label="Pesquisar" placeholder="⌕  Buscar registros..."><span class="chip">● Ambiente DEV</span><span class="avatar">AG</span></div></header><main class="main"><div class="heading"><div><p class="eyebrow">CENTRAL DE OPERAÇÕES</p><h1 id="title">Visão geral</h1><p class="subtitle" id="subtitle">Visibilidade completa do atendimento e infraestrutura.</p></div><button class="primary" id="action">+ Novo chamado</button></div><div class="banner">Prévia de interface corporativa com informações fictícias. As ações de navegação e busca funcionam nesta demonstração; cadastros reais dependem do CRM autenticado.</div><div id="content"></div><footer class="footer">Águia Gestão CRM · Design system em evolução · Nenhum dado real é utilizado</footer></main></div></div><div id="modal-root"></div><div id="toast-root" role="status" aria-live="polite"></div>
+<script>
+const groups=[{title:'OPERAÇÕES',items:[['◫','Visão geral'],['▤','Chamados'],['◇','Ordens de serviço'],['✓','Vistorias'],['▦','Agenda'],['◷','SLA e prioridades']]},{title:'RELACIONAMENTO',items:[['♙','Clientes'],['♧','Equipe técnica']]},{title:'INFRAESTRUTURA',items:[['▦','Ativos'],['▥','Estoque']]},{title:'GESTÃO',items:[['▣','Relatórios'],['⚙','Configurações']]}];
+const sidebarDescriptions={'Visão geral':'Painel e indicadores','Chamados':'Atendimento e suporte','Ordens de serviço':'Execução técnica','Vistorias':'Checklist e vistorias Smart Fit','Agenda':'Escala e visitas técnicas','SLA e prioridades':'Prazos e criticidade','Clientes':'Empresas e unidades','Equipe técnica':'Profissionais N1, N2 e N3','Ativos':'Equipamentos e infraestrutura','Estoque':'Materiais e suprimentos','Relatórios':'Indicadores e análises','Configurações':'Personalização e acesso'};
+const data={
+tickets:[
+  ['#CH-1026','Catraca 01 com leitor facial travado','Smart Fit · Unidade Paulista','Crítica','Em andamento','35m'],
+  ['#CH-1025','Switch PoE do Rack com portas em falha','Smart Fit · Unidade Moema','Alta','Em andamento','1h 15m'],
+  ['#CH-1024','Wi-Fi instável no salão de musculação','Smart Fit · Unidade Centro','Crítica','Em andamento','2h 14m'],
+  ['#CH-1023','Câmera CFTV sem imagem no DVR','Bio Ritmo · Unidade Sul','Alta','Aberto','5h 32m'],
+  ['#CH-1022','Ponto de rede do balcão sem link','Unidade demonstração','Média','Resolvido','Concluído'],
+  ['#CH-1021','Totem Facial SPA com lentidão de leitura','Smart Fit · Unidade Jardins','Alta','Aberto','2h 45m'],
+  ['#CH-1020','Áudio da sala de ginástica sem som no canal 2','Smart Fit · Unidade Santana','Média','Em andamento','3h 50m'],
+  ['#CH-1019','TV 03 da área cardio sem sinal HDMI','Smart Fit · Unidade Butantã','Baixa','Aberto','6h 10m'],
+  ['#CH-1018','Antena Wi-Fi desconectada na sala de bike','Smart Fit · Unidade Moema','Média','Resolvido','Ontem'],
+  ['#CH-1017','Catraca PNE com travamento mecânico','Smart Fit · Unidade Paulista','Alta','Resolvido','Ontem']
+],
+orders:[
+  ['#OS-211','Substituição de motor e sensor da catraca 01','Smart Fit · Unidade Paulista','Crítica','Em execução','Hoje · 14:00'],
+  ['#OS-210','Troca de Switch PoE 24p gerenciável no rack','Smart Fit · Unidade Moema','Alta','Pendente','Hoje · 16:30'],
+  ['#OS-209','Calibração e atualização do leitor Facial SPA','Smart Fit · Unidade Jardins','Alta','Pendente','Amanhã · 09:00'],
+  ['#OS-208','Instalação de 5 access points Wi-Fi 6','Smart Fit · Unidade Centro','Alta','Em execução','Hoje'],
+  ['#OS-207','Organização e certificação de rack principal','Bio Ritmo · Unidade Sul','Média','Pendente','Amanhã'],
+  ['#OS-206','Substituição de câmeras IP dome no salão','Unidade demonstração','Baixa','Concluída','Ontem'],
+  ['#OS-205','Reparo de amplificador e fiação da sala de ginástica','Smart Fit · Unidade Santana','Média','Pendente','Amanhã']
+],
+clients:[
+  ['#CL-001','Smart Fit · Unidade Paulista','São Paulo','Ativo','2 chamados',''],
+  ['#CL-002','Smart Fit · Unidade Moema','São Paulo','Ativo','2 chamados',''],
+  ['#CL-003','Smart Fit · Unidade Jardins','São Paulo','Ativo','1 chamado',''],
+  ['#CL-004','Smart Fit · Unidade Santana','São Paulo','Ativo','1 chamado',''],
+  ['#CL-005','Smart Fit · Unidade Butantã','São Paulo','Ativo','1 chamado',''],
+  ['#CL-006','Smart Fit · Unidade Centro','São Paulo','Ativo','1 chamado',''],
+  ['#CL-007','Bio Ritmo · Unidade Sul','São Paulo','Ativo','1 chamado',''],
+  ['#CL-008','Unidade demonstração','São Paulo','Ativo','1 chamado','']
+],assets:[['#AT-301','Switch 24 portas','Rack principal · 192.168.1.10','Rede','Ativo',''],['#AT-302','Access Point Wi-Fi 6','Salão · 192.168.1.21','Wi-Fi','Ativo',''],['#AT-303','DVR 16 canais','CFTV · 192.168.1.30','CFTV','Manutenção','']],stock:[['#MT-01','Cabo CAT6','85 metros','Material','Normal',''],['#MT-02','Keystone RJ45','12 unidades','Material','Reposição',''],['#MT-03','Conector RJ45','150 unidades','Material','Normal','']],team:[['#TEC-01','Lucas','N1','Suporte','Ativo',''],['#TEC-02','Washington','N2','Redes','Ativo',''],['#TEC-03','Renato','N2','Infraestrutura','Ativo',''],['#TEC-04','Rodrigo','N1','Suporte','Ativo',''],['#TEC-05','Robert','N3','Redes','Ativo',''],['#TEC-06','Roberto','N2','CFTV','Ativo',''],['#TEC-07','Agnaldo','N3','Infraestrutura','Ativo',''],['#TEC-08','Reginaldo','N1','Suporte','Ativo','']],sla:[['#SLA-01','Chamados críticos','Resposta em até 1 hora','Crítica','Atenção',''],['#SLA-02','Chamados de alta prioridade','Resposta em até 4 horas','Alta','Dentro do prazo','']],reports:[['#REL-01','Volume de chamados','Resumo por período','Operação','Disponível',''],['#REL-02','Inventário técnico','Equipamentos e status','Infraestrutura','Disponível','']],admin:[['#CFG-01','Perfis e permissões','Administrador, supervisor e técnico','Acesso','Planejado',''],['#CFG-02','Parâmetros de operação','Filas, categorias e SLA','Configuração','Planejado','']],
+vistorias:[
+  ['#VIS-101','Câmera Facial SPA com leitura intermitente','Smart Fit · Unidade Paulista','Alta','Pendente','Facial SPA'],
+  ['#VIS-102','Catraca 02 com travamento mecânico','Smart Fit · Unidade Santana','Crítica','Aprovado (OS criada)','Catracas'],
+  ['#VIS-103','Computador do Balcão não reconhece leitor','Smart Fit · Unidade Butantã','Média','Pendente','Balcão'],
+  ['#VIS-104','Switch PoE do Rack com superaquecimento','Smart Fit · Unidade Moema','Alta','Aprovado (OS criada)','Rack'],
+  ['#VIS-105','CFTV: câmera 08 sem sinal de vídeo','Smart Fit · Unidade Paulista','Alta','Pendente','Câmeras'],
+  ['#VIS-106','Zona de som da musculação sem áudio no canal 2','Bio Ritmo · Unidade Sul','Média','Pendente','Som'],
+  ['#VIS-107','Access point Wi-Fi com sinal fraco no vestiário','Smart Fit · Unidade Paulista','Alta','Aprovado (OS criada)','Antenas e Wi-Fi']
+],
+agenda:[
+  ['#AG-201','Substituição de leitor facial e calibração','Smart Fit · Unidade Paulista','Alta','Hoje · 14:00 (2.0h)','Lucas Silva (N2)'],
+  ['#AG-202','Revisão e troca de solenóide na Catraca 02','Smart Fit · Unidade Santana','Crítica','Hoje · 16:30 (1.5h)','Mariana Rocha (N3)'],
+  ['#AG-203','Instalação de exaustor e switch PoE no Rack','Smart Fit · Unidade Moema','Alta','Amanhã · 09:00 (3.0h)','Mariana Rocha (N3)'],
+  ['#AG-204','Alinhamento e teste de cobertura Wi-Fi','Bio Ritmo · Unidade Sul','Média','Amanhã · 13:00 (2.0h)','Felipe Santos (N1)']
+]};
+// Persistência local apenas para dados fictícios desta demonstração.
+try{
+ const saved=JSON.parse(localStorage.getItem('aguia-demo-records-v1')||'null');
+ if(saved&&typeof saved==='object'){
+  for(const key of Object.keys(data)){
+   if(Array.isArray(saved[key])&&saved[key].every(row=>Array.isArray(row)&&row.length===6&&row.every(value=>typeof value==='string')))data[key]=saved[key];
+  }
+ }
+}catch{/* Armazenamento indisponível: a demonstração continua em memória. */}
+function saveDemo(){try{localStorage.setItem('aguia-demo-records-v1',JSON.stringify(data))}catch{/* Sem persistência neste navegador. */}}
+const sampleTeam=[['#TEC-01','Lucas','N1','Suporte','Ativo',''],['#TEC-02','Washington','N2','Redes','Ativo',''],['#TEC-03','Renato','N2','Infraestrutura','Ativo',''],['#TEC-04','Rodrigo','N1','Suporte','Ativo',''],['#TEC-05','Robert','N3','Redes','Ativo',''],['#TEC-06','Roberto','N2','CFTV','Ativo',''],['#TEC-07','Agnaldo','N3','Infraestrutura','Ativo',''],['#TEC-08','Reginaldo','N1','Suporte','Ativo','']];
+if(data.team.length===2&&data.team[0][1]==='Técnico N1'&&data.team[1][1]==='Técnico N2'){data.team=sampleTeam;saveDemo()}
+
+const unitCodes={};
+try{const saved=JSON.parse(localStorage.getItem('aguia-demo-unit-codes-v1')||'{}');if(saved&&typeof saved==='object'&&!Array.isArray(saved))Object.assign(unitCodes,saved)}catch{}
+function saveUnitCodes(){try{localStorage.setItem('aguia-demo-unit-codes-v1',JSON.stringify(unitCodes))}catch{}}
+const clientHierarchy={};
+try{const saved=JSON.parse(localStorage.getItem('aguia-demo-client-hierarchy-v1')||'{}');if(saved&&typeof saved==='object'&&!Array.isArray(saved))Object.assign(clientHierarchy,saved)}catch{}
+function saveHierarchy(){try{localStorage.setItem('aguia-demo-client-hierarchy-v1',JSON.stringify(clientHierarchy))}catch{}}
+function clientDisplay(row){return row[1]+(unitCodes[row[0]]?' · '+unitCodes[row[0]]:'')}
+function clientLabel(row){const parent=data.clients.find(p=>p[0]===clientHierarchy[row[0]]);return parent?parent[1]+' › '+clientDisplay(row):clientDisplay(row)}
+function clientOptions(){return data.clients.filter(r=>r[3]==='Ativo').map(r=>'<option value="'+esc(r[0])+'">'+esc(clientLabel(r))+'</option>').join('')}
+const relationships={};
+try{const saved=JSON.parse(localStorage.getItem('aguia-demo-links-v1')||'{}');if(saved&&typeof saved==='object'&&!Array.isArray(saved))Object.assign(relationships,saved)}catch{}
+function saveLinks(){try{localStorage.setItem('aguia-demo-links-v1',JSON.stringify(relationships))}catch{}}
+let current='Visão geral',query='',clientNetworkFilter='all',selectedUnit='all';
+try{const savedU=localStorage.getItem('aguia-selected-unit');if(savedU)selectedUnit=savedU;}catch(e){}
+
+function getAllUnits(){
+  const s=new Set();
+  data.clients.forEach(c=>{if(c[1])s.add(c[1].trim())});
+  data.tickets.forEach(t=>{if(t[2])s.add(t[2].trim())});
+  data.orders.forEach(o=>{if(o[2])s.add(o[2].trim())});
+  if(data.vistorias)data.vistorias.forEach(v=>{if(v[2])s.add(v[2].trim())});
+  return Array.from(s).sort((a,b)=>a.localeCompare(b,'pt-BR'));
+}
+
+function onGlobalUnitChange(val){
+  selectedUnit=val;
+  try{localStorage.setItem('aguia-selected-unit',selectedUnit)}catch(e){}
+  render();
+  updateUnitSelectOptions();
+  notify(val==='all'?'Exibindo todas as unidades da rede.':'Filtro ativo: '+val);
+}
+
+function updateUnitSelectOptions(){
+  const sel=document.getElementById('global-unit-select');
+  if(!sel)return;
+  const units=getAllUnits();
+  let html='<option value="all" '+(selectedUnit==='all'?'selected':'')+'>🏢 Todas as unidades</option>';
+  units.forEach(u=>{
+    html+='<option value="'+esc(u)+'" '+(selectedUnit===u?'selected':'')+'>'+esc(u)+'</option>';
+  });
+  sel.innerHTML=html;
+}
+const definitions={
+'Chamados':{key:'tickets',singular:'chamado',fields:[['Título','text'],['Cliente / Unidade','text'],['Prioridade','select:Crítica|Alta|Média|Baixa|Planejada']]},
+'Ordens de serviço':{key:'orders',singular:'ordem de serviço',fields:[['Descrição da atividade','text'],['Unidade / Local','text'],['Prioridade','select:Crítica|Alta|Média|Baixa|Planejada']]},
+'Vistorias':{key:'vistorias',singular:'vistoria',fields:[['Demanda / Apontamento','text'],['Unidade / Setor','text'],['Prioridade','select:Crítica|Alta|Média|Baixa']]},
+'Agenda':{key:'agenda',singular:'agendamento técnico',fields:[['Atividade prevista','text'],['Unidade / Cliente','text'],['Prioridade','select:Crítica|Alta|Média|Baixa']]},
+'Clientes':{key:'clients',singular:'cliente',fields:[['Nome / Razão social','text'],['Cidade','text'],['Situação','select:Ativo|Inativo']]},
+'Ativos':{key:'assets',singular:'ativo',fields:[['Equipamento','text'],['Local / Endereço IP','text'],['Categoria','select:Rede|Wi-Fi|CFTV|Servidor|Outro']]},
+'Estoque':{key:'stock',singular:'material',fields:[['Material','text'],['Quantidade / Unidade','text'],['Categoria','select:Material|Equipamento|Acessório']]},
+'Equipe técnica':{key:'team',singular:'técnico',fields:[['Nome do profissional','text'],['Nível','select:N1|N2|N3'],['Área','select:Suporte|Redes|Infraestrutura|CFTV']]},
+'SLA e prioridades':{key:'sla',singular:'regra de SLA',fields:[['Nome da regra','text'],['Meta de atendimento','text'],['Prioridade','select:Crítica|Alta|Média|Baixa']]},
+'Relatórios':{key:'reports',singular:'relatório',fields:[['Nome do relatório','text'],['Descrição','text'],['Categoria','select:Operação|Infraestrutura|Gestão']]},
+'Configurações':{key:'admin',singular:'configuração',fields:[['Nome da configuração','text'],['Descrição','text'],['Área','select:Acesso|Configuração|Operação']]}
+};
+const statusDefault={'Chamados':'Aberto','Ordens de serviço':'Pendente','Vistorias':'Pendente','Agenda':'Agendado','Clientes':'Ativo','Ativos':'Ativo','Estoque':'Normal','Equipe técnica':'Ativo','SLA e prioridades':'Planejado','Relatórios':'Disponível','Configurações':'Planejado'};
+function notify(message){document.getElementById('toast-root').innerHTML='<div class="toast">'+esc(message)+'</div>';setTimeout(()=>document.getElementById('toast-root').replaceChildren(),3500)}
+function closeModal(){document.getElementById('modal-root').replaceChildren()}
+const relatedFields={
+'Clientes':[['Cliente pai / Rede','clients',false]],
+'Chamados':[['Técnico responsável','team',false]],
+'Ordens de serviço':[['Chamado de origem','tickets',false],['Técnico responsável','team',false]],
+'Ativos':[['Cliente / Unidade','clients',true]],
+'Estoque':[['Cliente / Unidade de destino','clients',false]],
+'Relatórios':[['Cliente / Unidade','clients',false]]
+};
+function relatedOptions(key){return data[key].filter(row=>key!=='clients'||row[3]==='Ativo').map(row=>'<option value="'+esc(row[0])+'">'+esc(key==='clients'?clientLabel(row):key==='team'?row[1]+' · '+row[2]:row[1])+' ('+esc(row[0])+')</option>').join('')}
+function openCreate(page=current,presetClientId=''){if(page==='Clientes')return openClientForm();if(page==='Visão geral')page='Chamados';const d=definitions[page];if(!d)return;const fields=d.fields.map(([label,type],i)=>'<label>'+esc(label)+(((page==='Chamados'||page==='Ordens de serviço')&&i===1)?'<select name="f'+i+'" required aria-label="Selecionar cliente ou unidade"><option value="" disabled selected>Selecione um cliente / unidade ▾</option>'+clientOptions()+'</select>':type.startsWith('select:')?'<select name="f'+i+'" required>'+type.slice(7).split('|').map(v=>'<option>'+esc(v)+'</option>').join('')+'</select>':'<input name="f'+i+'" required maxlength="160" placeholder="Informe '+esc(label.toLowerCase())+'">')+'</label>').join('')+(page==='Clientes'?'<label>Sigla / Código da unidade filha (opcional)<input name="unitCode" maxlength="32" pattern="[a-zA-Z0-9_-]+" placeholder="Ex.: SPCBUT06" autocomplete="off"><small class="unit-caption">Preencha quando este cliente for uma unidade de uma rede.</small></label>':'')+(relatedFields[page]||[]).map(([label,key,required],i)=>'<label>'+esc(label)+'<select name="rel'+i+'" '+(required?'required':'')+'><option value="">'+(required?'Selecione um registro':'Não vinculado')+' ▾</option>'+relatedOptions(key)+'</select></label>').join('');document.getElementById('modal-root').innerHTML='<div class="modal-backdrop" id="modal-backdrop"><section class="modal" role="dialog" aria-modal="true" aria-labelledby="modal-title"><div class="modal-head"><h2 id="modal-title">Cadastrar '+esc(d.singular)+'</h2><button class="secondary" type="button" id="modal-close" aria-label="Fechar">✕</button></div><form id="create-form" class="modal-body">'+fields+'<div class="modal-foot"><button type="button" class="secondary" id="modal-cancel">Cancelar</button><button type="submit" class="primary">Salvar '+esc(d.singular)+'</button></div></form></section></div>';document.getElementById('modal-close').onclick=closeModal;document.getElementById('modal-cancel').onclick=closeModal;document.getElementById('modal-backdrop').onclick=e=>{if(e.target.id==='modal-backdrop')closeModal()};document.getElementById('create-form').onsubmit=e=>{e.preventDefault();const fd=new FormData(e.target);const values=d.fields.map((_,i)=>String(fd.get('f'+i)||'').trim());if(values.some(v=>!v))return;if((page==='Chamados'||page==='Ordens de serviço')&&values[1]){const selected=data.clients.find(r=>r[0]===values[1]);if(!selected||selected[3]!=='Ativo'){notify('Selecione um cliente ativo');return}values[1]=clientLabel(selected)}const prefix={tickets:'CH',orders:'OS',clients:'CL',assets:'AT',stock:'MT',team:'TEC',sla:'SLA',reports:'REL',admin:'CFG',vistorias:'VIS',agenda:'AG'}[d.key];const next=String(Math.max(0,...data[d.key].map(r=>Number((r[0].match(/(\d+)$/)||[])[1])||0))+1).padStart(3,'0');data[d.key].unshift(['#'+prefix+'-'+next,values[0],values[1],values[2],statusDefault[page],'Novo']);if(page==='Clientes'){const c=data.clients[0];c[3]=values[2];c[4]='0 chamados';c[5]='';}const createdId=data[d.key][0][0];const refs=(relatedFields[page]||[]).map(([label,key],i)=>({label,key,id:String(fd.get('rel'+i)||'')})).filter(ref=>ref.id);if(page==='Clientes'&&refs.length){clientHierarchy[createdId]=refs[0].id;saveHierarchy();const code=String(fd.get('unitCode')||'').trim().toUpperCase();if(code){unitCodes[createdId]=code;saveUnitCodes()}}else if(refs.length){relationships[createdId]=refs;saveLinks()}saveDemo();current=page;closeModal();render();notify('Registro demonstrativo criado com sucesso')};if(presetClientId){const clientSelect=document.querySelector('#create-form select[name="f1"]');if(clientSelect)clientSelect.value=presetClientId}document.querySelector('#create-form input')?.focus()}
+function openClientDetail(clientId){const row=data.clients.find(r=>r[0]===clientId);if(!row)return;const parent=data.clients.find(r=>r[0]===clientHierarchy[clientId]);const units=data.clients.filter(r=>clientHierarchy[r[0]]===clientId);const ids=new Set([clientId,...units.map(u=>u[0])]);const names=new Set([row[1],clientLabel(row),...units.map(u=>u[1]),...units.map(u=>clientLabel(u))]);const tickets=data.tickets.filter(t=>names.has(t[2]));const orders=data.orders.filter(o=>names.has(o[2]));const assets=data.assets.filter(a=>(relationships[a[0]]||[]).some(link=>link.key==='clients'&&ids.has(link.id)));const card=(label,items,page)=>'<section class="unit-section"><div class="unit-section-head"><strong>'+esc(label)+' <span class="unit-count">'+items.length+'</span></strong></div>'+(items.length?items.map(item=>'<div class="unit-record"><span>'+esc(item[0])+'</span><strong>'+esc(item[1])+'</strong><small>'+esc(item[4])+'</small></div>').join(''):'<p class="unit-empty">Nenhum registro vinculado nesta demonstração.</p>')+'</section>';document.getElementById('modal-root').innerHTML='<div class="modal-backdrop" id="modal-backdrop"><section class="modal unit-modal" role="dialog" aria-modal="true" aria-labelledby="modal-title"><div class="modal-head"><div><h2 id="modal-title">'+esc(clientDisplay(row))+'</h2><small class="unit-caption">'+esc(parent?'Unidade de '+parent[1]:'Cliente pai / Rede')+' · '+esc(row[0])+(unitCodes[clientId]?' · '+esc(unitCodes[clientId]):'')+'</small></div><button class="secondary" id="modal-close" type="button">✕</button></div><div class="modal-body"><div class="unit-info"><div><span>Cidade / Local</span><strong>'+esc(row[2])+'</strong></div><div><span>Situação</span><strong>'+esc(row[3])+'</strong></div><div><span>Unidades filhas</span><strong>'+units.length+'</strong></div></div>'+(units.length?'<section class="unit-section"><div class="unit-section-head"><strong>Unidades vinculadas</strong></div>'+units.map(u=>'<button class="unit-child-button" data-client-id="'+esc(u[0])+'">'+esc(clientDisplay(u))+' →</button>').join('')+'</section>':'')+card('Chamados',tickets,'Chamados')+card('Ordens de serviço',orders,'Ordens de serviço')+card('Ativos / Equipamentos',assets,'Ativos')+'<div class="unit-actions"><button class="secondary" id="unit-edit" type="button">Editar cadastro</button><button class="primary" id="unit-ticket" type="button">+ Novo chamado</button><button class="secondary" id="unit-order" type="button">+ Nova OS</button></div><p class="unit-note">Resumo demonstrativo. Os vínculos do banco de dados real ainda serão integrados.</p></div></section></div>';document.getElementById('modal-close').onclick=closeModal;document.getElementById('modal-backdrop').onclick=e=>{if(e.target.id==='modal-backdrop')closeModal()};document.querySelectorAll('[data-client-id]').forEach(b=>b.onclick=()=>openClientDetail(b.dataset.clientId));document.getElementById('unit-edit').onclick=()=>openClientForm(clientId);document.getElementById('unit-ticket').onclick=()=>openCreate('Chamados',clientId);document.getElementById('unit-order').onclick=()=>openCreate('Ordens de serviço',clientId)}
+
+const ticketNotes=(()=>{try{return JSON.parse(localStorage.getItem('aguia-demo-ticket-notes-v1')||'{}')}catch{return {}}})();
+function saveTicketNotes(){try{localStorage.setItem('aguia-demo-ticket-notes-v1',JSON.stringify(ticketNotes))}catch{}}
+function ticketActor(){let actor='';try{actor=sessionStorage.getItem('aguia-demo-actor-v1')||''}catch{}if(actor)return actor;const name=prompt('Identifique quem está realizando esta alteração (nome do operador):');if(name===null)return null;actor=name.trim().slice(0,80);if(!actor){notify('Identifique o operador para registrar a alteração');return null}try{sessionStorage.setItem('aguia-demo-actor-v1',actor)}catch{}return actor}
+function ticketHistory(id,message,actor){const now=new Date();(ticketNotes[id]||(ticketNotes[id]=[])).unshift({message,actor:actor||'Autor não identificado (registro anterior)',timestamp:now.toISOString(),at:now.toLocaleString('pt-BR')});saveTicketNotes()}
+function openTicketDetail(row,tab='overview'){
+ const id=row[0],links=relationships[id]||[],assigned=links.filter(x=>x.key==='team').map(x=>data.team.find(t=>t[0]===x.id)).filter(Boolean),orders=data.orders.filter(o=>(relationships[o[0]]||[]).some(x=>x.key==='tickets'&&x.id===id));
+ const activeTab=['overview','history','service','orders'].includes(tab)?tab:'overview';
+ const tabs=[['overview','Visão geral'],['history','Histórico'],['service','Atendimento'],['orders','OS vinculadas']];
+ const summary='<div class="ticket-summary"><div><small>PRIORIDADE</small><strong>'+esc(row[3])+'</strong></div><div><small>STATUS</small><strong>'+esc(row[4])+'</strong></div><div><small>RESPONSÁVEL</small><strong>'+esc(assigned.map(t=>t[1]+' · '+t[2]).join(', ')||'Não atribuído')+'</strong></div><div><small>SLA</small><strong>Não configurado</strong></div></div>';
+ const overview='<div class="ticket-section"><h3>Informações do chamado</h3>'+[['Identificador',row[0]],['Título',row[1]],['Cliente / Unidade',row[2]],['Prioridade',row[3]],['Status',row[4]],['Prazo',row[5]]].map(([k,v])=>'<div class="ticket-detail-row"><span>'+esc(k)+'</span><strong>'+esc(v)+'</strong></div>').join('')+'</div>';
+ const history='<div class="ticket-section"><h3>Histórico de alterações</h3>'+((ticketNotes[id]||[]).length?(ticketNotes[id]||[]).map((n,i)=>'<div class="ticket-event"><span class="ticket-event-dot">●</span><div class="ticket-event-content"><strong>'+esc(n.message)+'</strong><div class="ticket-event-meta"><span>👤 '+esc(n.actor||'Autor não identificado (registro anterior)')+'</span><time datetime="'+esc(n.timestamp||'')+'">🕒 '+esc(n.at||'Data não registrada')+'</time></div>'+(i===0?'<span class="ticket-latest">Última alteração</span>':'')+'</div></div>').join(''):'<p class="ticket-muted">Nenhuma alteração registrada nesta demonstração.</p>')+'<p class="ticket-muted">Identificação declarada pelo operador no modo DEV. A auditoria autenticada será implementada no backend.</p></div>';
+ const service='<div class="ticket-section"><h3>Atendimento técnico</h3><p class="ticket-muted">Registre diagnósticos, testes e ações realizadas. As atualizações aparecem no histórico.</p><button class="secondary" type="button" data-ticket-action="note">+ Registrar atualização</button></div>';
+ const os='<div class="ticket-section"><h3>Ordens de serviço vinculadas</h3>'+(orders.length?orders.map(o=>'<div class="ticket-detail-row"><strong>'+esc(o[0])+' · '+esc(o[1])+'</strong><button type="button" class="secondary" data-ticket-order="'+esc(o[0])+'">Abrir OS</button></div>').join(''):'<p class="ticket-muted">Nenhuma OS vinculada.</p>')+'<button type="button" class="secondary" data-ticket-action="os">+ Criar OS</button></div>';
+ document.getElementById('modal-root').innerHTML='<div class="modal-backdrop" id="modal-backdrop"><section class="modal ticket-modal" role="dialog" aria-modal="true" aria-labelledby="modal-title"><div class="ticket-handle"></div><div class="modal-head"><div><small class="ticket-overline">CHAMADO · '+esc(id)+'</small><h2 id="modal-title">'+esc(row[1])+'</h2><p class="ticket-location">'+esc(row[2])+'</p></div><button class="secondary ticket-close" id="modal-close" type="button" aria-label="Fechar detalhes">✕</button></div><div class="modal-body">'+summary+'<div class="ticket-tabs" role="tablist">'+tabs.map(([key,label])=>'<button type="button" role="tab" aria-selected="'+(activeTab===key)+'" data-ticket-tab="'+key+'" class="'+(activeTab===key?'active':'')+'">'+label+'</button>').join('')+'</div>'+(activeTab==='history'?history:activeTab==='service'?service:activeTab==='orders'?os:overview+history)+'<div class="ticket-actions"><h3>Ações do chamado</h3><div class="ticket-action-grid">'+[['edit','pencil','Editar','Alterar informações do chamado'],['assign','user-round-plus','Atribuir técnico','Definir responsável pelo atendimento'],['os','clipboard-plus','Criar OS','Gerar ordem de serviço vinculada'],['note','loader-circle','Atualização','Registrar andamento ou diagnóstico'],['resolve','circle-check','Resolver','Finalizar com a solução aplicada']].map(([key,icon,label,description])=>'<button type="button" class="ticket-action ticket-action-'+key+' '+(key==='resolve'?'ticket-resolve':'')+'" data-ticket-action="'+key+'"><span class="ticket-action-icon"><i data-lucide="'+icon+'" aria-hidden="true"></i></span><span class="ticket-action-copy"><strong>'+label+'</strong><small>'+description+'</small></span><i data-lucide="chevron-right" class="ticket-action-chevron" aria-hidden="true"></i></button>').join('')+'</div></div><p class="ticket-muted ticket-disclaimer">Dados demonstrativos salvos somente neste navegador. SLA e anexos reais exigem integração com o backend.</p></div></section></div>';
+ hydrateSidebarIcons();document.getElementById('modal-close').onclick=closeModal;
+ document.getElementById('modal-backdrop').onclick=e=>{if(e.target.id==='modal-backdrop')closeModal()};
+ document.querySelectorAll('[data-ticket-tab]').forEach(b=>b.onclick=()=>openTicketDetail(row,b.dataset.ticketTab));
+ document.querySelectorAll('[data-ticket-order]').forEach(b=>b.onclick=()=>{const i=data.orders.findIndex(o=>o[0]===b.dataset.ticketOrder);if(i>=0)viewRow('Ordens de serviço',i)});
+ document.querySelectorAll('[data-ticket-action]').forEach(b=>b.onclick=()=>ticketAction(row,b.dataset.ticketAction));
+}
+function ticketAction(row,action){
+ const id=row[0];
+ if(action==='os'){openCreate('Ordens de serviço');return}
+ if(action==='edit'){const actor=ticketActor();if(!actor)return;const title=prompt('Título do chamado:',row[1]);if(title===null)return;const clean=title.trim();if(!clean){notify('Informe um título válido');return}row[1]=clean;ticketHistory(id,'Título atualizado',actor);saveDemo();render();openTicketDetail(row);return}
+ if(action==='assign'){const actor=ticketActor();if(!actor)return;const options=data.team.map((t,i)=>(i+1)+' - '+t[1]+' ('+t[2]+')').join('\\n');const choice=prompt('Selecione o técnico pelo número:\\n'+options);if(choice===null)return;const tech=data.team[Number(choice)-1];if(!tech){notify('Técnico inválido');return}relationships[id]=(relationships[id]||[]).filter(r=>r.key!=='team');relationships[id].push({key:'team',id:tech[0],label:'Técnico responsável'});saveLinks();ticketHistory(id,'Responsável atribuído: '+tech[1],actor);openTicketDetail(row);return}
+ if(action==='note'){const actor=ticketActor();if(!actor)return;const note=prompt('Descreva o diagnóstico ou atualização:');if(note===null)return;if(!note.trim()){notify('Informe uma atualização');return}ticketHistory(id,note.trim().slice(0,600),actor);openTicketDetail(row,'history');return}
+ if(action==='resolve'){if(row[4]==='Resolvido'){notify('Chamado já resolvido');return}const actor=ticketActor();if(!actor)return;const solution=prompt('Descreva a solução aplicada para resolver o chamado:');if(solution===null)return;if(!solution.trim()){notify('A resolução exige descrição da solução');return}row[4]='Resolvido';ticketHistory(id,'Chamado resolvido. Solução: '+solution.trim().slice(0,600),actor);saveDemo();render();openTicketDetail(row,'history');notify('Chamado resolvido na demonstração')}
+}
+
+const recordAudit=(()=>{try{return JSON.parse(localStorage.getItem('aguia-demo-record-audit-v1')||'{}')}catch{return {}}})();
+function recordAuditKey(page,id){return page+'::'+id}
+function recordLog(page,id,actor,message){const key=recordAuditKey(page,id);(recordAudit[key]||(recordAudit[key]=[])).unshift({actor,message,at:new Date().toLocaleString('pt-BR'),timestamp:new Date().toISOString()});try{localStorage.setItem('aguia-demo-record-audit-v1',JSON.stringify(recordAudit))}catch{}}
+function recordStatusOptions(page){return page==='Ordens de serviço'?['Pendente','Em execução','Concluída']:page==='Ativos'?['Ativo','Em manutenção','Inativo']:page==='Estoque'?['Disponível','Em reposição','Indisponível']:null}
+function openRecordDetail(page,row,tab='overview'){
+ const id=row[0],tabs=[['overview','Visão geral'],['history','Histórico'],['links','Vínculos']],history=recordAudit[recordAuditKey(page,id)]||[];
+ const links=relationships[id]||[];
+ const rows=['Identificador','Registro','Local / Detalhe','Categoria / Prioridade','Status','Prazo'];
+ const overview='<div class="ticket-section"><h3>Informações do registro</h3>'+row.map((v,i)=>'<div class="ticket-detail-row"><span>'+esc(rows[i]||'Informação '+(i+1))+'</span><strong>'+esc(v)+'</strong></div>').join('')+'</div>';
+ const timeline='<div class="ticket-section"><h3>Histórico de alterações</h3>'+(history.length?history.map((n,i)=>'<div class="ticket-event"><span class="ticket-event-dot">●</span><div class="ticket-event-content"><strong>'+esc(n.message)+'</strong><div class="ticket-event-meta"><span>Operador: '+esc(n.actor)+'</span><time datetime="'+esc(n.timestamp)+'">'+esc(n.at)+'</time></div>'+(i===0?'<span class="ticket-latest">Última alteração</span>':'')+'</div></div>').join(''):'<p class="ticket-muted">Nenhuma alteração registrada nesta demonstração.</p>')+'</div>';
+ const linked='<div class="ticket-section"><h3>Registros vinculados</h3>'+(links.length?links.map(ref=>{const item=(data[ref.key]||[]).find(r=>r[0]===ref.id);return '<div class="ticket-detail-row"><span>'+esc(ref.label||ref.key)+'</span><strong>'+esc(item?item[1]+' ('+ref.id+')':'Registro não encontrado')+'</strong></div>'}).join(''):'<p class="ticket-muted">Nenhum registro vinculado.</p>')+'</div>';
+ const actions=[['edit','pencil','Editar','Alterar informações'],['note','loader-circle','Atualização','Registrar andamento'],...(recordStatusOptions(page)?[['status','refresh-cw','Alterar status','Selecionar próxima etapa']]:[])];
+ const actionMarkup=actions.map(([key,icon,label,description])=>'<button type="button" class="ticket-action ticket-action-'+(key==='note'?'note':key)+'" data-record-action="'+key+'"><span class="ticket-action-icon"><i data-lucide="'+icon+'" aria-hidden="true"></i></span><span class="ticket-action-copy"><strong>'+label+'</strong><small>'+description+'</small></span><i data-lucide="chevron-right" class="ticket-action-chevron" aria-hidden="true"></i></button>').join('');
+ document.getElementById('modal-root').innerHTML='<div class="modal-backdrop" id="modal-backdrop"><section class="modal ticket-modal" role="dialog" aria-modal="true" aria-labelledby="modal-title"><div class="ticket-handle"></div><div class="modal-head"><div><small class="ticket-overline">'+esc(page.toUpperCase())+' · '+esc(id)+'</small><h2 id="modal-title">'+esc(row[1])+'</h2><p class="ticket-location">'+esc(row[2]||'Registro operacional')+'</p></div><button type="button" class="secondary ticket-close" id="modal-close" aria-label="Fechar detalhes">✕</button></div><div class="modal-body"><div class="ticket-summary"><div><small>IDENTIFICADOR</small><strong>'+esc(row[0])+'</strong></div><div><small>CATEGORIA</small><strong>'+esc(row[3]||'—')+'</strong></div><div><small>STATUS</small><strong>'+esc(row[4]||'—')+'</strong></div><div><small>INFORMAÇÃO</small><strong>'+esc(row[5]||'—')+'</strong></div></div><div class="ticket-tabs" role="tablist">'+tabs.map(([key,label])=>'<button type="button" role="tab" aria-selected="'+(tab===key)+'" data-record-tab="'+key+'" class="'+(tab===key?'active':'')+'">'+label+'</button>').join('')+'</div>'+(tab==='history'?timeline:tab==='links'?linked:overview+timeline)+'<div class="ticket-actions"><h3>Ações do registro</h3><div class="ticket-action-grid">'+actionMarkup+'</div></div><p class="ticket-muted ticket-disclaimer">Modo demonstrativo: identificação declarada pelo operador. Auditoria autenticada depende do backend.</p></div></section></div>';
+ document.getElementById('modal-close').onclick=closeModal;
+ document.getElementById('modal-backdrop').onclick=e=>{if(e.target.id==='modal-backdrop')closeModal()};
+ document.querySelectorAll('[data-record-tab]').forEach(b=>b.onclick=()=>openRecordDetail(page,row,b.dataset.recordTab));
+ document.querySelectorAll('[data-record-action]').forEach(b=>b.onclick=()=>recordAction(page,row,b.dataset.recordAction));
+ hydrateSidebarIcons();
+}
+function recordAction(page,row,action){
+ const actor=ticketActor();if(!actor)return;
+ if(action==='edit'){const value=prompt('Editar nome / descrição:',row[1]);if(value===null)return;if(!value.trim()){notify('Informe um valor válido');return}const previous=row[1];row[1]=value.trim().slice(0,200);recordLog(page,row[0],actor,'Descrição alterada: '+previous+' → '+row[1]);saveDemo();render();openRecordDetail(page,row,'history');return}
+ if(action==='note'){const note=prompt('Descreva a atualização:');if(note===null)return;if(!note.trim()){notify('Informe uma atualização');return}recordLog(page,row[0],actor,note.trim().slice(0,600));openRecordDetail(page,row,'history');return}
+ if(action==='status'){const options=recordStatusOptions(page);if(!options)return;const choice=prompt('Selecione o status pelo número:\\n'+options.map((x,i)=>(i+1)+' - '+x).join('\\n')+'\\nStatus atual: '+row[4]);if(choice===null)return;const index=Number(choice)-1;if(!Number.isInteger(index)||index<0||index>=options.length){notify('Status inválido');return}const next=options[index];if(next===row[4]){notify('O status já está selecionado');return}const reason=prompt('Informe o motivo da alteração de status:');if(reason===null)return;if(!reason.trim()){notify('Informe o motivo da alteração');return}const previous=row[4];row[4]=next;recordLog(page,row[0],actor,'Status: '+previous+' → '+next+'. Motivo: '+reason.trim().slice(0,400));saveDemo();render();openRecordDetail(page,row,'history')}
+}
+function viewRow(page,index){
+ const d=definitions[page];
+ if(page==='Clientes'){const selected=data.clients[index];if(selected)openClientDetail(selected[0]);return}
+ if(!d)return;
+ const row=page==='Equipe técnica'?data.team.find(r=>r[0]===index):data[d.key][index];
+ if(!row)return;
+ if(page==='Chamados'){openTicketDetail(row);return}
+ openRecordDetail(page,row);
+}
+
+const esc=s=>String(s).replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+const statusClass=s=>/Crítica|Manutenção|Atenção|Reposição/.test(s)?'red':/Alta|Pendente|Em execução/.test(s)?'amber':/Ativo|Resolvido|Concluíd|Normal|Disponível|Dentro/.test(s)?'green':'';
+function closeMenu(){document.getElementById('shell').classList.remove('open');document.getElementById('menu').setAttribute('aria-expanded','false')}
+function toggleAguiaTheme(){const next=document.documentElement.dataset.theme==='dark'?'light':'dark';document.documentElement.dataset.theme=next;try{localStorage.setItem('aguia-demo-theme-v1',next)}catch{}nav()}
+try{document.documentElement.dataset.theme=localStorage.getItem('aguia-demo-theme-v1')==='dark'?'dark':'light'}catch{document.documentElement.dataset.theme='light'}
+const sidebarIconPaths={
+'Visão geral':'<rect x="3" y="3" width="7" height="7" rx="2"/><rect x="14" y="3" width="7" height="7" rx="2"/><rect x="3" y="14" width="7" height="7" rx="2"/><rect x="14" y="14" width="7" height="7" rx="2"/>',
+'Chamados':'<rect x="4" y="3" width="16" height="18" rx="3"/><path d="M8 2v4m8-4v4M4 9h16m-12 4h3m-3 4h7"/>',
+'Ordens de serviço':'<rect x="5" y="4" width="14" height="17" rx="2"/><path d="M9 4.5V3h6v1.5M9 11h6m-6 4h6m-6 4h3"/>',
+'Vistorias':'<path d="m9 11 3 3L22 4"/><path d="M21 12v7a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11"/>',
+'Agenda':'<rect width="18" height="18" x="3" y="4" rx="2" ry="2"/><line x1="16" x2="16" y1="2" y2="6"/><line x1="8" x2="8" y1="2" y2="6"/><line x1="3" x2="21" y1="10" y2="10"/>',
+'SLA e prioridades':'<rect x="4" y="4" width="16" height="16" rx="4"/><path d="m8 12 3 3 5-6"/>',
+'Clientes':'<circle cx="9" cy="8" r="3"/><path d="M3 20v-2a6 6 0 0 1 12 0v2M17 7a3 3 0 0 1 0 6m1 3a4 4 0 0 1 3 4"/>',
+'Equipe técnica':'<circle cx="9" cy="8" r="3"/><circle cx="17" cy="9" r="2.5"/><path d="M3 20v-2a6 6 0 0 1 12 0v2m1-6a5 5 0 0 1 5 5v1"/>',
+'Ativos':'<rect x="3" y="3" width="18" height="7" rx="2"/><rect x="3" y="14" width="18" height="7" rx="2"/><path d="M7 6.5h.01M7 17.5h.01M11 6.5h7M11 17.5h7"/>',
+'Estoque':'<path d="m12 2 9 5-9 5-9-5 9-5Zm-9 9 9 5 9-5M3 15l9 5 9-5"/>',
+'Relatórios':'<path d="M4 20V10m5 10V4m5 16v-7m5 7V8"/><path d="M2 21h20"/>',
+'Administração':'<circle cx="12" cy="12" r="3"/><path d="M10 2h4l.7 2.6 2 .9 2.4-1.2 2.8 2.8-1.2 2.4.9 2L24 12l-2.4 1.5-.9 2 1.2 2.4-2.8 2.8-2.4-1.2-2 .9L14 23h-4l-.7-2.6-2-.9-2.4 1.2-2.8-2.8 1.2-2.4-.9-2L0 12l2.4-1.5.9-2-1.2-2.4 2.8-2.8 2.4 1.2 2-.9z"/>'
+};
+const lucideSidebarNames={"Visão geral":"layout-dashboard","Chamados":"ticket","Ordens de serviço":"clipboard-list","Vistorias":"check-check","Agenda":"calendar-days","SLA e prioridades":"clock-alert","Clientes":"building-2","Equipe técnica":"users-round","Ativos":"server","Estoque":"package","Relatórios":"chart-no-axes-column","Configurações":"settings","Administração":"settings"};
+function sidebarIcon(name){const fallback='<svg aria-hidden="true" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round">'+(sidebarIconPaths[name]||sidebarIconPaths['Visão geral'])+'</svg>';return '<span class="lucide-fallback">'+fallback+'</span><i data-lucide="'+(lucideSidebarNames[name]||'circle')+'" aria-hidden="true" class="lucide-target"></i>'}
+function hydrateSidebarIcons(){if(window.lucide&&typeof window.lucide.createIcons==='function'){window.lucide.createIcons({attrs:{'stroke-width':1.75,width:23,height:23}});document.documentElement.classList.add('lucide-ready')}}
+function nav(){document.getElementById('nav').innerHTML=groups.map(g=>'<div class="nav-title">'+esc(g.title)+'</div>'+g.items.map(([icon,name])=>'<button class="nav-item '+(current===name?'active':'')+'" title="'+esc(name)+'" aria-label="'+esc(name)+'" data-page="'+esc(name)+'" '+(current===name?'aria-current="page"':'')+'><span class="nav-icon">'+sidebarIcon(name)+'</span><span class="nav-label"><strong>'+esc(name)+'</strong><small>'+esc(sidebarDescriptions[name]||'')+'</small></span><span class="nav-arrow">›</span>'+(name==='Chamados'?'<span class="nav-count">4</span>':'')+'</button>').join('')).join('')+'<div class="nav-preferences"><button type="button" class="nav-theme" id="aguia-theme-toggle" aria-pressed="'+(document.documentElement.dataset.theme==='dark')+'"><span class="nav-icon"><i data-lucide="moon" aria-hidden="true"></i></span><span class="nav-label"><strong>Modo escuro</strong><small>Alternar tema da interface</small></span><span class="theme-switch"><span></span></span></button><div class="nav-dev"><strong>DEV</strong><span>Ambiente de desenvolvimento</span></div></div>';document.querySelectorAll('[data-page]').forEach(b=>b.onclick=()=>{current=b.dataset.page;dashboardFilter='';query='';document.getElementById('search').value='';render();closeMenu()});hydrateSidebarIcons();const toggle=document.getElementById('aguia-theme-toggle');if(toggle)toggle.onclick=toggleAguiaTheme}
+const priorityCatalog={'Crítica':{tone:'critical',icon:'octagon-alert'},'Alta':{tone:'high',icon:'triangle-alert'},'Média':{tone:'medium',icon:'circle-minus'},'Baixa':{tone:'low',icon:'circle-arrow-down'},'Planejada':{tone:'planned',icon:'calendar-clock'}};
+function priorityBadge(value){const p=priorityCatalog[value];return p?'<span class="priority-chip priority-'+p.tone+'"><i data-lucide="'+p.icon+'" aria-hidden="true"></i><span>'+esc(value)+'</span></span>':esc(value)}
+function priorityDetail(value){return priorityCatalog[value]?priorityBadge(value):esc(value)}
+function table(title,rows,columns=['ID','Registro','Cliente / Local','Prioridade','Status','Prazo'],page=null){const filtered=rows.filter(r=>r.join(' ').toLowerCase().includes(query.toLowerCase())&&(page!=='Clientes'||clientNetworkFilter==='all'||r[0]===clientNetworkFilter||clientHierarchy[r[0]]===clientNetworkFilter));return '<section class="panel"><div class="panel-head"><div><h2>'+esc(title)+'</h2><small>'+filtered.length+' registros de demonstração</small></div><button class="link" id="clear-search">Ver todos →</button></div><div class="table-wrap"><table class="table"><thead><tr>'+columns.map(c=>'<th>'+esc(c)+'</th>').join('')+(page?'<th>Ações</th>':'')+'</tr></thead><tbody>'+filtered.map(r=>'<tr class="record-clickable" tabindex="0" role="button" aria-label="Abrir detalhes de '+esc(r[1])+'" data-record-page="'+esc(page||'')+'" data-record-index="'+(page==='Equipe técnica'?esc(r[0]):page?data[definitions[page].key].indexOf(r):-1)+'">'+r.map((v,i)=>'<td>'+(i===1?'<strong>'+esc(page==='Clientes'?clientDisplay(r):v)+'</strong>':i===4?'<span class="status '+statusClass(v)+'">'+esc(v)+'</span>':i===3&&(page==='Chamados'||page==='Ordens de serviço'||page==='SLA e prioridades')?priorityBadge(v):esc(v))+'</td>').join('')+(page?'<td class="row-actions">'+(page==='Ordens de serviço'?'<button type="button" onclick="event.stopPropagation();printFormalOS(\''+esc(r[0])+'\',\''+esc(r[1])+'\',\''+esc(r[2])+'\',\''+esc(r[3])+'\')">📄 Imprimir OS</button> ':(page==='Vistorias'&&r[4]!=='Aprovado (OS criada)')?'<button type="button" style="color:#16a34a;border-color:#bbf7d0" onclick="event.stopPropagation();approveInspection(\''+esc(r[0])+'\')">✓ Aprovar OS</button> ':(page==='Relatórios')?'<button type="button" onclick="event.stopPropagation();exportConsolidatedReportPDF()">📄 Emitir PDF</button> ':'')+'<button type="button" data-view="'+esc(page)+'" data-index="'+(page==='Equipe técnica'?r[0]:data[definitions[page].key].indexOf(r))+'">Detalhes</button></td>':'')+'</tr>').join('')+'</tbody></table>'+(filtered.length?'':'<div class="empty">Nenhum registro encontrado para esta busca.</div>')+'</div></section>'}
+function kpi(label,value,foot,icon,target='',filter=''){return '<button type="button" class="kpi kpi-action" data-kpi-page="'+esc(target)+'" data-kpi-filter="'+esc(filter)+'" aria-label="Abrir '+esc(label)+'"><div class="kpi-top">'+esc(label)+'<span class="kpi-icon">'+icon+'</span></div><div class="kpi-number">'+esc(value)+'</div><div class="kpi-foot">'+foot+'</div></button>'}
+function dashboardBars(title,subtitle,items,total,kind='status'){
+ return '<section class="panel dashboard-panel"><div class="panel-head"><div><h2>'+esc(title)+'</h2><small>'+esc(subtitle)+'</small></div><span class="dashboard-total">'+total+' registros</span></div><div class="dashboard-bars">'+items.map(item=>{const count=item.count,percent=total?Math.round(count/total*100):0;return '<button type="button" class="dashboard-bar-item" data-dashboard-priority="'+(kind==='priority'?esc(item.label):'')+'" data-dashboard-status="'+(kind==='status'?esc(item.label):'')+'" aria-label="Filtrar '+esc(item.label)+': '+count+' chamados"><span class="dashboard-bar-top"><span>'+(kind==='priority'?priorityBadge(item.label):'<span class="dashboard-status-dot '+esc(item.tone)+'"></span>'+esc(item.label))+'</span><strong>'+count+' <small>('+percent+'%)</small></strong></span><span class="dashboard-track"><span class="dashboard-fill '+esc(item.tone)+'" style="width:'+percent+'%"></span></span></button>'}).join('')+'</div></section>'
+}
+let rankingMonth='all',rankingClient='all',rankingUnit='all';
+function overview(){
+ const matchUnit=(val)=>{
+   if(!selectedUnit||selectedUnit==='all')return true;
+   const u=selectedUnit.toLowerCase();
+   return (val||'').toLowerCase().includes(u)||u.includes((val||'').toLowerCase());
+ };
+ const allTickets=data.tickets,allOrders=data.orders,allVistorias=data.vistorias||[];
+ const tickets=allTickets.filter(r=>matchUnit(r[2]));
+ const orders=allOrders.filter(r=>matchUnit(r[2]));
+ const vistorias=allVistorias.filter(r=>matchUnit(r[2]));
+ const active=tickets.filter(r=>r[4]==='Aberto'||r[4]==='Em andamento');
+ const pending=orders.filter(r=>r[4]==='Em execução'||r[4]==='Pendente');
+ const urgent=active.filter(r=>r[3]==='Crítica'||r[3]==='Alta');
+ const unitBanner=selectedUnit!=='all'?'<div class="active-unit-banner"><div style="display:flex;align-items:center;gap:8px"><span>🏢</span><span>Exibindo indicadores da unidade: <strong>'+esc(selectedUnit)+'</strong> ('+tickets.length+' chamados, '+orders.length+' OS, '+vistorias.length+' vistorias)</span></div><div style="display:flex;gap:8px"><button type="button" class="btn-export-unit-pdf" onclick="exportConsolidatedReportPDF()">📊 Exportar PDF da Unidade</button><button type="button" class="btn-clear-unit" onclick="onGlobalUnitChange(\'all\')">Ver todas as unidades ✕</button></div></div>':'';
+ const priorities=['Crítica','Alta','Média','Baixa','Planejada'].map((label,i)=>({label,count:tickets.filter(r=>r[3]===label).length,tone:['critical','high','medium','low','planned'][i]}));
+ const statuses=['Aberto','Em andamento','Resolvido'].map((label,i)=>({label,count:tickets.filter(r=>r[4]===label).length,tone:['low','high','planned'][i]}));
+ const techLoad=data.team.map(t=>({id:t[0],name:t[1],level:t[2],count:active.filter(r=>(relationships[r[0]]||[]).some(link=>link.key==='team'&&link.id===t[0])).length})).sort((a,b)=>b.count-a.count||a.name.localeCompare(b.name,'pt-BR'));
+ const completed=tickets.filter(r=>r[4]==='Resolvido'||r[4]==='Fechado');
+ const dates=completed.map(r=>{const n=(ticketNotes[r[0]]||[]).find(x=>/chamado resolvido/i.test(x.message||''));return [r[0],n?.timestamp||'']});
+ const dateMap=Object.fromEntries(dates);
+ const months=[...new Set(dates.map(x=>x[1].slice(0,7)).filter(Boolean))].sort().reverse();
+ const clients=[...new Set(data.clients.map(r=>r[1]).filter(Boolean))].sort();
+ const units=[...new Set(tickets.map(r=>r[2]).filter(Boolean))].sort();
+ const filtered=completed.filter(r=>(rankingMonth==='all'||dateMap[r[0]].slice(0,7)===rankingMonth)&&(rankingClient==='all'||r[2].toLowerCase().includes(rankingClient.toLowerCase()))&&(rankingUnit==='all'||r[2]===rankingUnit));
+ const technicianResults=data.team.map(t=>({id:t[0],name:t[1],level:t[2],count:filtered.filter(r=>(relationships[r[0]]||[]).some(link=>link.key==='team'&&link.id===t[0])).length})).filter(t=>t.count>0).sort((a,b)=>b.count-a.count||a.name.localeCompare(b.name,'pt-BR')).slice(0,5);
+ const unattributed=filtered.filter(r=>!(relationships[r[0]]||[]).some(link=>link.key==='team')).length;
+ const opts=(items,selected,all)=>'<option value="all">'+all+'</option>'+items.map(x=>'<option value="'+esc(x)+'" '+(x===selected?'selected':'')+'>'+esc(x)+'</option>').join('');
+ const leaderCard='<section class="panel dashboard-panel dashboard-leader"><div class="panel-head"><div><h2><i data-lucide="trophy"></i> Top 5 técnicos</h2><small>Chamados concluídos atribuídos · DEV</small></div></div><div class="ranking-filters"><label>Mês<select id="ranking-month">'+opts(months,rankingMonth,'Todo o período')+'</select></label><label>Cliente<select id="ranking-client">'+opts(clients,rankingClient,'Todos os clientes')+'</select></label><label>Unidade<select id="ranking-unit">'+opts(units,rankingUnit,'Todas as unidades')+'</select></label></div>'+(technicianResults.length?'<div class="dashboard-leader-people">'+technicianResults.map((t,i)=>'<div class="dashboard-leader-person"><span class="ranking-position">'+(i+1)+'º</span><span class="dashboard-leader-avatar">'+esc(t.name.slice(0,1))+'</span><span class="ranking-name"><strong>'+esc(t.name)+'</strong><small>'+esc(t.level)+'</small></span><span class="dashboard-leader-number">'+t.count+'<small>concluído(s)</small></span></div>').join('')+'</div>':'<div class="dashboard-empty"><strong>Sem resultados para estes filtros</strong></div>')+'<p class="dashboard-hint">'+filtered.length+' concluído(s), '+unattributed+' sem técnico. Filtro mensal usa data de resolução registrada; cliente usa nome textual da unidade. Ranking por responsável atual, não auditoria de execução.</p></section>';
+ const recent=Object.entries(ticketNotes).flatMap(([id,notes])=>(Array.isArray(notes)?notes:[]).map(n=>({id,message:n.message,actor:n.actor||'Autor não identificado',at:n.at||'',stamp:Date.parse(n.timestamp||'')||0}))).concat(Object.entries(recordAudit).flatMap(([key,notes])=>(Array.isArray(notes)?notes:[]).map(n=>({id:key.split('::').slice(1).join('::'),message:n.message,actor:n.actor||'Autor não identificado',at:n.at||'',stamp:Date.parse(n.timestamp||'')||0})))).sort((a,b)=>b.stamp-a.stamp).slice(0,6);
+ const kpis='<div class="kpis">'+kpi('Chamados ativos',String(active.length),'Abertos e em andamento','<i data-lucide="ticket"></i>','Chamados','active')+kpi('Prioridades urgentes',String(urgent.length),'Crítica e alta ainda ativas','<i data-lucide="shield-alert"></i>','Chamados','priority')+kpi('OS em aberto',String(pending.length),'Pendentes ou em execução','<i data-lucide="clipboard-list"></i>','Ordens de serviço','pending')+kpi('Ativos cadastrados',String(data.assets.length),'Inventário demonstrativo','<i data-lucide="server"></i>','Ativos','all')+'</div>';
+ const charts='<div class="dashboard-chart-grid">'+dashboardBars('Prioridades dos chamados','Classificação atual dos registros',priorities,tickets.length,'priority')+dashboardBars('Status dos chamados','Distribuição calculada automaticamente',statuses,tickets.length,'status')+'</div>';
+ const tech='<section class="panel dashboard-panel"><div class="panel-head"><div><h2>Carga da equipe técnica</h2><small>Chamados ativos vinculados a cada técnico</small></div><button type="button" class="link" data-kpi-page="Equipe técnica">Ver equipe →</button></div><div class="dashboard-team">'+techLoad.map(t=>'<div class="dashboard-team-row"><span class="dashboard-avatar">'+esc(t.name.slice(0,1).toUpperCase())+'</span><span class="dashboard-team-name"><strong>'+esc(t.name)+'</strong><small>'+esc(t.level)+'</small></span><span class="dashboard-team-count">'+t.count+' ativo'+(t.count===1?'':'s')+'</span></div>').join('')+'</div><p class="dashboard-hint">Chamados sem vínculo técnico não entram na carga individual.</p></section>';
+ const activity='<section class="panel dashboard-panel"><div class="panel-head"><div><h2>Atividade recente</h2><small>Alterações registradas neste navegador</small></div></div>'+(recent.length?recent.map(a=>'<div class="dashboard-activity"><span class="activity-dot"></span><div><strong>'+esc(a.message)+'</strong><small>'+esc(a.id)+' · '+esc(a.actor)+' · '+esc(a.at)+'</small></div></div>').join(''):'<div class="dashboard-empty"><i data-lucide="history"></i><strong>Sem eventos registrados</strong><span>As alterações realizadas na demonstração aparecerão aqui.</span></div>')+'</section>';
+ return '<div class="dashboard-heading"><div><span class="dashboard-eyebrow">CENTRAL DE OPERAÇÕES</span><h2>Panorama operacional</h2><p>Indicadores calculados com os registros desta demonstração.</p></div><span class="dashboard-live"><span></span> Dados locais · DEV</span></div>'+unitBanner+kpis+charts+leaderCard+'<div class="dashboard-bottom-grid">'+tech+activity+'</div><div class="dashboard-records">'+table('Fila de atendimento · Prioridades',tickets.slice().sort((a,b)=>{const order=['Crítica','Alta','Média','Baixa','Planejada'];return order.indexOf(a[3])-order.indexOf(b[3])}),undefined,'Chamados')+table('Ordens de serviço recentes',orders,undefined,'Ordens de serviço')+'</div>';
+}
+function technicianDirectory(){const levels=['N1','N2','N3'];return '<div class="kpis">'+levels.map(level=>kpi('Técnicos '+level,String(data.team.filter(r=>r[2]===level).length),'Equipe de '+level,'♧')).join('')+kpi('Total da equipe',String(data.team.length),'Cadastros demonstrativos','▦')+'</div>'+levels.map(level=>'<section class="panel"><div class="panel-head"><h2>Suporte '+level+'</h2><small>'+data.team.filter(r=>r[2]===level).length+' profissionais</small></div>'+table('Profissionais '+level,data.team.filter(r=>r[2]===level),['ID','Técnico','Nível','Área','Situação',''], 'Equipe técnica')+'</section>').join('')}
+const clientProfiles={};
+try{const saved=JSON.parse(localStorage.getItem('aguia-demo-client-profiles-v1')||'{}');if(saved&&typeof saved==='object'&&!Array.isArray(saved))Object.assign(clientProfiles,saved)}catch{}
+function saveProfiles(){try{localStorage.setItem('aguia-demo-client-profiles-v1',JSON.stringify(clientProfiles))}catch{}}
+const profileSections=[
+['Identificação',[['legalName','Razão social','text'],['tradeName','Nome fantasia / Unidade','text'],['taxId','CNPJ','text'],['stateRegistration','Inscrição estadual','text'],['suframa','SUFRAMA','text'],['unitCode','Sigla da unidade','text'],['parentId','Cliente pai / Rede','parent'],['status','Situação','status']]],
+['Endereço',[['zip','CEP','text'],['street','Logradouro','text'],['number','Número','text'],['complement','Complemento','text'],['district','Bairro','text'],['city','Cidade','text'],['state','UF','text'],['country','País','text'],['ibge','Código IBGE','text']]],
+['Contatos',[['contact','Responsável / Contato','text'],['email','E-mail principal','email'],['billingEmail','E-mail NF-e','email'],['phone','Telefone','tel'],['mobile','Celular / WhatsApp','tel']]],
+['Comercial',[['creditLimit','Limite de crédito','number'],['pendingCredit','Crédito pendente','number'],['customerType','Tipo de cliente','type'],['priceTable','Tabela de preços','price'],['cashOnly','Somente à vista','check'],['blockInvoice','Bloquear boleto','check'],['blocked','Cliente bloqueado','check'],['international','Empresa internacional','check'],['taxExempt','Não contribuinte','check'],['simpleTax','Simples Nacional','check'],['publicAgency','Órgão público','check']]],
+['Observações',[['notes','Observações gerais','textarea'],['billingNotes','Dados de cobrança / entrega','textarea'],['serviceNotes','Informações para atendimento técnico','textarea']]]
+];
+function profileField([key,label,type],profile){const value=profile[key]??'';if(type==='check')return '<label class="profile-check"><input type="checkbox" name="'+key+'" '+(value?'checked':'')+'>'+esc(label)+'</label>';if(type==='parent')return '<label>'+esc(label)+'<select name="'+key+'"><option value="">Nenhum (cliente principal)</option>'+data.clients.filter(r=>r[0]!==profile.id).map(r=>'<option value="'+esc(r[0])+'" '+(value===r[0]?'selected':'')+'>'+esc(clientDisplay(r))+'</option>').join('')+'</select></label>';if(['status','type','price'].includes(type)){const options=type==='status'?['Ativo','Inativo']:type==='type'?['Consumidor final','Revenda','Indústria','Outros']:['Padrão','Instalador','Atacado','Distribuidor'];return '<label>'+esc(label)+'<select name="'+key+'">'+options.map(v=>'<option '+(value===v?'selected':'')+'>'+esc(v)+'</option>').join('')+'</select></label>'}if(type==='textarea')return '<label class="profile-wide">'+esc(label)+'<textarea name="'+key+'" rows="4" maxlength="2000">'+esc(value)+'</textarea></label>';return '<label>'+esc(label)+'<input name="'+key+'" type="'+type+'" maxlength="180" value="'+esc(value)+'" '+(key==='legalName'||key==='tradeName'?'required':'')+'></label>'}
+function openClientForm(id=''){const existing=data.clients.find(r=>r[0]===id);const profile={id,...(clientProfiles[id]||{}),legalName:clientProfiles[id]?.legalName||existing?.[1]||'',tradeName:clientProfiles[id]?.tradeName||existing?.[1]||'',city:clientProfiles[id]?.city||existing?.[2]||'',status:existing?.[3]||'Ativo',unitCode:unitCodes[id]||'',parentId:clientHierarchy[id]||''};let tab=0;const root=document.getElementById('modal-root');const draw=()=>{root.innerHTML='<div class="modal-backdrop" id="modal-backdrop"><section class="modal profile-modal" role="dialog" aria-modal="true" aria-labelledby="modal-title"><div class="modal-head"><div><h2 id="modal-title">'+(existing?'Editar cliente':'Novo cliente / Unidade')+'</h2><small class="unit-caption">Cadastro empresarial · Ambiente demonstrativo</small></div><button type="button" class="secondary" id="modal-close">✕</button></div><form id="profile-form"><nav class="profile-tabs" aria-label="Seções do cadastro">'+profileSections.map((sec,i)=>'<button type="button" class="'+(tab===i?'active':'')+'" data-tab="'+i+'">'+esc(sec[0])+'</button>').join('')+'</nav><div class="modal-body"><div class="profile-grid">'+profileSections[tab][1].map(field=>profileField(field,profile)).join('')+'</div><div class="modal-foot"><button type="button" class="secondary" id="modal-cancel">Cancelar</button><button type="submit" class="primary">'+(existing?'Salvar alterações':'Cadastrar cliente')+'</button></div></div></form></section></div>';const collect=()=>{const form=document.getElementById('profile-form');for(const [key,,type] of profileSections[tab][1]){const input=form.elements.namedItem(key);if(input)profile[key]=type==='check'?input.checked:String(input.value).trim()}};document.getElementById('modal-close').onclick=closeModal;document.getElementById('modal-cancel').onclick=closeModal;document.getElementById('modal-backdrop').onclick=e=>{if(e.target.id==='modal-backdrop')closeModal()};document.querySelectorAll('[data-tab]').forEach(b=>b.onclick=()=>{collect();tab=Number(b.dataset.tab);draw()});document.getElementById('profile-form').onsubmit=e=>{e.preventDefault();collect();if(!profile.legalName.trim()||!profile.tradeName.trim()){tab=0;draw();notify('Informe razão social e nome fantasia');return}const tax=String(profile.taxId||'').replace(/\\D/g,'');if(tax&&tax.length!==14){tab=0;draw();notify('CNPJ deve conter 14 dígitos');return}if(profile.parentId&&profile.parentId===id){notify('Uma unidade não pode ser sua própria matriz');return}const clientId=id||'#CL-'+String(Math.max(0,...data.clients.map(r=>Number((r[0].match(/(\\d+)$/)||[])[1])||0))+1).padStart(3,'0');if(!existing)data.clients.unshift([clientId,profile.tradeName,profile.city||'Não informado',profile.status,'0 chamados','']);else{existing[1]=profile.tradeName;existing[2]=profile.city||'Não informado';existing[3]=profile.status}clientProfiles[clientId]={...profile,id:clientId};saveProfiles();if(profile.parentId)clientHierarchy[clientId]=profile.parentId;else delete clientHierarchy[clientId];saveHierarchy();if(profile.unitCode)unitCodes[clientId]=profile.unitCode.toUpperCase();else delete unitCodes[clientId];saveUnitCodes();saveDemo();closeModal();current='Clientes';render();notify('Ficha do cliente salva nesta demonstração')}};draw()}
+function clientDirectory(){const parents=data.clients.filter(r=>!clientHierarchy[r[0]]);const networkOptions=parents.map(r=>'<option value="'+esc(r[0])+'" '+(clientNetworkFilter===r[0]?'selected':'')+'>'+esc(r[1])+'</option>').join('');const children=data.clients.filter(r=>clientHierarchy[r[0]]);const selected=clientNetworkFilter==='all'?data.clients:data.clients.filter(r=>r[0]===clientNetworkFilter||clientHierarchy[r[0]]===clientNetworkFilter);const cards='<div class="kpis">'+kpi('Clientes / Unidades',String(selected.length),'Cadastros no filtro atual','♙')+kpi('Redes / Matrizes',String(selected.filter(r=>!clientHierarchy[r[0]]).length),'Clientes principais','▦')+kpi('Unidades filhas',String(selected.filter(r=>!!clientHierarchy[r[0]]).length),'Vinculadas a redes','◇')+kpi('Clientes ativos',String(selected.filter(r=>r[3]==='Ativo').length),'Disponíveis para chamados','✓')+'</div>';return cards+'<section class="panel"><div class="panel-head"><div><h2>Estrutura de clientes</h2><small>Organização matriz → unidades</small></div><label class="network-filter">Filtrar rede <select id="network-filter" aria-label="Filtrar clientes por rede"><option value="all">Todas as redes</option>'+networkOptions+'</select></label></div><div class="network-tree">'+parents.filter(p=>clientNetworkFilter==='all'||p[0]===clientNetworkFilter).map(p=>{const units=children.filter(c=>clientHierarchy[c[0]]===p[0]);return '<div class="network-group"><div class="network-parent"><span class="network-symbol">▣</span><div><strong>'+esc(p[1])+'</strong><small>Cliente pai · '+units.length+' unidade(s)</small></div></div>'+units.map(c=>'<div class="network-child"><span>↳</span><div><strong>'+esc(clientDisplay(c))+'</strong><small>'+esc(c[2])+' · '+esc(c[3])+'</small></div></button>').join('')+'</div>'}).join('')+'</div></section>'+table('Cadastro de clientes e unidades',data.clients,undefined,'Clientes')}
+let dashboardFilter='';function goToDashboardModule(page,filter=''){current=page;dashboardFilter=filter;query='';document.getElementById('search').value='';render();closeMenu();window.scrollTo({top:0,behavior:'smooth'})}
+function filteredDashboardRows(page,rows){
+  let result=rows;
+  if(selectedUnit&&selectedUnit!=='all'){
+    const u=selectedUnit.toLowerCase();
+    result=result.filter(r=>{
+      const val=(page==='Clientes'?r[1]:r[2])||'';
+      return val.toLowerCase().includes(u)||u.includes(val.toLowerCase());
+    });
+  }
+  if(!dashboardFilter)return result;if(page==='Chamados'&&dashboardFilter==='active')return result.filter(r=>r[4]==='Aberto'||r[4]==='Em andamento');if(page==='Chamados'&&dashboardFilter==='priority')return result.filter(r=>(r[3]==='Crítica'||r[3]==='Alta')&&r[4]!=='Resolvido');if(page==='Chamados'&&dashboardFilter.startsWith('priority:'))return result.filter(r=>r[3]===dashboardFilter.slice(9));if(page==='Chamados'&&dashboardFilter.startsWith('status:'))return result.filter(r=>r[4]===dashboardFilter.slice(7));if(page==='Ordens de serviço'&&dashboardFilter==='pending')return result.filter(r=>r[4]==='Pendente'||r[4]==='Em execução');return result}
+function render(){nav();updateUnitSelectOptions();document.getElementById('title').textContent=current;document.getElementById('crumb').textContent=current;document.getElementById('subtitle').textContent=current==='Visão geral'?'Visibilidade completa do atendimento e infraestrutura.':'Gestão operacional · Ambiente demonstrativo';const action=document.getElementById('action');action.textContent=current==='Visão geral'?'+ Novo chamado':'+ Cadastrar '+definitions[current].singular;const map={'Configurações':data.admin,'Chamados':data.tickets,'Ordens de serviço':data.orders,'Vistorias':data.vistorias,'Agenda':data.agenda,'Clientes':data.clients,'Ativos':data.assets,'Estoque':data.stock,'Equipe técnica':data.team,'SLA e prioridades':data.sla,'Relatórios':data.reports};document.getElementById('content').innerHTML=current==='Visão geral'?overview():current==='Clientes'?clientDirectory():current==='Equipe técnica'?technicianDirectory():table(current+' · Registros',filteredDashboardRows(current,map[current]||[]),undefined,current);document.querySelectorAll('[data-kpi-page]').forEach(b=>b.onclick=()=>goToDashboardModule(b.dataset.kpiPage,b.dataset.kpiFilter));[['ranking-month','month'],['ranking-client','client'],['ranking-unit','unit']].forEach(([id,key])=>{const el=document.getElementById(id);if(el)el.onchange=()=>{if(key==='month')rankingMonth=el.value;if(key==='client')rankingClient=el.value;if(key==='unit')rankingUnit=el.value;render()}});document.querySelectorAll('[data-dashboard-priority],[data-dashboard-status]').forEach(b=>b.onclick=()=>goToDashboardModule('Chamados',b.dataset.dashboardPriority?'priority:'+b.dataset.dashboardPriority:'status:'+b.dataset.dashboardStatus));document.querySelectorAll('#clear-search').forEach(b=>b.onclick=()=>{dashboardFilter='';query='';document.getElementById('search').value='';render()});document.querySelectorAll('[data-view]').forEach(b=>b.onclick=e=>{e.stopPropagation();viewRow(b.dataset.view,b.dataset.view==='Equipe técnica'?b.dataset.index:Number(b.dataset.index))});document.querySelectorAll('[data-record-page]').forEach(el=>{const open=()=>{if(el.dataset.recordPage)viewRow(el.dataset.recordPage,el.dataset.recordPage==='Equipe técnica'?el.dataset.recordIndex:Number(el.dataset.recordIndex))};el.onclick=e=>{if(e.target.closest('button,a,input,select'))return;open()};el.onkeydown=e=>{if(e.key==='Enter'||e.key===' '){e.preventDefault();open()}}});const networkFilter=document.getElementById('network-filter');if(networkFilter)networkFilter.onchange=e=>{clientNetworkFilter=e.target.value;render()};hydrateSidebarIcons();document.querySelectorAll('[data-client-id]').forEach(b=>b.onclick=()=>openClientDetail(b.dataset.clientId))}
+document.getElementById('menu').onclick=()=>{const open=document.getElementById('shell').classList.toggle('open');document.getElementById('menu').setAttribute('aria-expanded',String(open))};document.getElementById('overlay').onclick=closeMenu;document.addEventListener('keydown',e=>{if(e.key==='Escape'){closeMenu();closeModal()}});document.getElementById('search').oninput=e=>{query=e.target.value;render()};document.getElementById('action').onclick=()=>openCreate();render();
+
+function approveInspection(id){
+  const vis=(data.vistorias||[]).find(r=>r[0]===id);
+  if(!vis)return;
+  if(vis[4]==='Aprovado (OS criada)'){notify('Esta vistoria já foi aprovada e possui OS');return}
+  vis[4]='Aprovado (OS criada)';
+  const nextOrderNum=String(data.orders.length+201);
+  data.orders.unshift(['#OS-'+nextOrderNum,'Ação corretiva: '+vis[1],vis[2],vis[3],'Pendente','Novo']);
+  saveDemo();render();notify('Vistoria '+id+' aprovada! Nova OS criada no módulo de Ordens de serviço.');
+}
+
+
+function exportConsolidatedReportPDF(){
+  const win = window.open('', '_blank');
+  if(!win){
+    notify('Permita popups no navegador para visualizar o relatório PDF.');
+    return;
+  }
+  
+  const unit = (selectedUnit && selectedUnit !== 'all') ? selectedUnit : 'Todas as Unidades (Rede Geral)';
+  const now = new Date();
+  const dateStr = now.toLocaleDateString('pt-BR', { day: '2-digit', month: '2-digit', year: 'numeric', hour: '2-digit', minute: '2-digit' });
+  const periodStr = now.toLocaleDateString('pt-BR', { month: 'long', year: 'numeric' });
+  
+  const matchUnit = (val) => {
+    if(!selectedUnit || selectedUnit === 'all') return true;
+    const u = selectedUnit.toLowerCase();
+    return (val||'').toLowerCase().includes(u) || u.includes((val||'').toLowerCase());
+  };
+  
+  const unitTickets = data.tickets.filter(r => matchUnit(r[2]));
+  const unitOrders = data.orders.filter(r => matchUnit(r[2]));
+  const unitVistorias = (data.vistorias || []).filter(r => matchUnit(r[2]));
+  
+  const totalTickets = unitTickets.length;
+  const criticalTickets = unitTickets.filter(r => r[3] === 'Crítica' || r[3] === 'Alta').length;
+  const pendingOrders = unitOrders.filter(r => r[4] === 'Pendente' || r[4] === 'Em execução').length;
+  const complianceRate = totalTickets > 0 ? (((totalTickets - criticalTickets) / totalTickets) * 100).toFixed(1) : '100.0';
+
+  win.document.write(`<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="utf-8">
+  <title>Relatório Operacional Consolidado - ${esc(unit)}</title>
+  <style>
+    @page { size: A4; margin: 12mm 15mm; }
+    * { box-sizing: border-box; }
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+      color: #0f172a;
+      background: #ffffff;
+      margin: 0;
+      padding: 18px 24px;
+      font-size: 11px;
+      line-height: 1.45;
+    }
+    .print-actions {
+      display: flex;
+      justify-content: flex-end;
+      gap: 10px;
+      margin-bottom: 20px;
+      padding-bottom: 15px;
+      border-bottom: 1px solid #e2e8f0;
+    }
+    .btn-print {
+      background: #195cac;
+      color: #fff;
+      border: 0;
+      padding: 9px 18px;
+      border-radius: 6px;
+      font-weight: 700;
+      cursor: pointer;
+      font-size: 12px;
+    }
+    .btn-close {
+      background: #f1f5f9;
+      color: #475569;
+      border: 1px solid #cbd5e1;
+      padding: 9px 15px;
+      border-radius: 6px;
+      cursor: pointer;
+      font-size: 12px;
+    }
+    @media print {
+      .print-actions { display: none !important; }
+      body { padding: 0; }
+    }
+    .doc-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-start;
+      border-bottom: 2px solid #0f375c;
+      padding-bottom: 14px;
+      margin-bottom: 16px;
+    }
+    .brand-title {
+      font-size: 21px;
+      font-weight: 800;
+      color: #0f375c;
+      letter-spacing: -0.5px;
+      margin: 0 0 4px;
+    }
+    .brand-subtitle {
+      font-size: 11.5px;
+      color: #475569;
+      margin: 0;
+    }
+    .badge-partner {
+      display: inline-block;
+      background: #fef08a;
+      color: #854d0e;
+      font-size: 9.5px;
+      font-weight: 800;
+      padding: 3px 8px;
+      border-radius: 4px;
+      margin-top: 6px;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+    }
+    .meta-box {
+      text-align: right;
+      font-size: 10.5px;
+      color: #475569;
+      line-height: 1.6;
+    }
+    .meta-box strong {
+      color: #0f172a;
+    }
+    .section-title {
+      font-size: 13px;
+      font-weight: 800;
+      color: #0f375c;
+      margin: 18px 0 8px;
+      padding-bottom: 4px;
+      border-bottom: 1px solid #cbd5e1;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+    .kpi-grid {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 12px;
+      margin-bottom: 18px;
+    }
+    .kpi-card {
+      border: 1px solid #e2e8f0;
+      border-radius: 8px;
+      background: #f8fafc;
+      padding: 11px 14px;
+    }
+    .kpi-card small {
+      display: block;
+      font-size: 9.5px;
+      font-weight: 750;
+      text-transform: uppercase;
+      color: #64748b;
+      margin-bottom: 4px;
+    }
+    .kpi-card strong {
+      font-size: 22px;
+      font-weight: 800;
+      color: #0f2d4a;
+    }
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      margin-bottom: 16px;
+      font-size: 10.5px;
+    }
+    th {
+      background: #f1f5f9;
+      color: #334155;
+      font-weight: 700;
+      text-align: left;
+      padding: 7px 9px;
+      border-bottom: 1px solid #cbd5e1;
+      text-transform: uppercase;
+      font-size: 9px;
+      letter-spacing: 0.4px;
+    }
+    td {
+      padding: 7px 9px;
+      border-bottom: 1px solid #e2e8f0;
+      vertical-align: middle;
+    }
+    tr:nth-child(even) td {
+      background: #fafbfc;
+    }
+    .tag {
+      display: inline-block;
+      padding: 2px 7px;
+      border-radius: 4px;
+      font-size: 9.5px;
+      font-weight: 700;
+    }
+    .tag-critical { background: #fee2e2; color: #991b1b; }
+    .tag-high { background: #ffedd5; color: #9a3412; }
+    .tag-medium { background: #fef3c7; color: #92400e; }
+    .tag-low { background: #e0f2fe; color: #075985; }
+    .tag-green { background: #dcfce7; color: #166534; }
+    .tag-blue { background: #e0e7ff; color: #3730a3; }
+    .signatures {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 45px;
+      margin-top: 35px;
+      page-break-inside: avoid;
+    }
+    .sig-block {
+      border-top: 1px solid #94a3b8;
+      padding-top: 8px;
+      text-align: center;
+      font-size: 10px;
+      color: #475569;
+    }
+    .sig-block strong {
+      display: block;
+      color: #0f172a;
+      font-size: 11px;
+      margin-bottom: 2px;
+    }
+  </style>
+</head>
+<body>
+  <div class="print-actions">
+    <button class="btn-print" onclick="window.print()">🖨️ Imprimir / Salvar em PDF</button>
+    <button class="btn-close" onclick="window.close()">Fechar</button>
+  </div>
+
+  <div class="doc-header">
+    <div>
+      <h1 class="brand-title">ÁGUIA GESTÃO CRM & OPERATIONS</h1>
+      <p class="brand-subtitle">Relatório Operacional Executivo de Atendimento & Infraestrutura</p>
+      <span class="badge-partner">Parceiro Homologado · Rede Smart Fit</span>
+    </div>
+    <div class="meta-box">
+      <div><strong>Unidade:</strong> ${esc(unit)}</div>
+      <div><strong>Período de Apuração:</strong> ${esc(periodStr)}</div>
+      <div><strong>Data de Emissão:</strong> ${esc(dateStr)}</div>
+      <div><strong>Responsável:</strong> Washington Dantas (Operações)</div>
+    </div>
+  </div>
+
+  <div class="kpi-grid">
+    <div class="kpi-card">
+      <small>Total de Demandas</small>
+      <strong>${totalTickets}</strong>
+    </div>
+    <div class="kpi-card">
+      <small>Chamados Críticos / Altos</small>
+      <strong style="color:${criticalTickets > 0 ? '#b91c1c' : '#15803d'}">${criticalTickets}</strong>
+    </div>
+    <div class="kpi-card">
+      <small>Ordens de Serviço Ativas</small>
+      <strong>${pendingOrders}</strong>
+    </div>
+    <div class="kpi-card">
+      <small>Índice de SLA Operacional</small>
+      <strong style="color:#15803d">${complianceRate}%</strong>
+    </div>
+  </div>
+
+  <div class="section-title">
+    <span>1. Chamados & Ocorrências Operacionais</span>
+    <small style="font-size:10px;color:#64748b">${unitTickets.length} registro(s)</small>
+  </div>
+  ${unitTickets.length ? `
+  <table>
+    <thead>
+      <tr>
+        <th style="width:75px">Código</th>
+        <th>Descrição da Ocorrência</th>
+        <th>Unidade / Setor</th>
+        <th style="width:75px">Prioridade</th>
+        <th style="width:90px">Status</th>
+        <th style="width:70px">Decorrido</th>
+      </tr>
+    </thead>
+    <tbody>
+      ${unitTickets.map(t => {
+        const pClass = t[3]==='Crítica'?'tag-critical':t[3]==='Alta'?'tag-high':t[3]==='Média'?'tag-medium':'tag-low';
+        const sClass = t[4]==='Resolvido'||t[4]==='Fechado'?'tag-green':t[4]==='Em andamento'?'tag-blue':'tag-medium';
+        return `<tr>
+          <td><strong>${esc(t[0])}</strong></td>
+          <td>${esc(t[1])}</td>
+          <td>${esc(t[2])}</td>
+          <td><span class="tag ${pClass}">${esc(t[3])}</span></td>
+          <td><span class="tag ${sClass}">${esc(t[4])}</span></td>
+          <td>${esc(t[5]||'-')}</td>
+        </tr>`;
+      }).join('')}
+    </tbody>
+  </table>` : '<p style="color:#64748b;font-style:italic">Nenhum chamado registrado para esta unidade.</p>'}
+
+  <div class="section-title">
+    <span>2. Vistorias & Checklists dos Setores (Smart Fit)</span>
+    <small style="font-size:10px;color:#64748b">${unitVistorias.length} apontamento(s)</small>
+  </div>
+  ${unitVistorias.length ? `
+  <table>
+    <thead>
+      <tr>
+        <th style="width:75px">Código</th>
+        <th>Apontamento Técnico</th>
+        <th>Setor Avaliado</th>
+        <th style="width:75px">Prioridade</th>
+        <th style="width:130px">Status da Ação</th>
+      </tr>
+    </thead>
+    <tbody>
+      ${unitVistorias.map(v => {
+        const pClass = v[3]==='Crítica'?'tag-critical':v[3]==='Alta'?'tag-high':'tag-medium';
+        const isApproved = v[4]==='Aprovado (OS criada)';
+        return `<tr>
+          <td><strong>${esc(v[0])}</strong></td>
+          <td>${esc(v[1])}</td>
+          <td><strong>${esc(v[5]||v[2])}</strong></td>
+          <td><span class="tag ${pClass}">${esc(v[3])}</span></td>
+          <td><span class="tag ${isApproved ? 'tag-green' : 'tag-high'}">${esc(v[4])}</span></td>
+        </tr>`;
+      }).join('')}
+    </tbody>
+  </table>` : '<p style="color:#64748b;font-style:italic">Nenhuma vistoria ou inconformidade registrada para esta unidade.</p>'}
+
+  <div class="section-title">
+    <span>3. Ordens de Serviço & Escala de Atendimento</span>
+    <small style="font-size:10px;color:#64748b">${unitOrders.length} OS vinculada(s)</small>
+  </div>
+  ${unitOrders.length ? `
+  <table>
+    <thead>
+      <tr>
+        <th style="width:75px">OS</th>
+        <th>Escopo de Manutenção / Instalação</th>
+        <th>Local / Unidade</th>
+        <th style="width:75px">Prioridade</th>
+        <th style="width:90px">Status</th>
+        <th style="width:80px">Previsão</th>
+      </tr>
+    </thead>
+    <tbody>
+      ${unitOrders.map(o => {
+        const pClass = o[3]==='Crítica'?'tag-critical':o[3]==='Alta'?'tag-high':'tag-medium';
+        const sClass = o[4]==='Concluída'?'tag-green':o[4]==='Em execução'?'tag-blue':'tag-medium';
+        return `<tr>
+          <td><strong>${esc(o[0])}</strong></td>
+          <td>${esc(o[1])}</td>
+          <td>${esc(o[2])}</td>
+          <td><span class="tag ${pClass}">${esc(o[3])}</span></td>
+          <td><span class="tag ${sClass}">${esc(o[4])}</span></td>
+          <td>${esc(o[5]||'Hoje')}</td>
+        </tr>`;
+      }).join('')}
+    </tbody>
+  </table>` : '<p style="color:#64748b;font-style:italic">Nenhuma Ordem de Serviço aberta para esta unidade.</p>'}
+
+  <div class="signatures">
+    <div class="sig-block">
+      <strong>Gerente / Responsável da Unidade</strong>
+      <span>Rede Smart Fit</span>
+    </div>
+    <div class="sig-block">
+      <strong>Washington Dantas · Supervisor Técnico</strong>
+      <span>Águia Gestão CRM & Infraestrutura</span>
+    </div>
+  </div>
+</body>
+</html>`);
+
+  win.document.close();
+  win.focus();
+  setTimeout(() => win.print(), 350);
+}
+
+function printFormalOS(id,title,client,priority){
+  const win=window.open('','_blank');
+  if(!win){notify('Permita popups para imprimir a Ordem de Serviço');return}
+  const dateStr=new Date().toLocaleDateString('pt-BR');
+  win.document.write(`<!DOCTYPE html><html lang="pt-BR"><head><meta charset="utf-8"><title>Ordem de Serviço ${id} - Águia Gestão CRM</title><style>body{font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Arial,sans-serif;margin:25px;color:#1c2940;line-height:1.5;font-size:12px}.header{display:flex;justify-content:space-between;align-items:center;border-bottom:2px solid #1a56b2;padding-bottom:12px;margin-bottom:16px}.logo{font-size:18px;font-weight:800;color:#1a56b2}.logo span{color:#eab308;font-weight:900}.badge{display:inline-block;padding:3px 8px;border-radius:5px;font-weight:700;font-size:10px;background:#fee2e2;color:#991b1b}.section{margin-bottom:14px;border:1px solid #e2e8f0;border-radius:6px;padding:12px}.section h3{margin:0 0 8px;font-size:11px;color:#0f172a;text-transform:uppercase;border-bottom:1px solid #f1f5f9;padding-bottom:4px}.grid{display:grid;grid-template-columns:1fr 1fr;gap:8px}.field label{display:block;font-size:9px;font-weight:700;color:#64748b;text-transform:uppercase}.field strong{font-size:12px;color:#0f172a}table{width:100%;border-collapse:collapse;margin-top:6px;font-size:11px}th,td{padding:6px 8px;border-bottom:1px solid #e2e8f0;text-align:left}th{background:#f8fafc;font-size:10px;color:#475569}.total-row td{font-weight:800;font-size:12px;border-top:2px solid #cbd5e1}.signatures{display:grid;grid-template-columns:1fr 1fr;gap:40px;margin-top:40px;text-align:center}.sig-line{border-top:1px solid #94a3b8;padding-top:6px;font-size:10px;color:#475569}@media print{body{margin:12mm}.no-print{display:none}}</style></head><body><div class="header"><div><div class="logo">ÁGUIA GESTÃO <span>CRM</span></div><div style="font-size:10px;color:#475569">Operações de Infraestrutura & TI · Parceiro Smart Fit</div></div><div style="text-align:right"><div style="font-size:15px;font-weight:800;color:#0f172a">${id}</div><div style="font-size:10px">Emissão: ${dateStr}</div><div style="margin-top:3px"><span class="badge">Prioridade: ${priority}</span></div></div></div><div class="section"><h3>1. Dados do Atendimento e Local</h3><div class="grid"><div class="field"><label>Unidade / Cliente</label><strong>${client}</strong></div><div class="field"><label>Responsável Técnico</label><strong>Equipe de Campo N2</strong></div><div class="field"><label>Escopo do Serviço</label><strong>${title}</strong></div><div class="field"><label>Previsão</label><strong>2.0 horas estimadas</strong></div></div></div><div class="section"><h3>2. Materiais do Estoque</h3><table><thead><tr><th>Código</th><th>Item</th><th>Qtd</th><th>Unit.</th><th>Total</th></tr></thead><tbody><tr><td>#MT-101</td><td>Conector RJ45 blindado CAT6</td><td>6 un</td><td>R$ 4,50</td><td>R$ 27,00</td></tr><tr><td>#MT-104</td><td>Patch Cord CAT6 1,5m</td><td>2 un</td><td>R$ 18,00</td><td>R$ 36,00</td></tr><tr><td>#MT-108</td><td>Patch Panel / Acessórios</td><td>1 un</td><td>R$ 85,00</td><td>R$ 85,00</td></tr><tr class="total-row"><td colspan="4">Subtotal de Materiais</td><td>R$ 148,00</td></tr></tbody></table></div><div class="section"><h3>3. Composição Financeira</h3><div class="grid"><div class="field"><label>Mão de Obra (2h)</label><strong>R$ 180,00</strong></div><div class="field"><label>Materiais</label><strong>R$ 148,00</strong></div><div class="field"><label>Deslocamento</label><strong>R$ 0,00</strong></div><div class="field"><label>Valor Total da OS</label><strong style="font-size:14px;color:#1a56b2">R$ 328,00</strong></div></div></div><div class="signatures"><div><div style="height:30px"></div><div class="sig-line"><strong>Técnico Responsável</strong><br>Águia Gestão CRM</div></div><div><div style="height:30px"></div><div class="sig-line"><strong>Gestor da Unidade</strong><br>Aceite de Conclusão</div></div></div></body></html>`);
+  win.document.close();win.focus();setTimeout(()=>win.print(),300);
+}
+
+function printSlaReport(){
+  const win=window.open('','_blank');
+  if(!win){notify('Permita popups para imprimir o relatório');return}
+  const dateStr=new Date().toLocaleDateString('pt-BR');
+  win.document.write(`<!DOCTYPE html><html lang="pt-BR"><head><meta charset="utf-8"><title>Relatório Operacional SLA - Águia Gestão</title><style>body{font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Arial,sans-serif;margin:25px;color:#1c2940;font-size:12px}.header{display:flex;justify-content:space-between;align-items:center;border-bottom:2px solid #1a56b2;padding-bottom:10px;margin-bottom:16px}.kpis{display:grid;grid-template-columns:repeat(4,1fr);gap:10px;margin-bottom:18px}.kpi{border:1px solid #e2e8f0;border-radius:6px;padding:10px;background:#f8fafc}.kpi small{display:block;font-size:9px;color:#64748b;font-weight:700;text-transform:uppercase}.kpi strong{font-size:20px;color:#0f172a}table{width:100%;border-collapse:collapse;margin-top:10px}th,td{padding:6px 8px;border-bottom:1px solid #e2e8f0;text-align:left}th{background:#f1f5f9;font-size:10px;color:#475569}@media print{body{margin:12mm}}</style></head><body><div class="header"><div><h2 style="margin:0;color:#1a56b2">ÁGUIA GESTÃO CRM — RELATÓRIO SLA</h2><div style="font-size:10px;color:#64748b">Consolidado Mensal de Chamados e Produtividade</div></div><div style="text-align:right;font-size:10px;color:#64748b"><div>Data: ${dateStr}</div><div>Rede Smart Fit</div></div></div><div class="kpis"><div class="kpi"><small>Total Chamados</small><strong>128</strong></div><div class="kpi"><small>Conformidade SLA</small><strong style="color:#16a34a">96.4%</strong></div><div class="kpi"><small>TMA Médio</small><strong>1h 42m</strong></div><div class="kpi"><small>OS Concluídas</small><strong>42</strong></div></div><h3 style="margin-top:16px;font-size:12px;color:#0f172a">Atendimentos por Setor</h3><table><thead><tr><th>Setor</th><th>Chamados</th><th>SLA Médio</th><th>Status</th></tr></thead><tbody><tr><td>Facial SPA</td><td>18</td><td>1h 15m</td><td><span style="color:#16a34a;font-weight:700">Meta atingida</span></td></tr><tr><td>Catracas</td><td>24</td><td>1h 30m</td><td><span style="color:#16a34a;font-weight:700">Meta atingida</span></td></tr><tr><td>Rack & Conectividade</td><td>14</td><td>2h 05m</td><td><span style="color:#16a34a;font-weight:700">Meta atingida</span></td></tr><tr><td>Câmeras & CFTV</td><td>22</td><td>2h 40m</td><td><span style="color:#ca8a04;font-weight:700">Atenção</span></td></tr><tr><td>Antenas e Wi-Fi</td><td>20</td><td>1h 45m</td><td><span style="color:#16a34a;font-weight:700">Meta atingida</span></td></tr><tr><td>Som & Sala de Ginástica</td><td>16</td><td>3h 10m</td><td><span style="color:#16a34a;font-weight:700">Meta atingida</span></td></tr></tbody></table></body></html>`);
+  win.document.close();win.focus();setTimeout(()=>win.print(),300);
+}
+
+</script><script defer src="https://cdn.jsdelivr.net/npm/lucide@0.468.0/dist/umd/lucide.min.js" onload="hydrateSidebarIcons()"></script></body></html>
