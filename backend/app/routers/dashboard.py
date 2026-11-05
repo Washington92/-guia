@@ -81,6 +81,14 @@ def analytics(
         for tech in technicians if best_total > 0 and completed_counts.get(tech.id, 0) == best_total
     ]
     top_technicians.sort(key=lambda tech: (tech["name"].casefold(), tech["id"]))
+    technician_ranking = sorted(
+        [
+            {"id": tech.id, "name": tech.name, "specialty": tech.specialty,
+             "completed_tickets": completed_counts.get(tech.id, 0)}
+            for tech in technicians if completed_counts.get(tech.id, 0) > 0
+        ],
+        key=lambda item: (-item["completed_tickets"], item["name"].casefold(), item["id"]),
+    )[:5]
 
 
     return {
@@ -120,7 +128,7 @@ def analytics(
         ],
         "top_technician": {
             "metric": "completed_tickets_by_current_assignee",
-            "leaders": top_technicians,
+            "leaders": top_technicians,\n            "ranking": technician_ranking,
             "completed_total": len(completed_ids),
             "completed_without_assignment": len(completed_ids - {a.ticket_id for a in completed_assignments}),
             "note": "Uses current assignment, not a verified completion author; ties are preserved",
